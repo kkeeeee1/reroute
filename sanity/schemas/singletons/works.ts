@@ -2,12 +2,10 @@ import {HomeIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
 
 export default defineType({
-  name: 'home',
-  title: 'Home',
+  name: 'works',
+  title: 'Works',
   type: 'document',
   icon: HomeIcon,
-  // Uncomment below to have edits publish automatically as you type
-  // liveEdit: true,
   fields: [
     defineField({
       name: 'seo',
@@ -50,7 +48,7 @@ export default defineType({
   preview: {
     prepare() {
       return {
-        title: 'Home',
+        title: 'Works',
         subtitle: 'SEO 설정',
       }
     },

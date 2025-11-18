@@ -1,5 +1,5 @@
 import {CogIcon} from '@sanity/icons'
-import {defineArrayMember, defineField, defineType} from 'sanity'
+import {defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'settings',
@@ -10,60 +10,37 @@ export default defineType({
   // liveEdit: true,
   fields: [
     defineField({
-      name: 'menuItems',
-      title: 'Menu Item list',
-      description: 'Links displayed on the header of your site.',
-      type: 'array',
-      of: [
-        {
-          title: 'Reference',
-          type: 'reference',
-          to: [
-            {
-              type: 'home',
-            },
-            {
-              type: 'page',
-            },
-            {
-              type: 'project',
-            },
-          ],
-        },
-      ],
-    }),
-    defineField({
-      name: 'footer',
-      description: 'This is a block of text that will be displayed at the bottom of the page.',
-      title: 'Footer Info',
-      type: 'array',
-      of: [
-        defineArrayMember({
-          type: 'block',
-          marks: {
-            annotations: [
-              {
-                name: 'link',
-                type: 'object',
-                title: 'Link',
-                fields: [
-                  {
-                    name: 'href',
-                    type: 'url',
-                    title: 'Url',
-                  },
-                ],
-              },
-            ],
-          },
+      name: 'defaultSeo',
+      title: '기본 SEO 정보',
+      type: 'object',
+      description: 'SEO 정보를 입력하지 않은 페이지에 적용될 기본 값입니다.',
+      fields: [
+        defineField({
+          name: 'metaTitle',
+          title: '기본 메타 제목',
+          type: 'string',
+          description: '검색 엔진에 표시될 기본 제목입니다.',
+        }),
+        defineField({
+          name: 'metaDescription',
+          title: '기본 메타 설명',
+          type: 'string',
+          description: '검색 엔진에 표시될 기본 설명입니다.',
+        }),
+        defineField({
+          name: 'keywords',
+          title: '기본 키워드',
+          type: 'array',
+          of: [{type: 'string'}],
+          description: '기본 SEO 키워드입니다.',
         }),
       ],
     }),
     defineField({
       name: 'ogImage',
-      title: 'Open Graph Image',
+      title: '기본 오픈 그래프 이미지',
       type: 'image',
-      description: 'Displayed on social cards and search engine results.',
+      description: '페이지에 자체 OG 이미지가 없을 때 소셜 카드에 표시되는 기본 이미지입니다.',
       options: {
         hotspot: true,
       },
@@ -73,7 +50,7 @@ export default defineType({
     prepare() {
       return {
         title: 'Settings',
-        subtitle: 'Menu Items, Footer Info, and Open Graph Image',
+        subtitle: '기본 SEO 정보 및 이미지 설정',
       }
     },
   },

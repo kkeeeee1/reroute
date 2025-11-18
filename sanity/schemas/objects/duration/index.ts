@@ -4,7 +4,7 @@ import {DurationInput} from './DurationInput'
 export default defineField({
   type: 'object',
   name: 'duration',
-  title: 'Duration',
+  title: '기간',
   components: {
     input: DurationInput,
   },
@@ -12,12 +12,12 @@ export default defineField({
     defineField({
       type: 'datetime',
       name: 'start',
-      title: 'Start',
+      title: '시작',
     }),
     defineField({
       type: 'datetime',
       name: 'end',
-      title: 'End',
+      title: '종료',
     }),
   ],
 })

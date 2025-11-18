@@ -8,29 +8,29 @@ export default defineType({
     defineField({
       type: 'string',
       name: 'title',
-      title: 'Title',
+      title: '제목',
       validation: (rule) => rule.required(),
     }),
     defineField({
       type: 'string',
       name: 'description',
-      title: 'Description',
+      title: '설명',
     }),
     defineField({
       name: 'image',
-      title: 'Image',
+      title: '이미지',
       type: 'image',
-      description: "This image will be used as the milestone's cover image.",
+      description: '이 이미지는 마일스톤의 커버 이미지로 사용됩니다.',
       options: {
         hotspot: true,
       },
     }),
     defineField({
       name: 'tags',
-      title: 'Tags',
+      title: '태그',
       type: 'array',
       description:
-        'Tags to help categorize the milestone. For example: name of the university course, name of the project, the position you held within the project etc. ',
+        '마일스톤을 분류하는 데 도움이 되는 태그입니다. 예: 대학 과정명, 프로젝트명, 프로젝트 내 직책 등',
       of: [{type: 'string'}],
       options: {
         layout: 'tags',
@@ -39,7 +39,7 @@ export default defineType({
     defineField({
       type: 'duration',
       name: 'duration',
-      title: 'Duration',
+      title: '기간',
       validation: (rule) => rule.required(),
     }),
   ],

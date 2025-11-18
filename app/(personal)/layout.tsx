@@ -1,12 +1,11 @@
 import '@/styles/index.css'
-import {CustomPortableText} from '@/components/CustomPortableText'
+import {Footer} from '@/components/Footer'
 import {Navbar} from '@/components/Navbar'
-import IntroTemplate from '@/intro-template'
 import {sanityFetch, SanityLive} from '@/sanity/lib/live'
-import {homePageQuery, settingsQuery} from '@/sanity/lib/queries'
+import {homePageQuery} from '@/sanity/lib/queries'
 import {urlForOpenGraphImage} from '@/sanity/lib/utils'
 import type {Metadata, Viewport} from 'next'
-import {toPlainText, type PortableTextBlock} from 'next-sanity'
+import {toPlainText} from 'next-sanity'
 import {VisualEditing} from 'next-sanity/visual-editing'
 import {draftMode} from 'next/headers'
 import {Suspense} from 'react'
@@ -16,23 +15,20 @@ import {DraftModeToast} from './DraftModeToast'
 import {SpeedInsights} from '@vercel/speed-insights/next'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const [{data: settings}, {data: homePage}] = await Promise.all([
-    sanityFetch({query: settingsQuery, stega: false}),
-    sanityFetch({query: homePageQuery, stega: false}),
-  ])
+  const {data: homePage} = await sanityFetch({query: homePageQuery, stega: false})
 
-  const ogImage = urlForOpenGraphImage(
-    // @ts-expect-error - @TODO update @sanity/image-url types so it's compatible
-    settings?.ogImage,
-  )
+  const ogImage = homePage?.seo?.ogImage ? urlForOpenGraphImage(homePage.seo.ogImage) : undefined
+
   return {
     title: homePage?.title
       ? {
           template: `%s | ${homePage.title}`,
-          default: homePage.title || 'Personal website',
+          default: homePage?.seo?.metaTitle || homePage.title || 'Personal website',
         }
       : undefined,
-    description: homePage?.overview ? toPlainText(homePage.overview) : undefined,
+    description:
+      homePage?.seo?.metaDescription ||
+      (homePage?.overview ? toPlainText(homePage.overview) : undefined),
     openGraph: {
       images: ogImage ? [ogImage] : [],
     },
@@ -44,26 +40,12 @@ export const viewport: Viewport = {
 }
 
 export default async function IndexRoute({children}: {children: React.ReactNode}) {
-  const {data} = await sanityFetch({query: settingsQuery})
   return (
     <>
       <div className="flex min-h-screen flex-col bg-white text-black">
-        <Navbar data={data} />
+        <Navbar />
         <div className="mt-20 flex-grow px-4 md:px-16 lg:px-32">{children}</div>
-        <footer className="bottom-0 w-full bg-white py-12 text-center md:py-20">
-          {data?.footer && (
-            <CustomPortableText
-              id={data._id}
-              type={data._type}
-              path={['footer']}
-              paragraphClasses="text-md md:text-xl"
-              value={data.footer as unknown as PortableTextBlock[]}
-            />
-          )}
-        </footer>
-        <Suspense>
-          <IntroTemplate />
-        </Suspense>
+        <Footer />
       </div>
       <Toaster />
       <SanityLive onError={handleError} />

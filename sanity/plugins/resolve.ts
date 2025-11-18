@@ -22,11 +22,6 @@ export const locations = {
     message: 'This document is used on all pages',
     tone: 'caution',
   }),
-  home: defineLocations({
-    message: 'This document is used to render the front page',
-    tone: 'positive',
-    locations: [{title: 'Home', href: resolveHref('home')!}],
-  }),
   project: defineLocations({
     select: {title: 'title', slug: 'slug.current'},
     resolve: (doc) => ({
