@@ -9,11 +9,11 @@ module.exports = {
   ],
   theme: {
     ...theme,
-    // Overriding fontFamily to use @next/font loaded families
+    // Overriding fontFamily to use Pretendard as primary sans-serif font
     fontFamily: {
-      mono: 'var(--font-mono)',
-      sans: 'var(--font-sans)',
+      sans: "'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
       serif: 'var(--font-serif)',
+      mono: 'var(--font-mono)',
     },
   },
   plugins: [require('@tailwindcss/typography')],
