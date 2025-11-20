@@ -229,15 +229,6 @@ export function IntroAnimation() {
                     className="text-[30px] font-bold leading-[40px] text-white md:text-[60px] md:leading-[80px] lg:text-[90px] lg:leading-[120px]"
                   >
                     {displayedLines[index]}
-                    {!isTypingComplete && currentLineIndex === index && (
-                      <motion.span
-                        animate={{opacity: [1, 0]}}
-                        transition={{duration: 0.5, repeat: Infinity, repeatType: 'reverse'}}
-                        className="inline-block"
-                      >
-                        |
-                      </motion.span>
-                    )}
                   </p>
                 ))}
               </motion.div>
