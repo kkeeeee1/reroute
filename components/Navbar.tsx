@@ -1,35 +1,73 @@
 'use client'
 
+import {useState} from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
-import {usePathname} from 'next/navigation'
-
-const NAV_ITEMS = [
-  {label: 'Home', href: '/'},
-  {label: 'B2B', href: '/b2b'},
-  {label: 'B2C', href: '/b2c'},
-  {label: 'About', href: '/about'},
-  {label: 'Works', href: '/works'},
-]
+import {Menu} from './Menu'
 
 export function Navbar() {
-  const pathname = usePathname()
+  const [isOpen, setIsOpen] = useState(false)
 
+  const toggleMenu = () => setIsOpen(!isOpen)
+  const closeMenu = () => setIsOpen(false)
+
+  // ${isOpen ? 'bg-transparent' : 'bg-white/80 backdrop-blur'}
   return (
-    <header className="sticky top-0 z-10 flex flex-wrap items-center gap-x-5 bg-white/80 px-4 py-4 backdrop-blur md:px-16 md:py-5 lg:px-32">
-      {NAV_ITEMS.map((item) => {
-        const isActive = pathname === item.href
-        return (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={`text-lg hover:text-black md:text-xl ${
-              isActive ? 'font-extrabold text-black' : 'text-gray-600'
-            }`}
-          >
-            {item.label}
+    <>
+      <header
+        className={`sticky top-0 z-50 transition-colors duration-300 bg-transparent 
+        `}
+      >
+        <div className="mx-auto flex max-w-screen-max items-center justify-between p-5 md:p-10 lg:p-20">
+          <Link href="/" onClick={closeMenu} className="relative z-50" id="header-logo">
+            <Image
+              src={isOpen ? '/images/logo_white.png' : '/images/logo_black.png'}
+              alt="Reroute Logo"
+              width={214}
+              height={59}
+              className="h-8 w-auto object-contain md:h-10 lg:h-12"
+              priority
+            />
           </Link>
-        )
-      })}
-    </header>
+
+          <button
+            onClick={toggleMenu}
+            className="relative z-50 flex items-center gap-5 md:gap-[30px]"
+            aria-label={isOpen ? 'Close menu' : 'Open menu'}
+          >
+            <span
+              className={`hidden text-lg font-medium transition-opacity duration-300 md:inline md:text-xl lg:text-2xl ${
+                isOpen ? 'text-white opacity-0' : 'text-black opacity-100'
+              }`}
+            >
+              Menu
+            </span>
+            <div className="flex h-6 w-6 flex-col items-center justify-center md:h-7 md:w-7 lg:h-8 lg:w-8">
+              <span
+                className={`block h-0.5 w-5 transform transition-all duration-300 ease-in-out md:w-6 ${
+                  isOpen
+                    ? 'translate-y-[6px] rotate-45 bg-white'
+                    : 'translate-y-0 rotate-0 bg-black'
+                }`}
+              />
+              <span
+                className={`my-1 block h-0.5 w-5 transition-all duration-300 ease-in-out md:w-6 ${
+                  isOpen ? 'bg-white opacity-0' : 'bg-black opacity-100'
+                }`}
+              />
+              <span
+                className={`block h-0.5 w-5 transform transition-all duration-300 ease-in-out md:w-6 ${
+                  isOpen
+                    ? '-translate-y-[6px] -rotate-45 bg-white'
+                    : 'translate-y-0 rotate-0 bg-black'
+                }`}
+              />
+            </div>
+          </button>
+        </div>
+      </header>
+
+      <Menu isOpen={isOpen} onClose={closeMenu} />
+    </>
   )
 }

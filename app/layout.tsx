@@ -1,5 +1,6 @@
 import './globals.css'
 import {IBM_Plex_Mono, PT_Serif} from 'next/font/google'
+import {IntroAnimation} from '@/components/IntroAnimation'
 
 const serif = PT_Serif({
   variable: '--font-serif',
@@ -16,7 +17,10 @@ const mono = IBM_Plex_Mono({
 export default async function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en" className={`${mono.variable} ${serif.variable}`}>
-      <body>{children}</body>
+      <body>
+        <IntroAnimation />
+        {children}
+      </body>
     </html>
   )
 }
