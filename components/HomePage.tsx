@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 import { HeroImageCarousel } from "./HeroImageCarousel";
+import { AboutSection } from "./AboutSection";
 
 const HOLD_DURATION = 1500; // ms
 const SPLIT_DURATION = 1000; // ms
@@ -53,6 +54,7 @@ export function HomePage() {
   }, []);
 
   return (
+    <>
     <section className="flex w-full justify-center">
       {/* Hero Section - always rendered */}
       <div className="relative flex w-full max-w-screen-max items-center justify-center px-5 md:px-10 lg:px-20">
@@ -176,5 +178,8 @@ export function HomePage() {
         </AnimatePresence>
       </div>
     </section>
+
+    <AboutSection />
+  </>
   );
 }
