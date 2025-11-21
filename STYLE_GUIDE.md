@@ -27,5 +27,44 @@ px-7 md:px-10 lg:px-20
 - **Navbar.tsx**: `px-7 md:px-10 lg:px-20`
 - **HomePage.tsx**: `px-7 md:px-10 lg:px-20`
 - **AboutSection.tsx**: `px-7 md:px-10 lg:px-20`
+- **ServiceSection.tsx**: `px-7 md:px-10 lg:px-20`
+- **MarqueeText.tsx**: `px-7 md:px-10 lg:px-20`
+
+---
+
+## 2. OUR SERVICE 섹션 타이포그래피
+
+### 제목 (OUR SERVICE)
+
+| 항목     | 값                    |
+| -------- | --------------------- |
+| 폰트     | Pretendard Variable   |
+| 크기     | 32px (sm: 36px, md: 40px, lg: 56px) |
+| 스타일   | ExtraBold (800)       |
+| 행간     | 40px (sm: 45px, md: 50px, lg: 70px) |
+
+---
+
+## 3. 마케 텍스트 애니메이션 (Marquee)
+
+### 텍스트 "We don't just solve problems We Reroute them"
+
+| 항목       | 값                    |
+| ---------- | --------------------- |
+| 폰트       | Inter                 |
+| 크기       | 80px (md: 120px, lg: 150px) |
+| 스타일     | Bold (600)            |
+| 행간       | 100px (md: 140px, lg: 170px) |
+| 애니메이션 | 우 → 좌 (20초, linear) |
+
+### "We Reroute them" (Italic 부분)
+
+| 항목   | 값          |
+| ------ | ----------- |
+| 폰트   | Inria Serif |
+| 크기   | 150px (lg)  |
+| 스타일 | Italic (700) |
+| 행간   | 100% |
+| 자간   | -2% |
 
 ---

@@ -5,6 +5,8 @@ import { useEffect, useState, useRef } from "react";
 import { HeroImageCarousel } from "./HeroImageCarousel";
 import { AboutSection } from "./AboutSection";
 import { ScrollDownIndicator } from "./ScrollDownIndicator";
+import { ServiceSection } from "./ServiceSection";
+import { MarqueeText } from "./MarqueeText";
 
 const HOLD_DURATION = 1500; // ms
 const SPLIT_DURATION = 700; // ms
@@ -186,6 +188,8 @@ export function HomePage() {
       </section>
 
       <AboutSection />
+      <ServiceSection />
+      <MarqueeText />
     </>
   );
 }
