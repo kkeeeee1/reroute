@@ -35,7 +35,9 @@ export function ServiceCard({
   tagTextColor,
   otherHovered,
 }: ServiceCardProps) {
-  const yOffset = otherHovered ? (id === "b2b" ? 40 : 80) : id === "b2b" ? 0 : 40;
+  // 초기 위치: B2B는 0, B2C는 40
+  // 호버 시: 호버된 것은 -20, 다른 것은 60
+  const yOffset = isHovered ? -20 : otherHovered ? 60 : id === "b2b" ? 0 : 40;
   const zIndex = isHovered ? 20 : id === "b2b" ? 10 : 5;
 
   return (
