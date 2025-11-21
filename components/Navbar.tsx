@@ -11,14 +11,14 @@ export function Navbar() {
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
 
-  // ${isOpen ? 'bg-transparent' : 'bg-white/80 backdrop-blur'}
   return (
     <>
       <header
         id="navbar"
         className={`sticky top-0 z-50 flex justify-center bg-transparent transition-colors duration-300`}
       >
-        <div className="flex w-full max-w-screen-max items-center justify-between p-5 md:p-10 lg:p-20">
+        <div className="flex w-full max-w-screen-max items-center justify-between px-7 py-8 md:px-10 md:py-8 lg:px-20 lg:py-12">
+
           <Link
             href="/"
             onClick={closeMenu}

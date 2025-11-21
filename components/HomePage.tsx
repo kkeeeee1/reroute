@@ -76,9 +76,15 @@ export function HomePage() {
 
   return (
     <>
-      <section className="flex w-full justify-center" style={{ minHeight: heroMinHeight }}>
+      <section
+        className="flex w-full justify-center"
+        style={{ minHeight: heroMinHeight }}
+      >
         {/* Hero Section - always rendered */}
-        <div className="relative flex w-full max-w-screen-max items-center justify-center px-5 md:px-10 lg:px-20" style={{ minHeight: heroMinHeight }}>
+        <div
+          className="relative flex w-full max-w-screen-max items-center justify-center px-7 md:px-10 lg:px-20"
+          style={{ minHeight: heroMinHeight }}
+        >
           {/* 메인 히어로 */}
           <div className="w-full">
             <div className="flex w-full flex-col items-center justify-between gap-6 md:flex-row md:gap-0">
@@ -128,7 +134,7 @@ export function HomePage() {
             </div>
 
             {/* Scroll Down Indicator */}
-            <div className="flex w-full items-center justify-center gap-2.5 py-20">
+            {/* <div className="flex w-full items-center justify-center gap-2.5 py-20">
               <span className="text-xs font-medium tracking-widest text-black">
                 SCROLL DOWN
               </span>
@@ -148,54 +154,54 @@ export function HomePage() {
                   mask="url(#path-1-inside-1_210_263)"
                 />
               </svg>
-            </div>
+            </div> */}
           </div>
 
           {/* 히어로 섹션 오버레이 텍스트 */}
           <AnimatePresence mode="wait">
-            {showOverlay && (
-              <div className="absolute inset-0 z-10 flex">
-                {/* Left half */}
-                <motion.div
-                  initial={{ x: 0 }}
-                  animate={{ x: startSplit ? "-100%" : 0 }}
-                  transition={{
-                    duration: SPLIT_DURATION / 1000,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                  className="absolute left-0 top-0 h-full w-1/2 bg-white"
-                />
+            {/* {showOverlay && ( */}
+            <div className="absolute inset-0 z-10 flex">
+              {/* Left half */}
+              <motion.div
+                initial={{ x: 0 }}
+                animate={{ x: startSplit ? "-100%" : 0 }}
+                transition={{
+                  duration: SPLIT_DURATION / 1000,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="absolute left-0 top-0 h-full w-1/2 bg-white"
+              />
 
-                {/* Right half */}
-                <motion.div
-                  initial={{ x: 0 }}
-                  animate={{ x: startSplit ? "100%" : 0 }}
-                  transition={{
-                    duration: SPLIT_DURATION / 1000,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                  className="absolute right-0 top-0 h-full w-1/2 bg-white"
-                />
+              {/* Right half */}
+              <motion.div
+                initial={{ x: 0 }}
+                animate={{ x: startSplit ? "100%" : 0 }}
+                transition={{
+                  duration: SPLIT_DURATION / 1000,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="absolute right-0 top-0 h-full w-1/2 bg-white"
+              />
 
-                {/* Tagline Text */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: startSplit ? 0 : 1 }}
-                  transition={{ opacity: { duration: 0.3 } }}
-                  className="absolute inset-0 z-10 flex items-center justify-center px-5 md:px-10 lg:px-20"
-                >
-                  <div className="max-w-screen-max text-left">
-                    <h2 className="text-[24px] font-bold leading-[32px] text-black sm:text-[32px] sm:leading-[45px] md:text-[55px] md:leading-[70px] lg:text-[85px] lg:leading-[105px] xl:text-[100px] xl:leading-[110px] 2xl:text-[130px] 2xl:leading-[140px]">
-                      Never Stuck Always Reroute{" "}
-                      <span className="font-normal">
-                        브랜드와 비즈니스의 막힌 길에서 새로운 경로를 설계하는
-                        전략 파트너
-                      </span>
-                    </h2>
-                  </div>
-                </motion.div>
-              </div>
-            )}
+              {/* Tagline Text */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: startSplit ? 0 : 1 }}
+                transition={{ opacity: { duration: 0.3 } }}
+                className="absolute inset-0 z-10 flex items-center justify-center px-7 md:px-10 lg:px-20"
+              >
+                <div className="max-w-screen-max text-left">
+                  <h2 className="text-[24px] font-bold leading-[32px] text-black sm:text-[32px] sm:leading-[45px] md:text-[55px] md:leading-[70px] lg:text-[85px] lg:leading-[105px] xl:text-[100px] xl:leading-[110px] 2xl:text-[130px] 2xl:leading-[140px]">
+                    Never Stuck Always Reroute{" "}
+                    <span className="font-normal">
+                      브랜드와 비즈니스의 막힌 길에서 새로운 경로를 설계하는
+                      전략 파트너
+                    </span>
+                  </h2>
+                </div>
+              </motion.div>
+            </div>
+            {/* )} */}
           </AnimatePresence>
         </div>
       </section>

@@ -11,21 +11,21 @@
 **IMPORTANT**: 모든 주요 섹션(Header, Navigation, Hero Section, About Section 등)에서 사용되는 표준 좌우 패딩입니다.
 
 ```
-px-5 md:px-10 lg:px-20
+px-7 md:px-10 lg:px-20
 ```
 
 ### 반응형 스케일
 
 | 화면 크기     | Tailwind | 픽셀값 |
 | ------------- | -------- | ------ |
-| 모바일 (기본) | px-5     | 20px   |
+| 모바일 (기본) | px-7     | 28px   |
 | 태블릿 (md)   | md:px-10 | 40px   |
 | 데스크탑 (lg) | lg:px-20 | 80px   |
 
 ### 사용 예시
 
-- **Navbar.tsx**: `p-5 md:p-10 lg:p-20`
-- **HomePage.tsx**: `px-5 md:px-10 lg:px-20`
-- **AboutSection.tsx**: `px-5 md:px-10 lg:px-20`
+- **Navbar.tsx**: `px-7 md:px-10 lg:px-20`
+- **HomePage.tsx**: `px-7 md:px-10 lg:px-20`
+- **AboutSection.tsx**: `px-7 md:px-10 lg:px-20`
 
 ---

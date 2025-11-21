@@ -35,12 +35,12 @@ export function AboutSection() {
   return (
     <section
       ref={sectionRef}
-      className="w-full bg-navy px-5 py-16 md:px-10 md:py-24 lg:px-20 lg:py-32"
+      className="w-full bg-navy px-7 py-16 md:px-10 md:py-24 lg:px-20 lg:py-32"
     >
-      <div className="mx-auto flex w-full max-w-screen-max flex-col gap-8 md:gap-20 lg:gap-40">
-        <div className="flex flex-col gap-4 md:gap-9 lg:gap-12">
+      <div className="mx-auto flex w-full max-w-screen-max flex-col gap-12 md:gap-20 lg:gap-40">
+        <div className="flex flex-col gap-7 md:gap-10 lg:gap-12">
           {/* WE and REROUTE with line */}
-          <div className="flex flex-col items-center gap-4 md:flex-row md:items-center md:gap-3 lg:gap-6">
+          <div className="flex flex-col items-center md:flex-row md:items-center md:gap-3 lg:gap-6">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -51,11 +51,15 @@ export function AboutSection() {
             </motion.h2>
 
             {/* Animated Line or Image */}
-            <div className="relative flex h-[60px] w-[60px] shrink-0 items-center justify-center sm:h-[70px] sm:w-[70px] md:h-[60px] md:w-[150px] lg:h-[140px] lg:w-[240px]">
+            <div className="relative flex h-[60px] w-[120px] shrink-0 items-center justify-center md:h-[60px] md:w-[150px] lg:h-[140px] lg:w-[240px]">
               {/* Line - animates with fade-in and scale */}
               <motion.div
                 initial={{ opacity: 0, scaleX: 0 }}
-                animate={isInView ? { opacity: 1, scaleX: 1 } : { opacity: 0, scaleX: 0 }}
+                animate={
+                  isInView
+                    ? { opacity: 1, scaleX: 1 }
+                    : { opacity: 0, scaleX: 0 }
+                }
                 transition={
                   isInView
                     ? { duration: 0.6, delay: 0.3, ease: "easeOut" }
@@ -103,7 +107,7 @@ export function AboutSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="whitespace-pre-wrap text-[16px] font-normal leading-[24px] text-white md:whitespace-normal md:text-[20px] md:leading-[30px] lg:text-[40px] lg:leading-[58px] xl:whitespace-pre-wrap"
+            className="text-[16px] font-normal leading-[24px] text-white md:text-[20px] md:leading-[30px] lg:text-[40px] lg:leading-[58px] xl:whitespace-pre-wrap"
           >
             리루트는 기업의 복잡한 문제와 기존 방식에 갇힌 조직을 진단하고,
             {"\n"}
