@@ -52,13 +52,13 @@ export function AboutSection() {
 
             {/* Animated Line or Image */}
             <div className="relative flex h-[80px] w-[80px] items-center justify-center md:h-[60px] md:w-[150px] lg:h-[140px] lg:w-[240px]">
-              {/* Line - animates with fade-in, then shrinks vertically */}
+              {/* Line - animates with fade-in */}
               <motion.div
-                initial={{ opacity: 0, scaleY: 0 }}
+                initial={{ opacity: 0 }}
                 animate={
                   isInView
-                    ? { opacity: 1, scaleY: 1 }
-                    : { opacity: 0, scaleY: 0 }
+                    ? { opacity: 1 }
+                    : { opacity: 0 }
                 }
                 transition={
                   isInView
@@ -68,23 +68,29 @@ export function AboutSection() {
                 className="absolute h-[1px] w-full origin-center bg-white"
               />
 
-              {/* Image - expands from center (line's position) */}
-              {showImage && (
-                <motion.div
-                  initial={{ scaleY: 0, opacity: 0 }}
-                  animate={{ scaleY: 1, opacity: 1 }}
-                  transition={{ duration: 0.8, delay: 1.2, ease: "easeInOut" }}
-                  className="relative h-full w-full origin-center"
-                >
-                  <Image
-                    src="/images/main/main_we_reroute.png"
-                    alt="We Reroute"
-                    width={240}
-                    height={140}
-                    className="object-contain"
-                  />
-                </motion.div>
-              )}
+              {/* Image - expands from center, overlays the line */}
+              <motion.div
+                initial={{ scaleY: 0, opacity: 0 }}
+                animate={
+                  showImage
+                    ? { scaleY: 1, opacity: 1 }
+                    : { scaleY: 0, opacity: 0 }
+                }
+                transition={
+                  showImage
+                    ? { duration: 0.8, delay: 1.2, ease: "easeInOut" }
+                    : { duration: 0 }
+                }
+                className="relative z-10 h-full w-full origin-center"
+              >
+                <Image
+                  src="/images/main/main_we_reroute.png"
+                  alt="We Reroute"
+                  width={240}
+                  height={140}
+                  className="object-contain"
+                />
+              </motion.div>
             </div>
 
             <motion.h2
