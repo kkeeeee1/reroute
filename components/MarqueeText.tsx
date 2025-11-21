@@ -10,11 +10,11 @@ export function MarqueeText() {
           <motion.div
             animate={{ x: ["0%", "-100%"] }}
             transition={{
-              duration: 20,
+              duration: 15,
               repeat: Infinity,
               ease: "linear",
             }}
-            className="flex whitespace-nowrap"
+            className="flex gap-4 whitespace-nowrap italic"
           >
             <span className="text-[80px] font-bold leading-[100px] text-black md:text-[120px] md:leading-[140px] lg:text-[150px] lg:leading-[170px]">
               We don't just solve problems
@@ -25,7 +25,7 @@ export function MarqueeText() {
             <span className="text-[80px] font-bold leading-[100px] text-black md:text-[120px] md:leading-[140px] lg:text-[150px] lg:leading-[170px]">
               We don't just solve problems
             </span>
-            <span className="ml-[3vw] text-[80px] font-bold leading-[100px] italic text-black md:text-[120px] md:leading-[140px] lg:text-[150px] lg:leading-[170px]">
+            <span className="ml-[3vw] text-[80px] font-bold italic leading-[100px] text-black md:text-[120px] md:leading-[140px] lg:text-[150px] lg:leading-[170px]">
               We Reroute them
             </span>
           </motion.div>
