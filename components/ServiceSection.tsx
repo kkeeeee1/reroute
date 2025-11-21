@@ -73,28 +73,51 @@ export function ServiceSection() {
           </h2>
         </motion.div>
 
-        {/* Service Cards Container - Side by Side */}
-        <div className="flex w-full flex-col justify-between gap-5 md:flex-row">
-          {serviceCards.map((card, index) => (
+        {/* Service Cards Container - Staggered Layout */}
+        <div className="flex w-full flex-col gap-5 md:flex-row md:items-center">
+          {/* B2B Card Container - Top aligned on desktop */}
+          <div className="flex w-full md:w-1/2 md:items-start">
             <ServiceCard
-              key={card.id}
-              id={card.id}
-              title={card.title}
-              description={card.description}
-              tagText={card.tagText}
-              callToAction={card.callToAction}
-              imageSrc={card.imageSrc}
-              href={card.href}
-              isHovered={hoveredCard === card.id}
+              key="b2b"
+              id="b2b"
+              title={serviceCards[0].title}
+              description={serviceCards[0].description}
+              tagText={serviceCards[0].tagText}
+              callToAction={serviceCards[0].callToAction}
+              imageSrc={serviceCards[0].imageSrc}
+              href={serviceCards[0].href}
+              isHovered={hoveredCard === "b2b"}
               onHover={setHoveredCard}
-              gradientColor={card.gradientColor}
-              tagBgColor={card.tagBgColor}
-              tagTextColor={card.tagTextColor}
-              otherHovered={hoveredCard !== null && hoveredCard !== card.id}
+              gradientColor={serviceCards[0].gradientColor}
+              tagBgColor={serviceCards[0].tagBgColor}
+              tagTextColor={serviceCards[0].tagTextColor}
+              otherHovered={hoveredCard !== null && hoveredCard !== "b2b"}
               isInView={isInView}
-              animationDelay={0.2 + index * 0.15}
+              animationDelay={0.2}
             />
-          ))}
+          </div>
+
+          {/* B2C Card Container - Bottom aligned on desktop */}
+          <div className="flex w-full md:w-1/2 md:items-end">
+            <ServiceCard
+              key="b2c"
+              id="b2c"
+              title={serviceCards[1].title}
+              description={serviceCards[1].description}
+              tagText={serviceCards[1].tagText}
+              callToAction={serviceCards[1].callToAction}
+              imageSrc={serviceCards[1].imageSrc}
+              href={serviceCards[1].href}
+              isHovered={hoveredCard === "b2c"}
+              onHover={setHoveredCard}
+              gradientColor={serviceCards[1].gradientColor}
+              tagBgColor={serviceCards[1].tagBgColor}
+              tagTextColor={serviceCards[1].tagTextColor}
+              otherHovered={hoveredCard !== null && hoveredCard !== "b2c"}
+              isInView={isInView}
+              animationDelay={0.35}
+            />
+          </div>
         </div>
       </div>
     </section>
