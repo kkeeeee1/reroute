@@ -51,17 +51,14 @@ export function ServiceCard({
         transition={{ duration: 0.4, ease: "easeOut" }}
         onMouseEnter={() => onHover(id)}
         onMouseLeave={() => onHover(null)}
-        className="relative h-[400px] w-full flex-1 cursor-pointer overflow-hidden rounded-lg md:h-[500px]"
+        className="relative aspect-square h-auto w-[calc(50%-5px)] cursor-pointer overflow-hidden"
       >
-        <Image
-          src={imageSrc}
-          alt={title}
-          fill
-          className="object-cover"
-        />
-        <div className={`absolute inset-0 flex flex-col justify-between bg-gradient-to-b from-transparent via-transparent ${gradientColor} p-8 md:p-12 lg:p-16`}>
+        <Image src={imageSrc} alt={title} fill className="object-cover" />
+        <div
+          className={`absolute inset-0 flex flex-col justify-between bg-gradient-to-b from-transparent via-transparent ${gradientColor} p-8 md:p-12 lg:p-16`}
+        >
           <div>
-            <h3 className="mb-4 text-[48px] font-extrabold leading-[56px] text-white md:text-[56px] md:leading-[70px] lg:text-[80px] lg:leading-[100px]">
+            <h3 className="mb-10 text-[48px] font-black leading-[56px] text-white md:text-[56px] md:leading-[70px] lg:text-[80px] lg:leading-[70px]">
               {title}
             </h3>
             <p className="text-[14px] font-medium leading-[20px] text-white md:text-[16px] md:leading-[24px]">
@@ -70,7 +67,9 @@ export function ServiceCard({
           </div>
           <div>
             <div>
-              <span className={`inline-block rounded-full ${tagBgColor} px-4 py-1 text-sm font-bold ${tagTextColor} md:text-base`}>
+              <span
+                className={`inline-block rounded-full ${tagBgColor} px-4 py-1 text-sm font-bold ${tagTextColor} md:text-base`}
+              >
                 {tagText}
               </span>
             </div>
