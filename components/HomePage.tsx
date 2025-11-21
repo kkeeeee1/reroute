@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 import { HeroImageCarousel } from "./HeroImageCarousel";
 import { AboutSection } from "./AboutSection";
+import { ScrollDownIndicator } from "./ScrollDownIndicator";
 
 const HOLD_DURATION = 1500; // ms
 const SPLIT_DURATION = 700; // ms
@@ -13,7 +14,6 @@ export function HomePage() {
   const [showOverlay, setShowOverlay] = useState(true);
   const [startSplit, setStartSplit] = useState(false);
   const [heroMinHeight, setHeroMinHeight] = useState("100vh");
-  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
   const hasShownRef = useRef(false);
 
   useEffect(() => {
@@ -75,20 +75,6 @@ export function HomePage() {
     };
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      // Show indicator only when scrolled to top
-      if (window.scrollY < 50) {
-        setShowScrollIndicator(true);
-      } else {
-        setShowScrollIndicator(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
     <>
       <section
@@ -148,33 +134,6 @@ export function HomePage() {
               </div>
             </div>
 
-            {/* Scroll Down Indicator */}
-            <motion.div
-              initial={{ opacity: 1 }}
-              animate={{ opacity: showScrollIndicator ? 1 : 0 }}
-              transition={{ duration: 0.3 }}
-              className="absolute bottom-12 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2.5"
-            >
-              <span className="text-xs font-medium tracking-widest text-black">
-                SCROLL DOWN
-              </span>
-              <svg
-                width="22"
-                height="10"
-                viewBox="0 0 22 10"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <mask id="path-1-inside-1_210_263" fill="white">
-                  <path d="M0 -1L10.7873 9.38825L21.5745 -1" />
-                </mask>
-                <path
-                  d="M10.7873 9.38825L9.39993 10.8289L10.7873 12.1649L12.1746 10.8289L10.7873 9.38825ZM0 -1L-1.38732 0.440606L9.39993 10.8289L10.7873 9.38825L12.1746 7.94764L1.38732 -2.44061L0 -1ZM10.7873 9.38825L12.1746 10.8289L22.9618 0.440606L21.5745 -1L20.1872 -2.44061L9.39993 7.94764L10.7873 9.38825Z"
-                  fill="#231F20"
-                  mask="url(#path-1-inside-1_210_263)"
-                />
-              </svg>
-            </motion.div>
           </div>
 
           {/* 히어로 섹션 오버레이 텍스트 */}

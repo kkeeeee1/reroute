@@ -1,6 +1,7 @@
 import './globals.css'
 import {IBM_Plex_Mono, PT_Serif} from 'next/font/google'
 import {IntroAnimation} from '@/components/IntroAnimation'
+import {ScrollDownIndicator} from '@/components/ScrollDownIndicator'
 
 const serif = PT_Serif({
   variable: '--font-serif',
@@ -19,6 +20,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
     <html lang="en" className={`${mono.variable} ${serif.variable}`}>
       <body>
         <IntroAnimation />
+        <ScrollDownIndicator />
         {children}
       </body>
     </html>
