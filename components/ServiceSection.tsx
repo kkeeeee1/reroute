@@ -46,8 +46,7 @@ export function ServiceSection() {
         </div>
 
         {/* Service Cards Container - Side by Side */}
-        <div className="grid gap-6 md:gap-8 lg:gap-10">
-          <div className="flex flex-col gap-6 md:flex-row md:gap-8 lg:gap-10">
+        <div className="flex flex-col gap-6 md:flex-row md:gap-8 lg:gap-10">
             {serviceCards.map((card) => (
               <ServiceCard
                 key={card.id}
@@ -66,7 +65,6 @@ export function ServiceSection() {
                 otherHovered={hoveredCard !== null && hoveredCard !== card.id}
               />
             ))}
-          </div>
         </div>
       </div>
     </section>
