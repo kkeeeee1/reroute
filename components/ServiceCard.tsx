@@ -39,14 +39,18 @@ export function ServiceCard({
   isInView = false,
   animationDelay = 0,
 }: ServiceCardProps) {
-  // 호버 시: 호버된 것은 -20, 다른 것은 60
+  const isDesktop = typeof window !== "undefined" && window.innerWidth >= 768;
+
+  // 데스크탑에서만 y-offset 적용
   const getYOffset = () => {
+    if (!isDesktop) return 0;
     if (isHovered) return -30;
     if (otherHovered) return 70;
     return id === "b2b" ? 0 : 70;
   };
 
   const getZIndex = () => {
+    if (!isDesktop) return 0;
     if (isHovered) return 20;
     return id === "b2b" ? 10 : 5;
   };
@@ -60,31 +64,35 @@ export function ServiceCard({
             ? { opacity: 1, y: getYOffset(), zIndex: getZIndex() }
             : { opacity: 0, y: 30 }
         }
-        transition={{ duration: 0.5, delay: animationDelay, ease: "easeInOut" }}
-        onMouseEnter={() => onHover(id)}
-        onMouseLeave={() => onHover(null)}
-        className="relative aspect-square w-[calc(100%-10px)]"
+        transition={{
+          duration: isHovered || otherHovered ? 0.6 : 0.5,
+          delay: animationDelay,
+          ease: [0.34, 1.56, 0.64, 1]
+        }}
+        onMouseEnter={() => isDesktop && onHover(id)}
+        onMouseLeave={() => isDesktop && onHover(null)}
+        className="relative aspect-square w-full md:w-[calc(100%-10px)]"
       >
         <Image src={imageSrc} alt={title} fill className="object-cover" />
         {id === "b2b" && <div className="absolute inset-0 bg-[#003BB1B2]" />}
         <div
-          className={`absolute inset-0 flex flex-col justify-between bg-gradient-to-b from-transparent via-transparent ${gradientColor} p-8 md:p-12 lg:p-16`}
+          className={`absolute inset-0 flex flex-col justify-between bg-gradient-to-b from-transparent via-transparent ${gradientColor} p-6 sm:p-6 md:p-12 lg:p-16`}
         >
           <div>
-            <h3 className="mb-10 text-[48px] font-black leading-[56px] text-white md:text-[56px] md:leading-[70px] lg:text-[80px] lg:leading-[70px]">
+            <h3 className="mb-4 text-[32px] font-black leading-[40px] text-white sm:mb-6 sm:text-[40px] sm:leading-[48px] md:mb-10 md:text-[56px] md:leading-[70px] lg:text-[80px] lg:leading-[70px]">
               {title}
             </h3>
-            <p className="text-[14px] font-medium leading-[20px] text-white md:text-[32px] md:leading-[70px]">
+            <p className="text-base font-medium leading-[18px] text-white sm:text-xl sm:leading-[22px] md:text-[32px] md:leading-[70px]">
               {description}
             </p>
           </div>
           <div>
             <span
-              className={`inline-block rounded-full ${tagBgColor} mb-[30px] px-5 py-2 text-sm font-bold ${tagTextColor} md:text-[32px] md:leading-[30px]`}
+              className={`inline-block rounded-full ${tagBgColor} mb-2 px-3 py-1 text-xs font-bold sm:mb-[20px] sm:px-4 sm:py-2 sm:text-sm md:mb-[30px] md:px-5 md:py-2 ${tagTextColor} md:text-[32px] md:leading-[30px]`}
             >
               {tagText}
             </span>
-            <p className="text-xl font-medium text-white md:text-[40px] md:leading-[40px]">
+            <p className="text-sm font-medium text-white sm:text-base md:text-[40px] md:leading-[40px]">
               {callToAction}
             </p>
           </div>

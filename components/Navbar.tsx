@@ -1,15 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Menu } from "./Menu";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isOverBlueSection, setIsOverBlueSection] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Get navbar position
+      const navbar = document.getElementById("navbar");
+      if (!navbar) return;
+
+      const navbarRect = navbar.getBoundingClientRect();
+      const navbarCenter = navbarRect.top + navbarRect.height / 2;
+
+      // Find all elements with navy/blue backgrounds
+      const blueElements = document.querySelectorAll('[class*="bg-navy"]');
+
+      let isOverBlue = false;
+      blueElements.forEach((element) => {
+        const rect = element.getBoundingClientRect();
+        // Check if navbar is over this blue section
+        if (navbarCenter >= rect.top && navbarCenter <= rect.bottom) {
+          isOverBlue = true;
+        }
+      });
+
+      setIsOverBlueSection(isOverBlue);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
@@ -26,11 +55,11 @@ export function Navbar() {
             id="header-logo"
           >
             <Image
-              src={isOpen ? "/images/logo_white.png" : "/images/logo_black.png"}
+              src={isOpen || isOverBlueSection ? "/images/logo_white.png" : "/images/logo_black.png"}
               alt="Reroute Logo"
               width={214}
               height={59}
-              className="h-8 w-auto object-contain md:h-10 lg:h-12"
+              className="h-8 w-auto object-contain md:h-10 lg:h-12 transition-opacity duration-300"
               priority
             />
           </Link>

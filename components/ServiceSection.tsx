@@ -56,7 +56,7 @@ export function ServiceSection() {
 
   return (
     <section ref={sectionRef} className="w-full bg-white">
-      <div className="mx-auto flex w-full max-w-screen-max flex-col gap-20 px-7 py-16 md:px-10 md:py-24 lg:px-20 lg:py-32">
+      <div className="mx-auto flex w-full max-w-screen-max flex-col gap-10 px-7 py-16 md:gap-20 md:px-10 md:py-24 lg:px-20 lg:py-32">
         {/* Title */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

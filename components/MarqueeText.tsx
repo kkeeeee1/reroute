@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export function MarqueeText() {
   return (
-    <section className="w-full py-16 md:py-24 lg:py-32">
+    <section className="w-full py-12 md:py-24 lg:py-32">
       <div className="overflow-hidden">
         <motion.div
           animate={{ x: ["0%", "-100%"] }}

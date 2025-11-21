@@ -27,7 +27,7 @@ export function ScrollDownIndicator({ hideOnOverlay = false }: { hideOnOverlay?:
         opacity: showIndicator && !hideOnOverlay ? 1 : 0,
       }}
       transition={{ duration: 0.3 }}
-      className="pointer-events-none fixed bottom-12 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2.5"
+      className="pointer-events-none fixed bottom-12 left-1/2 z-40 hidden -translate-x-1/2 items-center gap-2.5 md:flex"
     >
       <span className="text-base font-medium tracking-widest text-black">
         SCROLL DOWN
