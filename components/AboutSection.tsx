@@ -37,8 +37,8 @@ export function AboutSection() {
       ref={sectionRef}
       className="w-full bg-navy px-5 py-16 md:px-10 md:py-20 lg:px-20 lg:py-28"
     >
-      <div className="mx-auto flex w-full max-w-screen-max flex-col">
-        <div className="flex flex-col gap-7 md:gap-10 lg:gap-14">
+      <div className="mx-auto flex w-full max-w-screen-max flex-col gap-16 md:gap-28 lg:gap-40">
+        <div className="flex flex-col gap-6 md:gap-8 lg:gap-10">
           {/* WE and REROUTE with line */}
           <div className="flex items-center gap-3 md:gap-4 lg:gap-6">
             <motion.h2
@@ -55,11 +55,7 @@ export function AboutSection() {
               {/* Line - animates with fade-in */}
               <motion.div
                 initial={{ opacity: 0 }}
-                animate={
-                  isInView
-                    ? { opacity: 1 }
-                    : { opacity: 0 }
-                }
+                animate={isInView ? { opacity: 1 } : { opacity: 0 }}
                 transition={
                   isInView
                     ? { duration: 0.6, delay: 0.2, ease: "easeOut" }
@@ -78,7 +74,7 @@ export function AboutSection() {
                 }
                 transition={
                   showImage
-                    ? { duration: 0.8, delay: 1.2, ease: "easeInOut" }
+                    ? { duration: 0.8, delay: 0.8, ease: "easeInOut" }
                     : { duration: 0 }
                 }
                 className="relative z-10 h-full w-full origin-center"
@@ -86,8 +82,7 @@ export function AboutSection() {
                 <Image
                   src="/images/main/main_we_reroute.png"
                   alt="We Reroute"
-                  width={240}
-                  height={140}
+                  fill
                   className="object-contain"
                 />
               </motion.div>
@@ -125,7 +120,6 @@ export function AboutSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="mt-auto pt-8 md:pt-12 lg:pt-16"
         >
           <Link
             href="/about"

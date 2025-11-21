@@ -1,4 +1,4 @@
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
 
 @tailwind base;
 @tailwind components;
@@ -6,6 +6,11 @@
 
 @layer base {
   :root {
-    --font-sans: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    --font-sans:
+      "Pretendard Variable", -apple-system, BlinkMacSystemFont, system-ui,
+      "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  }
+  * {
+    user-select: none;
   }
 }
