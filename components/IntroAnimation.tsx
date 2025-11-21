@@ -33,6 +33,15 @@ export function IntroAnimation() {
     hasShownRef.current = true
     setIsVisible(true)
 
+    // Lock scroll completely during intro
+    const html = document.documentElement
+    const body = document.body
+    html.style.overflow = 'hidden'
+    body.style.overflow = 'hidden'
+    body.style.position = 'fixed'
+    body.style.width = '100%'
+    body.style.top = '0'
+
     // Get header logo position for transition target
     const updateLogoPosition = () => {
       const headerLogo = document.getElementById('header-logo')

@@ -20,6 +20,22 @@ module.exports = {
       maxWidth: {
         'screen-max': '1920px',
       },
+      animation: {
+        'shimmer-text-horizontal': 'shimmer-text-horizontal 5s cubic-bezier(0.4, 0, 0.2, 1) infinite',
+      },
+      keyframes: {
+        'shimmer-text-horizontal': {
+          '0%': {
+            backgroundPosition: '-100% 0%',
+          },
+          '20%': {
+            backgroundPosition: '100% 0%',
+          },
+          '100%': {
+            backgroundPosition: '100% 0%',
+          },
+        },
+      },
     },
   },
   plugins: [require('@tailwindcss/typography')],

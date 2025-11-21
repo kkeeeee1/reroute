@@ -16,3 +16,39 @@ ul {
 ol {
   list-style-type: disc;
 }
+
+/* Shimmer text animation */
+@keyframes shimmer-text-horizontal {
+  0% {
+    background-position: -100% 0%;
+    -webkit-text-fill-color: transparent;
+  }
+  10% {
+    background-position: -100% 0%;
+    -webkit-text-fill-color: transparent;
+  }
+  15% {
+    background-position: 0% 0%;
+    -webkit-text-fill-color: transparent;
+  }
+  35% {
+    background-position: 100% 0%;
+    -webkit-text-fill-color: transparent;
+  }
+  40% {
+    background-position: 100% 0%;
+    -webkit-text-fill-color: transparent;
+  }
+  100% {
+    background-position: 100% 0%;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.shimmer-overlay {
+  animation: shimmer-text-horizontal 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-shimmer-text-horizontal {
+  animation: shimmer-text-horizontal 5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
