@@ -52,14 +52,18 @@ export function ServiceCard({
   };
 
   return (
-    <Link href={href} className="h-full w-full">
+    <Link href={href} className="h-full w-full overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
-        animate={isInView ? { opacity: 1, y: getYOffset(), zIndex: getZIndex() } : { opacity: 0, y: 30 }}
-        transition={{ duration: 0.8, delay: animationDelay, ease: "easeOut" }}
+        animate={
+          isInView
+            ? { opacity: 1, y: getYOffset(), zIndex: getZIndex() }
+            : { opacity: 0, y: 30 }
+        }
+        transition={{ duration: 0.5, delay: animationDelay, ease: "easeOut" }}
         onMouseEnter={() => onHover(id)}
         onMouseLeave={() => onHover(null)}
-        className="relative aspect-square h-full w-[calc(100%-10px)] overflow-hidden"
+        className="relative aspect-square h-full w-[calc(100%-10px)]"
       >
         <Image src={imageSrc} alt={title} fill className="object-cover" />
         {id === "b2b" && <div className="absolute inset-0 bg-[#003BB1B2]" />}
