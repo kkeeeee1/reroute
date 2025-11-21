@@ -52,7 +52,7 @@ export function ServiceCard({
   };
 
   return (
-    <Link href={href} className="h-full w-full overflow-hidden">
+    <Link href={href} className="block w-full overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={
@@ -63,7 +63,7 @@ export function ServiceCard({
         transition={{ duration: 0.5, delay: animationDelay, ease: "easeOut" }}
         onMouseEnter={() => onHover(id)}
         onMouseLeave={() => onHover(null)}
-        className="relative aspect-square h-full w-[calc(100%-10px)]"
+        className="relative aspect-square w-[calc(100%-10px)]"
       >
         <Image src={imageSrc} alt={title} fill className="object-cover" />
         {id === "b2b" && <div className="absolute inset-0 bg-[#003BB1B2]" />}
