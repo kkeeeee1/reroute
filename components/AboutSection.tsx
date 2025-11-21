@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { ABOUT_SECTION } from "../constants";
 
 export function AboutSection() {
   const [isInView, setIsInView] = useState(false);
@@ -36,18 +35,18 @@ export function AboutSection() {
   return (
     <section
       ref={sectionRef}
-      className={`w-full bg-navy ${ABOUT_SECTION.sectionPadding}`}
+      className="w-full bg-navy px-5 py-16 md:px-10 md:py-24 lg:px-20 lg:py-32"
     >
       <div className="mx-auto flex w-full max-w-screen-max flex-col">
         {/* WE REROUTE Header */}
         <div className="flex flex-col items-center">
           {/* WE and REROUTE with line */}
-          <div className={`flex flex-wrap items-center justify-center ${ABOUT_SECTION.lineGap.sm} ${ABOUT_SECTION.lineGap.md} ${ABOUT_SECTION.lineGap.lg}`}>
+          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 lg:gap-9">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className={`text-white ${ABOUT_SECTION.heading.sm} ${ABOUT_SECTION.heading.md} ${ABOUT_SECTION.heading.lg}`}
+              className="text-[60px] font-extrabold leading-[60px] text-white md:text-[80px] md:leading-[80px] lg:text-[200px] lg:leading-[200px]"
             >
               WE
             </motion.h2>
@@ -85,7 +84,7 @@ export function AboutSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className={`text-white ${ABOUT_SECTION.heading.sm} ${ABOUT_SECTION.heading.md} ${ABOUT_SECTION.heading.lg}`}
+              className="text-[60px] font-extrabold leading-[60px] text-white md:text-[80px] md:leading-[80px] lg:text-[200px] lg:leading-[200px]"
             >
               REROUTE
             </motion.h2>
@@ -97,7 +96,7 @@ export function AboutSection() {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.8, delay: 0.6 }}
             style={{ marginTop: "clamp(40px, 8vw, 84px)" }}
-            className={`w-full text-center text-white ${ABOUT_SECTION.description.sm} ${ABOUT_SECTION.description.md} ${ABOUT_SECTION.description.lg}`}
+            className="mt-10 w-full text-center text-[32px] font-normal leading-[40px] text-white md:text-[40px] md:leading-[58px] lg:text-[40px] lg:leading-[58px]"
           >
             리루트는 기업의 복잡한 문제와 기존 방식에 갇힌 조직을 진단하고,
             전략부터 실행까지 한 흐름으로 연결합니다. 통합 운영관리, 브랜딩 &
@@ -114,7 +113,7 @@ export function AboutSection() {
           >
             <Link
               href="/about"
-              className={`text-white transition-opacity duration-300 hover:opacity-70 ${ABOUT_SECTION.viewMore.sm} ${ABOUT_SECTION.viewMore.md} ${ABOUT_SECTION.viewMore.lg}`}
+              className="text-[28px] font-bold leading-[100%] text-white transition-opacity duration-300 hover:opacity-70 md:text-[28px] lg:text-[28px]"
             >
               VIEW MORE
             </Link>
