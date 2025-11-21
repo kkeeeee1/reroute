@@ -18,6 +18,8 @@ interface ServiceCardProps {
   tagBgColor: string;
   tagTextColor: string;
   otherHovered: boolean;
+  isInView?: boolean;
+  animationDelay?: number;
 }
 
 export function ServiceCard({
@@ -34,27 +36,33 @@ export function ServiceCard({
   tagBgColor,
   tagTextColor,
   otherHovered,
+  isInView = false,
+  animationDelay = 0,
 }: ServiceCardProps) {
-  // 초기 위치: B2B는 0, B2C는 40
   // 호버 시: 호버된 것은 -20, 다른 것은 60
-  const yOffset = isHovered ? -20 : otherHovered ? 60 : id === "b2b" ? 0 : 40;
-  const zIndex = isHovered ? 20 : id === "b2b" ? 10 : 5;
+  const getYOffset = () => {
+    if (isHovered) return -20;
+    if (otherHovered) return 60;
+    return id === "b2b" ? 0 : 40;
+  };
+
+  const getZIndex = () => {
+    if (isHovered) return 20;
+    return id === "b2b" ? 10 : 5;
+  };
 
   return (
-    <Link href={href} className="w-full">
+    <Link href={href} className="h-full w-full">
       <motion.div
-        initial={{ y: id === "b2b" ? 0 : 40, zIndex: id === "b2b" ? 10 : 5 }}
-        animate={{
-          y: yOffset,
-          zIndex,
-        }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
+        initial={{ opacity: 0, y: 30 }}
+        animate={isInView ? { opacity: 1, y: getYOffset(), zIndex: getZIndex() } : { opacity: 0, y: 30 }}
+        transition={{ duration: 0.8, delay: animationDelay, ease: "easeOut" }}
         onMouseEnter={() => onHover(id)}
         onMouseLeave={() => onHover(null)}
-        className="relative aspect-square w-[calc(100%-10px)] overflow-hidden"
+        className="relative aspect-square h-full w-[calc(100%-10px)] overflow-hidden"
       >
         <Image src={imageSrc} alt={title} fill className="object-cover" />
-        <div className="absolute inset-0 bg-[#003BB1B2]" />
+        {id === "b2b" && <div className="absolute inset-0 bg-[#003BB1B2]" />}
         <div
           className={`absolute inset-0 flex flex-col justify-between bg-gradient-to-b from-transparent via-transparent ${gradientColor} p-8 md:p-12 lg:p-16`}
         >

@@ -17,7 +17,7 @@ export function ServiceSection() {
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (sectionRef.current) {
@@ -55,7 +55,10 @@ export function ServiceSection() {
   ];
 
   return (
-    <section ref={sectionRef} className="w-full bg-white px-7 py-16 md:px-10 md:py-24 lg:px-20 lg:py-32">
+    <section
+      ref={sectionRef}
+      className="w-full bg-white px-7 py-16 md:px-10 md:py-24 lg:px-20 lg:py-32"
+    >
       <div className="mx-auto flex w-full max-w-screen-max flex-col gap-20">
         {/* Title */}
         <motion.div
@@ -73,28 +76,24 @@ export function ServiceSection() {
         {/* Service Cards Container - Side by Side */}
         <div className="flex w-full flex-col justify-between gap-5 md:flex-row">
           {serviceCards.map((card, index) => (
-            <motion.div
+            <ServiceCard
               key={card.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.8, delay: 0.2 + index * 0.15 }}
-            >
-              <ServiceCard
-                id={card.id}
-                title={card.title}
-                description={card.description}
-                tagText={card.tagText}
-                callToAction={card.callToAction}
-                imageSrc={card.imageSrc}
-                href={card.href}
-                isHovered={hoveredCard === card.id}
-                onHover={setHoveredCard}
-                gradientColor={card.gradientColor}
-                tagBgColor={card.tagBgColor}
-                tagTextColor={card.tagTextColor}
-                otherHovered={hoveredCard !== null && hoveredCard !== card.id}
-              />
-            </motion.div>
+              id={card.id}
+              title={card.title}
+              description={card.description}
+              tagText={card.tagText}
+              callToAction={card.callToAction}
+              imageSrc={card.imageSrc}
+              href={card.href}
+              isHovered={hoveredCard === card.id}
+              onHover={setHoveredCard}
+              gradientColor={card.gradientColor}
+              tagBgColor={card.tagBgColor}
+              tagTextColor={card.tagTextColor}
+              otherHovered={hoveredCard !== null && hoveredCard !== card.id}
+              isInView={isInView}
+              animationDelay={0.2 + index * 0.15}
+            />
           ))}
         </div>
       </div>
