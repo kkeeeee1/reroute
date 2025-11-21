@@ -17,7 +17,7 @@ export function ServiceSection() {
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.1 },
+      { threshold: 0.4 },
     );
 
     if (sectionRef.current) {

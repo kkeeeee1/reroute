@@ -52,7 +52,7 @@ export function ServiceCard({
   };
 
   return (
-    <Link href={href} className="block w-full overflow-hidden">
+    <Link href={href} className="block w-full">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={
@@ -60,7 +60,7 @@ export function ServiceCard({
             ? { opacity: 1, y: getYOffset(), zIndex: getZIndex() }
             : { opacity: 0, y: 30 }
         }
-        transition={{ duration: 0.5, delay: animationDelay, ease: "easeOut" }}
+        transition={{ duration: 0.5, delay: animationDelay, ease: "easeInOut" }}
         onMouseEnter={() => onHover(id)}
         onMouseLeave={() => onHover(null)}
         className="relative aspect-square w-[calc(100%-10px)]"
