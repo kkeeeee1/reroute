@@ -7,6 +7,7 @@ import { AboutSection } from "./AboutSection";
 import { ScrollDownIndicator } from "./ScrollDownIndicator";
 import { ServiceSection } from "./ServiceSection";
 import { MarqueeText } from "./MarqueeText";
+import { ScrollToTopButton } from "./ScrollToTopButton";
 
 const HOLD_DURATION = 1500; // ms
 const SPLIT_DURATION = 700; // ms
@@ -190,6 +191,7 @@ export function HomePage() {
       <AboutSection />
       <ServiceSection />
       <MarqueeText />
+      <ScrollToTopButton />
     </>
   );
 }
