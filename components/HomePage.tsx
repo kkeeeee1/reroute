@@ -13,6 +13,7 @@ export function HomePage() {
   const [showOverlay, setShowOverlay] = useState(true);
   const [startSplit, setStartSplit] = useState(false);
   const [heroMinHeight, setHeroMinHeight] = useState("100vh");
+  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
   const hasShownRef = useRef(false);
 
   useEffect(() => {
@@ -74,6 +75,20 @@ export function HomePage() {
     };
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show indicator only when scrolled to top
+      if (window.scrollY < 50) {
+        setShowScrollIndicator(true);
+      } else {
+        setShowScrollIndicator(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <>
       <section
@@ -87,7 +102,7 @@ export function HomePage() {
         >
           {/* 메인 히어로 */}
           <div className="w-full">
-            <div className="flex w-full flex-col items-center justify-between gap-6 md:flex-row md:gap-0">
+            <div className="flex w-full flex-col items-center justify-between gap-6 py-7 md:flex-row md:gap-0">
               {/* 좌측 텍스트 */}
               <div className="w-full text-left md:w-1/3">
                 <h1 className="text-[60px] font-bold leading-[60px] sm:text-[65px] sm:leading-[65px] md:text-[70px] md:leading-[70px] lg:text-[90px] lg:leading-[90px] xl:text-[100px] xl:leading-[100px] 2xl:text-[120px] 2xl:leading-[120px]">
@@ -134,7 +149,12 @@ export function HomePage() {
             </div>
 
             {/* Scroll Down Indicator */}
-            {/* <div className="flex w-full items-center justify-center gap-2.5 py-20">
+            <motion.div
+              initial={{ opacity: 1 }}
+              animate={{ opacity: showScrollIndicator ? 1 : 0 }}
+              transition={{ duration: 0.3 }}
+              className="absolute bottom-12 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2.5"
+            >
               <span className="text-xs font-medium tracking-widest text-black">
                 SCROLL DOWN
               </span>
@@ -154,7 +174,7 @@ export function HomePage() {
                   mask="url(#path-1-inside-1_210_263)"
                 />
               </svg>
-            </div> */}
+            </motion.div>
           </div>
 
           {/* 히어로 섹션 오버레이 텍스트 */}
