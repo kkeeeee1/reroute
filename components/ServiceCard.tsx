@@ -41,9 +41,9 @@ export function ServiceCard({
 }: ServiceCardProps) {
   // 호버 시: 호버된 것은 -20, 다른 것은 60
   const getYOffset = () => {
-    if (isHovered) return -20;
-    if (otherHovered) return 60;
-    return id === "b2b" ? 0 : 40;
+    if (isHovered) return -30;
+    if (otherHovered) return 70;
+    return id === "b2b" ? 0 : 70;
   };
 
   const getZIndex = () => {

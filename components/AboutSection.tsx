@@ -33,11 +33,8 @@ export function AboutSection() {
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className="w-full bg-navy px-7 py-16 md:px-10 md:py-24 lg:px-20 lg:py-32"
-    >
-      <div className="mx-auto flex w-full max-w-screen-max flex-col gap-12 md:gap-20 lg:gap-40">
+    <section ref={sectionRef} className="w-full bg-navy">
+      <div className="mx-auto flex w-full max-w-screen-max flex-col gap-12 px-7 py-16 md:gap-20 md:px-10 md:py-24 lg:gap-40 lg:px-20 lg:py-32">
         <div className="flex flex-col gap-7 md:gap-10 lg:gap-12">
           {/* WE and REROUTE with line */}
           <div className="flex flex-col items-center md:flex-row md:items-center md:gap-3 lg:gap-6">
@@ -78,7 +75,7 @@ export function AboutSection() {
                 }
                 transition={
                   showImage
-                    ? { duration: 0.8, delay: 0.8, ease: "easeInOut" }
+                    ? { duration: 0.4, delay: 0.5, ease: "easeInOut" }
                     : { duration: 0 }
                 }
                 className="relative z-10 h-full w-full origin-center"
