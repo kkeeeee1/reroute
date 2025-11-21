@@ -22,10 +22,13 @@ export function ScrollDownIndicator() {
 
   return (
     <motion.div
-      initial={{ opacity: 1 }}
-      animate={{ opacity: showIndicator ? 1 : 0 }}
+      initial={{ opacity: 1, flexDirection: "column" }}
+      animate={{
+        opacity: showIndicator ? 1 : 0,
+        flexDirection: showIndicator ? "column" : "row",
+      }}
       transition={{ duration: 0.3 }}
-      className="fixed bottom-12 left-1/2 z-40 flex -translate-x-1/2 flex-col items-center gap-2.5 pointer-events-none"
+      className="fixed bottom-12 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2.5 pointer-events-none"
     >
       <span className="text-base font-medium tracking-widest text-black">
         SCROLL DOWN
