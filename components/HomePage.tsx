@@ -142,7 +142,7 @@ export function HomePage() {
           {/* 히어로 섹션 오버레이 텍스트 */}
           <AnimatePresence mode="wait">
             {showOverlay && (
-              <div className="absolute inset-0 z-10 flex">
+              <div className="absolute inset-0 z-10">
                 {/* Left half */}
                 <motion.div
                   initial={{ x: 0 }}
@@ -170,16 +170,15 @@ export function HomePage() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: startSplit ? 0 : 1 }}
                   transition={{ opacity: { duration: 0.3 } }}
-                  className="absolute inset-0 z-10 flex items-center justify-center px-7 md:px-10 lg:px-20"
                 >
-                  <div className="max-w-screen-max text-left">
-                    <h2 className="text-[24px] font-bold leading-[32px] text-black sm:text-[32px] sm:leading-[45px] md:text-[55px] md:leading-[70px] lg:text-[85px] lg:leading-[105px] xl:text-[100px] xl:leading-[110px] 2xl:text-[140px] 2xl:leading-[160px]">
+                  <div className="absolute inset-0 z-10 flex max-w-screen-max items-center justify-center px-7 text-left md:px-10 lg:px-20">
+                    <span className="text-[24px] font-bold leading-[32px] text-black sm:text-[32px] sm:leading-[45px] md:text-[55px] md:leading-[70px] lg:text-[85px] lg:leading-[105px] xl:text-[100px] xl:leading-[110px] 2xl:text-[140px] 2xl:leading-[160px]">
                       Never Stuck Always Reroute{" "}
                       <span className="font-normal">
                         브랜드와 비즈니스의 막힌 길에서 새로운 경로를 설계하는
                         전략 파트너
                       </span>
-                    </h2>
+                    </span>
                   </div>
                 </motion.div>
               </div>
