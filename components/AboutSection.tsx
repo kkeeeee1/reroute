@@ -35,23 +35,23 @@ export function AboutSection() {
   return (
     <section
       ref={sectionRef}
-      className="w-full bg-navy px-5 py-16 md:px-10 md:py-20 lg:px-20 lg:py-28"
+      className="w-full bg-navy px-5 py-16 md:px-10 md:py-24 lg:px-20 lg:py-32"
     >
-      <div className="mx-auto flex w-full max-w-screen-max flex-col gap-16 md:gap-28 lg:gap-40">
-        <div className="flex flex-col gap-6 md:gap-8 lg:gap-10">
+      <div className="mx-auto flex w-full max-w-screen-max flex-col gap-8 md:gap-16 lg:gap-40">
+        <div className="flex flex-col gap-4 md:gap-6 lg:gap-10">
           {/* WE and REROUTE with line */}
-          <div className="flex items-center gap-3 md:gap-4 lg:gap-6">
+          <div className="flex flex-col items-center gap-4 md:flex-row md:items-center md:gap-3 lg:gap-6">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-[40px] font-extrabold text-white md:text-[45px] lg:text-[56px]"
+              className="shrink-0 text-[32px] font-extrabold text-white sm:text-[36px] md:text-[40px] lg:text-[56px]"
             >
               WE
             </motion.h2>
 
             {/* Animated Line or Image */}
-            <div className="relative flex h-[80px] w-[80px] items-center justify-center md:h-[60px] md:w-[150px] lg:h-[140px] lg:w-[240px]">
+            <div className="relative flex shrink-0 items-center justify-center h-[60px] w-[60px] sm:h-[70px] sm:w-[70px] md:h-[60px] md:w-[150px] lg:h-[140px] lg:w-[240px]">
               {/* Line - animates with fade-in */}
               <motion.div
                 initial={{ opacity: 0 }}
@@ -92,7 +92,7 @@ export function AboutSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-[40px] font-extrabold text-white md:text-[45px] lg:text-[56px]"
+              className="shrink-0 text-[32px] font-extrabold text-white sm:text-[36px] md:text-[40px] lg:text-[56px]"
             >
               REROUTE
             </motion.h2>
@@ -103,14 +103,11 @@ export function AboutSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-[16px] font-normal leading-[24px] text-white md:text-[20px] md:leading-[30px] lg:text-[40px] lg:leading-[58px]"
+            className="text-[16px] font-normal leading-[24px] text-white whitespace-pre-wrap md:text-[20px] md:leading-[30px] md:whitespace-normal lg:text-[40px] lg:leading-[58px] lg:whitespace-pre-wrap"
           >
-            리루트는 기업의 복잡한 문제와 기존 방식에 갇힌 조직을 진단하고,
-            <br />
-            전략부터 실행까지 한 흐름으로 연결합니다. 통합 운영관리, 브랜딩 &
-            <br />
-            고객 경험 설계, 통합 마케팅, 맞춤형 플랫폼 개발까지 브랜드와
-            <br />
+            리루트는 기업의 복잡한 문제와 기존 방식에 갇힌 조직을 진단하고,{"\n"}
+            전략부터 실행까지 한 흐름으로 연결합니다. 통합 운영관리, 브랜딩 &{"\n"}
+            고객 경험 설계, 통합 마케팅, 맞춤형 플랫폼 개발까지 브랜드와{"\n"}
             비즈니스가 본질에 집중하며 나아갈 수 있는 구조를 완성합니다.
           </motion.p>
         </div>
