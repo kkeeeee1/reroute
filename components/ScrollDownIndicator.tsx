@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-export function ScrollDownIndicator() {
+export function ScrollDownIndicator({ hideOnOverlay = false }: { hideOnOverlay?: boolean }) {
   const [showIndicator, setShowIndicator] = useState(true);
 
   useEffect(() => {
@@ -22,13 +22,12 @@ export function ScrollDownIndicator() {
 
   return (
     <motion.div
-      initial={{ opacity: 1, flexDirection: "column" }}
+      initial={{ opacity: 1 }}
       animate={{
-        opacity: showIndicator ? 1 : 0,
-        flexDirection: showIndicator ? "column" : "row",
+        opacity: showIndicator && !hideOnOverlay ? 1 : 0,
       }}
       transition={{ duration: 0.3 }}
-      className="fixed bottom-12 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2.5 pointer-events-none"
+      className="pointer-events-none fixed bottom-12 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2.5"
     >
       <span className="text-base font-medium tracking-widest text-black">
         SCROLL DOWN

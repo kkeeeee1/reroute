@@ -77,6 +77,7 @@ export function HomePage() {
 
   return (
     <>
+      <ScrollDownIndicator hideOnOverlay={showOverlay} />
       <section
         className="flex w-full justify-center"
         style={{ minHeight: heroMinHeight }}
@@ -91,7 +92,7 @@ export function HomePage() {
             <div className="flex w-full flex-col items-center justify-between gap-6 py-7 md:flex-row md:gap-0">
               {/* 좌측 텍스트 */}
               <div className="w-full text-left md:w-1/3">
-                <h1 className="text-[60px] font-bold leading-[60px] sm:text-[65px] sm:leading-[65px] md:text-[70px] md:leading-[70px] lg:text-[90px] lg:leading-[90px] xl:text-[100px] xl:leading-[100px] 2xl:text-[120px] 2xl:leading-[120px]">
+                <h1 className="text-[60px] font-bold leading-[60px] sm:text-[65px] sm:leading-[65px] md:text-[70px] md:leading-[70px] lg:text-[90px] lg:leading-[90px] xl:text-[100px] xl:leading-[100px] 2xl:text-[130px] 2xl:leading-[130px]">
                   Never
                   <br />
                   Stuck
@@ -99,8 +100,8 @@ export function HomePage() {
                   Always
                   <br />
                   <span
-                    // 금빛 효과
-                    className="animate-shimmer-text-horizontal relative inline-block bg-gradient-to-r from-black via-yellow-200 to-black bg-clip-text"
+                    // 금빛 효과 - 3초에 한 번씩
+                    className="animate-shimmer-text-horizontal relative inline-block bg-gradient-to-r from-black via-yellow-200 to-black"
                     style={{
                       backgroundSize: "200% 100%",
                       backgroundPosition: "200% 0%",
@@ -118,7 +119,7 @@ export function HomePage() {
 
               {/* 우측 텍스트 */}
               <div className="w-full text-right md:w-1/3">
-                <p className="text-[32px] font-normal leading-[40px] sm:text-[40px] sm:leading-[50px] md:text-[40px] md:leading-[50px] lg:text-[55px] lg:leading-[65px] xl:text-[65px] xl:leading-[75px] 2xl:text-[80px] 2xl:leading-[90px]">
+                <p className="text-[32px] font-normal leading-[40px] sm:text-[40px] sm:leading-[50px] md:text-[40px] md:leading-[50px] lg:text-[55px] lg:leading-[65px] xl:text-[65px] xl:leading-[75px] 2xl:text-[85px] 2xl:leading-[95px]">
                   브랜드와
                   <br />
                   비즈니스의
@@ -133,54 +134,53 @@ export function HomePage() {
                 </p>
               </div>
             </div>
-
           </div>
 
           {/* 히어로 섹션 오버레이 텍스트 */}
           <AnimatePresence mode="wait">
-            {/* {showOverlay && ( */}
-            <div className="absolute inset-0 z-10 flex">
-              {/* Left half */}
-              <motion.div
-                initial={{ x: 0 }}
-                animate={{ x: startSplit ? "-100%" : 0 }}
-                transition={{
-                  duration: SPLIT_DURATION / 1000,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="absolute left-0 top-0 h-full w-1/2 bg-white"
-              />
+            {showOverlay && (
+              <div className="absolute inset-0 z-10 flex">
+                {/* Left half */}
+                <motion.div
+                  initial={{ x: 0 }}
+                  animate={{ x: startSplit ? "-100%" : 0 }}
+                  transition={{
+                    duration: SPLIT_DURATION / 1000,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className="absolute left-0 top-0 h-full w-1/2 bg-white"
+                />
 
-              {/* Right half */}
-              <motion.div
-                initial={{ x: 0 }}
-                animate={{ x: startSplit ? "100%" : 0 }}
-                transition={{
-                  duration: SPLIT_DURATION / 1000,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="absolute right-0 top-0 h-full w-1/2 bg-white"
-              />
+                {/* Right half */}
+                <motion.div
+                  initial={{ x: 0 }}
+                  animate={{ x: startSplit ? "100%" : 0 }}
+                  transition={{
+                    duration: SPLIT_DURATION / 1000,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className="absolute right-0 top-0 h-full w-1/2 bg-white"
+                />
 
-              {/* Tagline Text */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: startSplit ? 0 : 1 }}
-                transition={{ opacity: { duration: 0.3 } }}
-                className="absolute inset-0 z-10 flex items-center justify-center px-7 md:px-10 lg:px-20"
-              >
-                <div className="max-w-screen-max text-left">
-                  <h2 className="text-[24px] font-bold leading-[32px] text-black sm:text-[32px] sm:leading-[45px] md:text-[55px] md:leading-[70px] lg:text-[85px] lg:leading-[105px] xl:text-[100px] xl:leading-[110px] 2xl:text-[130px] 2xl:leading-[140px]">
-                    Never Stuck Always Reroute{" "}
-                    <span className="font-normal">
-                      브랜드와 비즈니스의 막힌 길에서 새로운 경로를 설계하는
-                      전략 파트너
-                    </span>
-                  </h2>
-                </div>
-              </motion.div>
-            </div>
-            {/* )} */}
+                {/* Tagline Text */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: startSplit ? 0 : 1 }}
+                  transition={{ opacity: { duration: 0.3 } }}
+                  className="absolute inset-0 z-10 flex items-center justify-center px-7 md:px-10 lg:px-20"
+                >
+                  <div className="max-w-screen-max text-left">
+                    <h2 className="text-[24px] font-bold leading-[32px] text-black sm:text-[32px] sm:leading-[45px] md:text-[55px] md:leading-[70px] lg:text-[85px] lg:leading-[105px] xl:text-[100px] xl:leading-[110px] 2xl:text-[140px] 2xl:leading-[170px]">
+                      Never Stuck Always Reroute{" "}
+                      <span className="font-normal">
+                        브랜드와 비즈니스의 막힌 길에서 새로운 경로를 설계하는
+                        전략 파트너
+                      </span>
+                    </h2>
+                  </div>
+                </motion.div>
+              </div>
+            )}
           </AnimatePresence>
         </div>
       </section>
