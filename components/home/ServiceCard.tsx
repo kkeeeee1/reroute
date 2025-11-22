@@ -76,23 +76,23 @@ export function ServiceCard({
         <Image src={imageSrc} alt={title} fill className="object-cover" />
         {id === "b2b" && <div className="absolute inset-0 bg-[#003BB1B2]" />}
         <div
-          className={`absolute inset-0 flex flex-col justify-between bg-gradient-to-b from-transparent via-transparent ${gradientColor} p-6 sm:p-6 md:p-12 lg:p-14 xl:p-16 2xl:p-20`}
+          className={`absolute inset-0 flex flex-col justify-between bg-gradient-to-b from-transparent via-transparent ${gradientColor} p-6 sm:p-6 md:p-12 lg:p-14 xl:p-15 2xl:p-16`}
         >
           <div>
-            <h3 className="mb-4 text-[32px] font-black leading-[40px] text-white sm:mb-6 sm:text-[40px] sm:leading-[48px] md:mb-10 md:text-[56px] md:leading-[70px] lg:text-[64px] lg:leading-[75px] xl:text-[72px] xl:leading-[80px] 2xl:text-[96px] 2xl:leading-[100px]">
+            <h3 className="mb-4 text-[32px] font-black leading-[40px] text-white sm:mb-6 sm:text-[40px] sm:leading-[48px] md:mb-10 md:text-[56px] md:leading-[70px] lg:text-[65px] lg:leading-[72px] xl:text-[72px] xl:leading-[78px] 2xl:text-[80px] 2xl:leading-[70px]">
               {title}
             </h3>
-            <p className="text-base font-medium leading-[18px] text-white sm:text-xl sm:leading-[22px] md:text-[28px] md:leading-[40px] lg:text-[32px] lg:leading-[50px] xl:text-[40px] xl:leading-[60px] 2xl:text-[48px] 2xl:leading-[70px]">
+            <p className="text-base font-medium leading-[18px] text-white sm:text-xl sm:leading-[22px] md:text-[24px] md:leading-[32px] lg:text-[28px] lg:leading-[40px] xl:text-[30px] xl:leading-[50px] 2xl:text-[32px] 2xl:leading-[70px]">
               {description}
             </p>
           </div>
           <div>
             <span
-              className={`inline-block rounded-full ${tagBgColor} mb-2 px-3 py-1 text-xs font-bold sm:mb-[20px] sm:px-4 sm:py-2 sm:text-sm md:mb-[30px] md:px-5 md:py-2 md:text-lg lg:mb-8 lg:px-6 lg:py-3 lg:text-xl xl:mb-10 xl:px-7 xl:py-3 xl:text-2xl 2xl:mb-12 2xl:px-8 2xl:py-4 2xl:text-[32px] 2xl:leading-[30px] ${tagTextColor}`}
+              className={`inline-block rounded-full ${tagBgColor} mb-2 px-3 py-1 text-xs font-bold sm:mb-[20px] sm:px-4 sm:py-2 sm:text-sm md:mb-[30px] md:px-5 md:py-2 md:text-base lg:mb-6 lg:px-5 lg:py-2 lg:text-lg xl:mb-8 xl:px-6 xl:py-3 xl:text-xl 2xl:mb-[30px] 2xl:px-5 2xl:py-2 2xl:text-[32px] 2xl:leading-[30px] ${tagTextColor}`}
             >
               {tagText}
             </span>
-            <p className="text-sm font-medium text-white sm:text-base md:text-[32px] md:leading-[40px] lg:text-[40px] lg:leading-[50px] xl:text-[48px] xl:leading-[60px] 2xl:text-[56px] 2xl:leading-[70px]">
+            <p className="text-sm font-medium text-white sm:text-base md:text-[24px] md:leading-[32px] lg:text-[32px] lg:leading-[40px] xl:text-[36px] xl:leading-[48px] 2xl:text-[40px] 2xl:leading-[40px]">
               {callToAction}
             </p>
           </div>

@@ -63,7 +63,7 @@ export function ServiceSection() {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.8, delay: 0.1 }}
         >
-          <h2 className="text-[32px] font-extrabold leading-[40px] text-black sm:text-[36px] sm:leading-[45px] md:text-[40px] md:leading-[50px] lg:text-[48px] lg:leading-[60px] xl:text-[56px] xl:leading-[70px] 2xl:text-[72px] 2xl:leading-[85px]">
+          <h2 className="text-[32px] font-extrabold leading-[40px] text-black sm:text-[36px] sm:leading-[45px] md:text-[40px] md:leading-[50px] lg:text-[48px] lg:leading-[60px] xl:text-[52px] xl:leading-[65px] 2xl:text-[56px] 2xl:leading-[70px]">
             OUR
             <br />
             SERVICE
