@@ -18,11 +18,13 @@ const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+  style: ["italic", "normal"],
 });
 const inriaSerif = Inria_Serif({
   variable: "--font-inria-serif",
   subsets: ["latin"],
   weight: ["400", "700"],
+  style: ["italic", "normal"],
 });
 
 export default async function RootLayout({
@@ -31,7 +33,10 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${mono.variable} ${serif.variable} ${inter.variable} ${inriaSerif.variable}`}>
+    <html
+      lang="en"
+      className={`${mono.variable} ${serif.variable} ${inter.variable} ${inriaSerif.variable}`}
+    >
       <body>
         <IntroAnimation />
         {children}

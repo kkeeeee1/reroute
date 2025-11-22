@@ -95,6 +95,14 @@ export function IntroAnimation() {
             // Step 3: Hide intro after background slides up
             setTimeout(() => {
               setIsVisible(false);
+              // 스크롤 다시 활성화
+              const html = document.documentElement;
+              const body = document.body;
+              html.style.overflow = "";
+              body.style.overflow = "";
+              body.style.position = "";
+              body.style.width = "";
+              body.style.top = "";
             }, BACKGROUND_SLIDE_DURATION + 100);
           }, LOGO_TRANSITION_DURATION);
         }, PAUSE_AFTER_TYPING);

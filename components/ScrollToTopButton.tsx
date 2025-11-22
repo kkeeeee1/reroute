@@ -5,9 +5,17 @@ import { useEffect, useState } from "react";
 
 export function ScrollToTopButton() {
   const [isVisible, setIsVisible] = useState(false);
+  const [showButton, setShowButton] = useState(true);
 
   useEffect(() => {
+    // IntroOverlay가 보이는지 확인
+    const checkIntroOverlay = () => {
+      const introOverlay = document.querySelector('[class*="fixed inset-0 z-50"]');
+      setShowButton(!introOverlay);
+    };
+
     const handleScroll = () => {
+      checkIntroOverlay();
       // Show button when user scrolls past hero section (more than 100vh or 1000px)
       if (window.scrollY > window.innerHeight) {
         setIsVisible(true);
@@ -17,7 +25,16 @@ export function ScrollToTopButton() {
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    // 초기 체크
+    checkIntroOverlay();
+    // IntroOverlay 변화 감지
+    const observer = new MutationObserver(checkIntroOverlay);
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      observer.disconnect();
+    };
   }, []);
 
   const scrollToTop = () => {
@@ -31,9 +48,9 @@ export function ScrollToTopButton() {
     <motion.button
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{
-        opacity: isVisible ? 1 : 0,
-        scale: isVisible ? 1 : 0.8,
-        pointerEvents: isVisible ? "auto" : "none",
+        opacity: isVisible && showButton ? 1 : 0,
+        scale: isVisible && showButton ? 1 : 0.8,
+        pointerEvents: isVisible && showButton ? "auto" : "none",
       }}
       transition={{ duration: 0.3 }}
       onClick={scrollToTop}
