@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { HeroSection } from "./home/HeroSection";
-import { IntroOverlay } from "./home/IntroOverlay";
-import { AboutSection } from "./home/AboutSection";
-import { ScrollDownIndicator } from "./home/ScrollDownIndicator";
-import { ServiceSection } from "./home/ServiceSection";
+import { HeroSection } from "./HeroSection";
+import { IntroOverlay } from "./IntroOverlay";
+import { AboutSection } from "./AboutSection";
+import { ScrollDownIndicator } from "./ScrollDownIndicator";
+import { ServiceSection } from "./ServiceSection";
 import { MarqueeText } from "./MarqueeText";
-import { ScrollToTopButton } from "./ScrollToTopButton";
+import { ScrollToTopButton } from "../ScrollToTopButton";
 
 export function HomePage() {
   const [introCompleted, setIntroCompleted] = useState(false);

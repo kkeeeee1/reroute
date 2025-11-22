@@ -31,7 +31,7 @@ export function HeroSection() {
       >
         {/* 메인 히어로 */}
         <div className="w-full">
-          <div className="flex w-full flex-col items-center justify-between gap-6 py-7 md:flex-row md:gap-0">
+          <div className="flex w-full flex-col items-center justify-between gap-6 py-10 md:flex-row md:gap-0">
             {/* 좌측 텍스트 */}
             <div className="w-full text-left md:w-1/3">
               <h1 className="text-[60px] font-bold leading-[60px] sm:text-[65px] sm:leading-[65px] md:text-[70px] md:leading-[70px] lg:text-[90px] lg:leading-[90px] xl:text-[100px] xl:leading-[100px] 2xl:text-[130px] 2xl:leading-[130px]">
@@ -54,9 +54,12 @@ export function HeroSection() {
             </div>
 
             {/* 우측 텍스트 */}
-            <div className="w-full text-right md:w-1/3">
-              <p className="text-[32px] font-normal leading-[40px] sm:text-[40px] sm:leading-[50px] md:text-[40px] md:leading-[50px] lg:text-[55px] lg:leading-[65px] xl:text-[65px] xl:leading-[75px] 2xl:text-[85px] 2xl:leading-[95px]">
-                <span className="md:hidden">브랜드와 비즈니스의 막힌 길에서 새로운 경로를 설계하는 전략 파트너</span>
+            <div className="w-full md:w-1/3 md:text-right">
+              <p className="text-[28px] font-normal leading-[32px] sm:text-[40px] sm:leading-[50px] md:text-[40px] md:leading-[50px] lg:text-[55px] lg:leading-[65px] xl:text-[65px] xl:leading-[75px] 2xl:text-[85px] 2xl:leading-[95px]">
+                <span className="md:hidden">
+                  브랜드와 비즈니스의 막힌 길에서 새로운 경로를 설계하는 전략
+                  파트너
+                </span>
                 <span className="hidden md:block">
                   브랜드와
                   <br />
