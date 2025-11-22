@@ -33,8 +33,8 @@ export function AboutSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="w-full bg-navy">
-      <div className="mx-auto flex w-full max-w-screen-max flex-col gap-12 px-7 py-16 md:gap-20 md:px-10 md:py-24 lg:gap-40 lg:px-20 lg:py-32">
+    <section ref={sectionRef} className="w-full bg-deepnavy">
+      <div className="mx-auto flex w-full max-w-screen-max flex-col gap-12 px-7 py-16 md:gap-20 md:px-10 md:py-24 lg:gap-40 lg:py-20 lg:px-28 xl:px-[100px] xl:py-24 2xl:px-[226px] 2xl:py-32">
         <div className="flex flex-col gap-7 md:gap-10 lg:gap-12">
           {/* WE and REROUTE with line */}
           <div className="flex flex-col items-center md:flex-row md:items-center md:gap-3 lg:gap-6">
@@ -104,14 +104,11 @@ export function AboutSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-[16px] font-normal leading-[24px] text-white md:text-[20px] md:leading-[30px] lg:text-[40px] lg:leading-[58px] xl:whitespace-pre-wrap"
+            className="text-[16px] font-normal leading-[24px] text-white md:text-[20px] md:leading-[30px] lg:text-[40px] lg:leading-[58px] 2xl:whitespace-pre-wrap 2xl:max-w-[70%]"
           >
-            리루트는 기업의 복잡한 문제와 기존 방식에 갇힌 조직을 진단하고,
+            리루트는 기업의 복잡한 문제와 기존 방식에 갇힌 조직을 진단하고, 전략부터 실행까지 한 흐름으로 연결합니다.
             {"\n"}
-            전략부터 실행까지 한 흐름으로 연결합니다. 통합 운영관리, 브랜딩 &
-            {"\n"}
-            고객 경험 설계, 통합 마케팅, 맞춤형 플랫폼 개발까지 브랜드와{"\n"}
-            비즈니스가 본질에 집중하며 나아갈 수 있는 구조를 완성합니다.
+            통합 운영관리, 브랜딩 & 고객 경험 설계, 통합 마케팅, 맞춤형 플랫폼 개발까지 브랜드와 비즈니스가 본질에 집중하며 나아갈 수 있는 구조를 완성합니다.
           </motion.p>
         </div>
 

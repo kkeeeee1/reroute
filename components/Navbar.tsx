@@ -22,7 +22,7 @@ export function Navbar() {
       const navbarCenter = navbarRect.top + navbarRect.height / 2;
 
       // Find all elements with navy/blue backgrounds
-      const blueElements = document.querySelectorAll('[class*="bg-navy"]');
+      const blueElements = document.querySelectorAll('[class*="bg-deepnavy"]');
 
       let isOverBlue = false;
       blueElements.forEach((element) => {

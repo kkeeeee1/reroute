@@ -16,6 +16,7 @@ module.exports = {
     extend: {
       colors: {
         navy: '#0E1C62',
+        deepnavy: '#0C1D77'
       },
       maxWidth: {
         'screen-max': '1920px',
