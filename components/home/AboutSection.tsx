@@ -75,7 +75,7 @@ export function AboutSection() {
                 }
                 transition={
                   showImage
-                    ? { duration: 0.4, delay: 0.5, ease: "easeInOut" }
+                    ? { duration: 0.4, delay: 0.3, ease: "easeInOut" }
                     : { duration: 0 }
                 }
                 className="relative z-10 h-full w-full origin-center"
