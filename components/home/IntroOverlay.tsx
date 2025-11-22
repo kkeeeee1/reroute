@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Menu } from "./Menu";
+import { Menu } from "../Menu";
 import { useState, useEffect } from "react";
 import { motion, useMotionValue } from "framer-motion";
 

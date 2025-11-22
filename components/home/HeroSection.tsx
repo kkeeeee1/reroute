@@ -35,13 +35,16 @@ export function HeroSection() {
             {/* 좌측 텍스트 */}
             <div className="w-full text-left md:w-1/3">
               <h1 className="text-[60px] font-bold leading-[60px] sm:text-[65px] sm:leading-[65px] md:text-[70px] md:leading-[70px] lg:text-[90px] lg:leading-[90px] xl:text-[100px] xl:leading-[100px] 2xl:text-[130px] 2xl:leading-[130px]">
-                Never
-                <br />
-                Stuck
-                <br />
-                Always
-                <br />
-                Reroute
+                <span className="md:hidden">Never Stuck Always Reroute</span>
+                <span className="hidden md:block">
+                  Never
+                  <br />
+                  Stuck
+                  <br />
+                  Always
+                  <br />
+                  Reroute
+                </span>
               </h1>
             </div>
 
@@ -53,17 +56,20 @@ export function HeroSection() {
             {/* 우측 텍스트 */}
             <div className="w-full text-right md:w-1/3">
               <p className="text-[32px] font-normal leading-[40px] sm:text-[40px] sm:leading-[50px] md:text-[40px] md:leading-[50px] lg:text-[55px] lg:leading-[65px] xl:text-[65px] xl:leading-[75px] 2xl:text-[85px] 2xl:leading-[95px]">
-                브랜드와
-                <br />
-                비즈니스의
-                <br />
-                막힌 길에서
-                <br />
-                새로운 경로를
-                <br />
-                설계하는
-                <br />
-                전략 파트너
+                <span className="md:hidden">브랜드와 비즈니스의 막힌 길에서 새로운 경로를 설계하는 전략 파트너</span>
+                <span className="hidden md:block">
+                  브랜드와
+                  <br />
+                  비즈니스의
+                  <br />
+                  막힌 길에서
+                  <br />
+                  새로운 경로를
+                  <br />
+                  설계하는
+                  <br />
+                  전략 파트너
+                </span>
               </p>
             </div>
           </div>
