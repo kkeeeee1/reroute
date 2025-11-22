@@ -1,158 +1,152 @@
-'use client'
+"use client";
 
-import {motion, AnimatePresence} from 'framer-motion'
-import Image from 'next/image'
-import {useEffect, useState, useRef} from 'react'
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import { useEffect, useState, useRef } from "react";
 
-const TEXT_LINES = [
-  "WE DON'T JUST",
-  "SOLVE PROBLEMS,",
-  "WE REROUTE THEM"
-]
-const TYPING_SPEED = 50 // ms per character
-const PAUSE_AFTER_TYPING = 800 // ms
-const LOGO_TRANSITION_DURATION = 1000 // ms
-const BACKGROUND_SLIDE_DURATION = 800 // ms
+const TEXT_LINES = ["WE DON'T JUST", "SOLVE PROBLEMS,", "WE REROUTE THEM"];
+const TYPING_SPEED = 50; // ms per character
+const PAUSE_AFTER_TYPING = 800; // ms
+const LOGO_TRANSITION_DURATION = 1000; // ms
+const BACKGROUND_SLIDE_DURATION = 800; // ms
 
 export function IntroAnimation() {
-  const [isVisible, setIsVisible] = useState(false)
-  const [displayedLines, setDisplayedLines] = useState<string[]>(['', '', ''])
-  const [currentLineIndex, setCurrentLineIndex] = useState(0)
-  const [isTypingComplete, setIsTypingComplete] = useState(false)
-  const [startLogoTransition, setStartLogoTransition] = useState(false)
-  const [startBackgroundSlide, setStartBackgroundSlide] = useState(false)
-  const [logoPosition, setLogoPosition] = useState({top: 0, left: 0, width: 0, height: 0})
-  const hasShownRef = useRef(false)
+  const [isVisible, setIsVisible] = useState(false);
+  const [displayedLines, setDisplayedLines] = useState<string[]>(["", "", ""]);
+  const [startLogoTransition, setStartLogoTransition] = useState(false);
+  const [startBackgroundSlide, setStartBackgroundSlide] = useState(false);
+  const [logoPosition, setLogoPosition] = useState({
+    top: 0,
+    left: 0,
+    width: 0,
+    height: 0,
+  });
+  const hasShownRef = useRef(false);
 
   useEffect(() => {
     // Only show on actual page load/refresh, not on client-side navigation
     if (hasShownRef.current) {
-      return
+      return;
     }
 
-    hasShownRef.current = true
-    setIsVisible(true)
+    hasShownRef.current = true;
+    setIsVisible(true);
 
     // Lock scroll completely during intro
-    const html = document.documentElement
-    const body = document.body
-    html.style.overflow = 'hidden'
-    body.style.overflow = 'hidden'
-    body.style.position = 'fixed'
-    body.style.width = '100%'
-    body.style.top = '0'
+    const html = document.documentElement;
+    const body = document.body;
+    html.style.overflow = "hidden";
+    body.style.overflow = "hidden";
+    body.style.position = "fixed";
+    body.style.width = "100%";
+    body.style.top = "0";
 
     // Get header logo position for transition target
     const updateLogoPosition = () => {
-      const headerLogo = document.getElementById('header-logo')
+      const headerLogo = document.getElementById("header-logo");
       if (headerLogo) {
-        const img = headerLogo.querySelector('img')
+        const img = headerLogo.querySelector("img");
         if (img) {
-          const rect = img.getBoundingClientRect()
+          const rect = img.getBoundingClientRect();
           setLogoPosition({
             top: rect.top,
             left: rect.left,
             width: rect.width,
             height: rect.height,
-          })
+          });
         }
       }
-    }
+    };
 
     // Update position initially and on resize
-    updateLogoPosition()
-    window.addEventListener('resize', updateLogoPosition)
+    updateLogoPosition();
+    window.addEventListener("resize", updateLogoPosition);
 
     // Typing animation for multiple lines
-    let lineIndex = 0
-    let charIndex = 0
-    
+    let lineIndex = 0;
+    let charIndex = 0;
+
     const typingInterval = setInterval(() => {
-      const currentLine = TEXT_LINES[lineIndex]
-      
+      const currentLine = TEXT_LINES[lineIndex];
+
       if (charIndex < currentLine.length) {
-        // Type next character
-        setDisplayedLines(prev => {
-          const newLines = [...prev]
-          newLines[lineIndex] = currentLine.slice(0, charIndex + 1)
-          return newLines
-        })
-        setCurrentLineIndex(lineIndex)
-        charIndex++
+        setDisplayedLines((prev) => {
+          const newLines = [...prev];
+          newLines[lineIndex] = currentLine.slice(0, charIndex + 1);
+          return newLines;
+        });
+        charIndex++;
       } else if (lineIndex < TEXT_LINES.length - 1) {
-        // Move to next line
-        lineIndex++
-        charIndex = 0
-        setCurrentLineIndex(lineIndex)
+        lineIndex++;
+        charIndex = 0;
       } else {
-        // All lines complete
-        clearInterval(typingInterval)
-        setIsTypingComplete(true)
-        
+        clearInterval(typingInterval);
+
         // Step 1: Typing complete, pause, then start logo transition
         setTimeout(() => {
           // Update logo position right before transition
-          updateLogoPosition()
-          setStartLogoTransition(true)
-          
+          updateLogoPosition();
+          setStartLogoTransition(true);
+
           // Step 2: After logo reaches position, start background slide
           setTimeout(() => {
-            setStartBackgroundSlide(true)
-            
+            setStartBackgroundSlide(true);
+
             // Step 3: Hide intro after background slides up
             setTimeout(() => {
-              setIsVisible(false)
-            }, BACKGROUND_SLIDE_DURATION + 100)
-          }, LOGO_TRANSITION_DURATION)
-        }, PAUSE_AFTER_TYPING)
+              setIsVisible(false);
+            }, BACKGROUND_SLIDE_DURATION + 100);
+          }, LOGO_TRANSITION_DURATION);
+        }, PAUSE_AFTER_TYPING);
       }
-    }, TYPING_SPEED)
+    }, TYPING_SPEED);
 
     return () => {
-      clearInterval(typingInterval)
-      window.removeEventListener('resize', updateLogoPosition)
-    }
-  }, [])
+      clearInterval(typingInterval);
+      window.removeEventListener("resize", updateLogoPosition);
+    };
+  }, []);
 
-  if (!isVisible) return null
+  if (!isVisible) return null;
 
   // Calculate transform for logo transition
   const getLogoTransform = () => {
-    if (!startLogoTransition) return {x: 0, y: 0, scale: 1}
-    
-    // Get the current position of the intro logo (after being pushed by text)
-    const introLogo = document.querySelector('[data-intro-logo="true"]') as HTMLElement
-    if (!introLogo) return {x: 0, y: 0, scale: 1}
-    
-    const introRect = introLogo.getBoundingClientRect()
-    const introCenterX = introRect.left + introRect.width / 2
-    const introCenterY = introRect.top + introRect.height / 2
-    
-    // Target: center of header logo
-    const targetCenterX = logoPosition.left + logoPosition.width / 2
-    const targetCenterY = logoPosition.top + logoPosition.height / 2
-    
-    // Calculate translation from intro logo's CURRENT position to header logo position
-    const deltaX = targetCenterX - introCenterX
-    const deltaY = targetCenterY - introCenterY
-    
-    // Calculate scale
-    const scale = logoPosition.width / introRect.width
-    
-    return {x: deltaX, y: deltaY, scale}
-  }
+    if (!startLogoTransition) return { x: 0, y: 0, scale: 1 };
 
-  const transform = getLogoTransform()
+    // Get the current position of the intro logo (after being pushed by text)
+    const introLogo = document.querySelector(
+      '[data-intro-logo="true"]',
+    ) as HTMLElement;
+    if (!introLogo) return { x: 0, y: 0, scale: 1 };
+
+    const introRect = introLogo.getBoundingClientRect();
+    const introCenterX = introRect.left + introRect.width / 2;
+    const introCenterY = introRect.top + introRect.height / 2;
+
+    // Target: center of header logo
+    const targetCenterX = logoPosition.left + logoPosition.width / 2;
+    const targetCenterY = logoPosition.top + logoPosition.height / 2;
+
+    // Calculate translation from intro logo's CURRENT position to header logo position
+    const deltaX = targetCenterX - introCenterX;
+    const deltaY = targetCenterY - introCenterY;
+
+    // Calculate scale
+    const scale = logoPosition.width / introRect.width;
+
+    return { x: deltaX, y: deltaY, scale };
+  };
+
+  const transform = getLogoTransform();
 
   return (
     <AnimatePresence mode="wait">
       {isVisible && (
         <>
-          {/* Background that fades out - only after logo reaches position */}
           <motion.div
-            initial={{opacity: 1}}
-            animate={{opacity: startBackgroundSlide ? 0 : 1}}
-            exit={{opacity: 0}}
+            initial={{ opacity: 1 }}
+            animate={{ opacity: startBackgroundSlide ? 0 : 1 }}
+            exit={{ opacity: 0 }}
             transition={{
               opacity: {
                 duration: BACKGROUND_SLIDE_DURATION / 1000,
@@ -162,24 +156,21 @@ export function IntroAnimation() {
             className="fixed inset-0 z-[100] bg-navy"
           />
 
-          {/* Content container - above background */}
           <motion.div
-            initial={{opacity: 1}}
-            exit={{opacity: 0}}
-            transition={{duration: 0.3}}
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
             className="fixed inset-0 z-[110] flex items-center justify-center"
           >
-            <div className="relative flex flex-col items-center justify-center gap-8 px-5 md:gap-12 lg:gap-16">
-              {/* 인트로 로고 - starts small, grows to header size while moving to position */}
+            <div className="relative flex flex-col items-center justify-center gap-7 px-5 md:gap-12 lg:gap-16">
               <motion.div
                 data-intro-logo="true"
-                initial={{opacity: 0, scale: 0.8}}
+                initial={{ opacity: 0, scale: 0.8 }}
                 animate={
                   startBackgroundSlide
                     ? {
-                        // When background fades, use absolute positioning to keep logo fixed
                         opacity: 0,
-                        position: 'fixed',
+                        position: "fixed",
                         top: logoPosition.top,
                         left: logoPosition.left,
                         width: logoPosition.width,
@@ -196,7 +187,7 @@ export function IntroAnimation() {
                       }
                 }
                 transition={{
-                  opacity: {duration: 0.3, delay: 0},
+                  opacity: { duration: 0.3, delay: 0 },
                   scale: {
                     duration: LOGO_TRANSITION_DURATION / 1000,
                     ease: [0.22, 1, 0.36, 1],
@@ -209,10 +200,10 @@ export function IntroAnimation() {
                     duration: LOGO_TRANSITION_DURATION / 1000,
                     ease: [0.22, 1, 0.36, 1],
                   },
-                  top: {duration: 0},
-                  left: {duration: 0},
-                  width: {duration: 0},
-                  height: {duration: 0},
+                  top: { duration: 0 },
+                  left: { duration: 0 },
+                  width: { duration: 0 },
+                  height: { duration: 0 },
                 }}
               >
                 <Image
@@ -220,22 +211,21 @@ export function IntroAnimation() {
                   alt="Reroute"
                   width={214}
                   height={59}
-                  className="h-auto w-[80px] md:w-[120px] lg:w-[160px]"
+                  className="h-auto w-[70px] sm:w-[80px] md:w-[110px] lg:w-[140px] xl:w-[170px] 2xl:w-[200px]"
                   priority
                 />
               </motion.div>
 
-              {/* 인트로 텍스트 - 3 lines, fades when logo starts moving */}
               <motion.div
-                initial={{opacity: 0}}
-                animate={{opacity: startLogoTransition ? 0 : 1}}
-                transition={{duration: 0.3}}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: startLogoTransition ? 0 : 1 }}
+                transition={{ duration: 0.3 }}
                 className="text-center"
               >
                 {TEXT_LINES.map((line, index) => (
                   <p
                     key={index}
-                    className="text-[30px] font-bold leading-[40px] text-white md:text-[60px] md:leading-[80px] lg:text-[90px] lg:leading-[120px]"
+                    className="text-[20px] font-bold leading-[22px] text-white sm:text-[28px] sm:leading-[30px] md:text-[40px] md:leading-[50px] lg:text-[56px] lg:leading-[71px] xl:text-[67px] xl:leading-[84px] 2xl:text-[90px] 2xl:leading-[120px]"
                   >
                     {displayedLines[index]}
                   </p>
@@ -246,5 +236,5 @@ export function IntroAnimation() {
         </>
       )}
     </AnimatePresence>
-  )
+  );
 }

@@ -12,6 +12,8 @@ module.exports = {
       sans: "'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
       serif: 'var(--font-serif)',
       mono: 'var(--font-mono)',
+      inter: 'var(--font-inter)',
+      'inria-serif': 'var(--font-inria-serif)',
     },
     extend: {
       colors: {

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 export function ScrollDownIndicator({ hideOnOverlay = false }: { hideOnOverlay?: boolean }) {
   const [showIndicator, setShowIndicator] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,15 +17,37 @@ export function ScrollDownIndicator({ hideOnOverlay = false }: { hideOnOverlay?:
       }
     };
 
+    // Observer to detect if menu is open by checking for the menu ID
+    const checkMenuVisibility = () => {
+      const menuElement = document.getElementById('menu');
+      setIsMenuOpen(!!menuElement);
+    };
+
+    // Initial check
+    checkMenuVisibility();
+
+    // Set up MutationObserver to watch for menu changes
+    const observer = new MutationObserver(checkMenuVisibility);
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      observer.disconnect();
+    };
   }, []);
 
   return (
     <motion.div
       initial={{ opacity: 1 }}
       animate={{
-        opacity: showIndicator && !hideOnOverlay ? 1 : 0,
+        opacity: showIndicator && !hideOnOverlay && !isMenuOpen ? 1 : 0,
       }}
       transition={{ duration: 0.3 }}
       className="pointer-events-none fixed bottom-12 left-1/2 z-40 hidden -translate-x-1/2 items-center gap-2.5 md:flex"

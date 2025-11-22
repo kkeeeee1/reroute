@@ -28,18 +28,20 @@ export function Footer() {
           {/* 클릭 시 메일 보내기 */}
           <a
             href="mailto:contact@reroute.com"
-            className="text-sm font-black leading-[20px] text-black transition-opacity duration-300 hover:opacity-70 md:text-base md:leading-[24px] lg:text-lg"
+            className="group relative text-sm font-black leading-[20px] text-black md:text-base md:leading-[24px] lg:text-lg"
           >
-            MAIL
+            <span className="relative z-10">MAIL</span>
+            <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-black transition-all duration-300 ease-out group-hover:w-full" />
           </a>
           {/* 클릭시 카카오 채팅방 이동 */}
           <a
             href="http://pf.kakao.com/_TLlpn/chat"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm font-black leading-[20px] text-black transition-opacity duration-300 hover:opacity-70 md:text-base md:leading-[24px] lg:text-lg"
+            className="group relative text-sm font-black leading-[20px] text-black md:text-base md:leading-[24px] lg:text-lg"
           >
-            KAKAOTALK
+            <span className="relative z-10">KAKAOTALK</span>
+            <span className="absolute bottom-0 left-0 h-[2px] w-0 bg-black transition-all duration-300 ease-out group-hover:w-full" />
           </a>
         </div>
       </div>
