@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Menu } from "./Menu";
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue } from "framer-motion";
 
 const MAIN_TEXT = "Never Stuck Always Reroute";
 const SUB_TEXT =
@@ -34,8 +34,12 @@ export function IntroOverlay({ onDismiss }: IntroOverlayProps) {
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
 
+  const leftX = useMotionValue(0);
+  const rightX = useMotionValue(0);
+
+  const lerp = (a: number, b: number, n: number) => (1 - n) * a + n * b;
+
   useEffect(() => {
-    // IntroOverlay 표시 중 스크롤 비활성화
     document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
 
@@ -44,55 +48,77 @@ export function IntroOverlay({ onDismiss }: IntroOverlayProps) {
 
     const handleWheel = (e: WheelEvent) => {
       if (isHandlingDismiss) return;
-
-      // 아래로 스크롤할 때만 처리 (deltaY > 0)
       if (e.deltaY <= 0) return;
 
       e.preventDefault();
       accumulatedScroll += e.deltaY;
+
       const windowWidth = window.innerWidth;
       const progress = accumulatedScroll / windowWidth;
       setScrollProgress(progress);
 
-      // progress가 1.5 이상이면 overlay 완전히 숨김
       if (progress >= 1.5) {
         isHandlingDismiss = true;
         setIsVisible(false);
 
-        // 스크롤 이벤트 리스너 즉시 제거
-        window.removeEventListener("wheel", handleWheel, {
-          passive: false,
-        } as any);
+        window.removeEventListener(
+          "wheel",
+          handleWheel as any,
+          {
+            passive: false,
+          } as any,
+        );
 
-        // 스크롤 다시 활성화
         document.documentElement.style.overflow = "";
         document.body.style.overflow = "";
 
-        // 스크롤 위치를 맨 위로 리셋
         setTimeout(() => {
           window.scrollTo(0, 0);
-          // onDismiss 콜백 실행
-          if (onDismiss) {
-            onDismiss(() => {});
-          }
+          if (onDismiss) onDismiss(() => {});
         }, 0);
       }
     };
 
-    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("wheel", handleWheel as any, { passive: false });
+
     return () => {
-      window.removeEventListener("wheel", handleWheel);
-      // cleanup 시에도 스크롤 활성화
+      window.removeEventListener("wheel", handleWheel as any);
       document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
     };
   }, [onDismiss]);
 
+  // overshoot 없이 부드럽게 따라가도록 lerp 적용
+  useEffect(() => {
+    let frame: number;
+
+    const update = () => {
+      const weight = 0.5;
+      const targetLeft = -scrollProgress * window.innerWidth * weight;
+      const targetRight = scrollProgress * window.innerWidth * weight;
+
+      const currentLeft = leftX.get();
+      const currentRight = rightX.get();
+
+      // 부드럽게 보간 (0.12~0.2 사이 추천)
+      const smoothLeft = lerp(currentLeft, targetLeft, 0.08);
+      const smoothRight = lerp(currentRight, targetRight, 0.08);
+
+      leftX.set(smoothLeft);
+      rightX.set(smoothRight);
+
+      frame = requestAnimationFrame(update);
+    };
+
+    update();
+    return () => cancelAnimationFrame(frame);
+  }, [scrollProgress, leftX, rightX]);
+
   if (!isVisible) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex flex-col overflow-hidden bg-white">
-      {/* 헤더 */}
+      {/* 헤더 - NavBar에 있는 로직들은 필요없고 UI만 필요해서 아래처럼 작업 / 추후 NavBar 스타일 달라지면 여기도 적용 필요*/}
       <header className="flex justify-center bg-transparent">
         <div className="flex w-full max-w-screen-max items-center justify-between px-7 py-8 md:px-10 md:py-8 lg:px-20 lg:py-12">
           <Link
@@ -148,28 +174,26 @@ export function IntroOverlay({ onDismiss }: IntroOverlayProps) {
         </div>
       </header>
 
-      {/* 컨텐츠 */}
+      {/* 메인 컨텐츠 */}
       <div className="flex flex-1 items-center justify-center">
-        {/* 밑에 있는 레이어 - "Never Stuck Always Reroute"만 보임, 좌측으로 이동 */}
+        {/* 아래 레이어: 좌측으로 이동 */}
         <motion.div
           className="absolute px-7 md:px-10 lg:px-20"
-          animate={{ x: -scrollProgress * window.innerWidth }}
-          transition={{
-            type: "tween",
-            duration: 0,
+          style={{
+            x: leftX,
+            willChange: "transform",
           }}
         >
           <TextSpan text={MAIN_TEXT} className="font-bold" />
           <TextSpan text={SUB_TEXT} className="ml-4 font-normal opacity-0" />
         </motion.div>
 
-        {/* 위에 있는 레이어 - "브랜드와 비즈니스의 막힌 길에서 새로운 경로를 설계하는 전략 파트너"만 보임, 우측으로 이동 */}
+        {/* 위 레이어: 우측으로 이동 */}
         <motion.div
           className="absolute px-7 md:px-10 lg:px-20"
-          animate={{ x: scrollProgress * window.innerWidth }}
-          transition={{
-            type: "tween",
-            duration: 0,
+          style={{
+            x: rightX,
+            willChange: "transform",
           }}
         >
           <TextSpan text={MAIN_TEXT} className="font-bold opacity-0" />
