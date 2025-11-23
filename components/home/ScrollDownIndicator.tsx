@@ -3,7 +3,11 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-export function ScrollDownIndicator({ hideOnOverlay = false }: { hideOnOverlay?: boolean }) {
+export function ScrollDownIndicator({
+  hideOnOverlay = false,
+}: {
+  hideOnOverlay?: boolean;
+}) {
   const [showIndicator, setShowIndicator] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -19,7 +23,7 @@ export function ScrollDownIndicator({ hideOnOverlay = false }: { hideOnOverlay?:
 
     // Observer to detect if menu is open by checking for the menu ID
     const checkMenuVisibility = () => {
-      const menuElement = document.getElementById('menu');
+      const menuElement = document.getElementById("menu");
       setIsMenuOpen(!!menuElement);
     };
 
@@ -32,11 +36,11 @@ export function ScrollDownIndicator({ hideOnOverlay = false }: { hideOnOverlay?:
       childList: true,
       subtree: true,
       attributes: true,
-      attributeFilter: ['class'],
+      attributeFilter: ["class"],
     });
 
     window.addEventListener("scroll", handleScroll);
-    
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
       observer.disconnect();
@@ -50,14 +54,13 @@ export function ScrollDownIndicator({ hideOnOverlay = false }: { hideOnOverlay?:
         opacity: showIndicator && !hideOnOverlay && !isMenuOpen ? 1 : 0,
       }}
       transition={{ duration: 0.3 }}
-      className="pointer-events-none fixed bottom-12 left-1/2 z-40 hidden -translate-x-1/2 items-center gap-2.5 md:flex"
+      className="pointer-events-none fixed bottom-12 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2.5"
     >
-      <span className="text-base font-medium tracking-widest text-black">
+      <span className="text-xs font-medium tracking-widest text-black md:text-base">
         SCROLL DOWN
       </span>
       <svg
-        width="22"
-        height="10"
+        className="h-2 w-4 md:h-[10px] md:w-[22px]"
         viewBox="0 0 22 10"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
