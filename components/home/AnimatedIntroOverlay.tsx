@@ -56,7 +56,10 @@ export function AnimatedIntroOverlay({
   const [wordPositions, setWordPositions] = useState<
     Record<string, WordPosition>
   >({});
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.innerWidth < 768;
+  });
   const wordRefs = useRef<Record<string, HTMLSpanElement | null>>({});
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -73,19 +76,21 @@ export function AnimatedIntroOverlay({
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
-  // 스크롤 잠금 - 애니메이션 완료 후 1초 후에 해제
+  // 스크롤 잠금 - 데스크톱에서만 애니메이션 중 스크롤 차단
   useEffect(() => {
+    // 모바일에서는 스크롤 잠금 하지 않음
+    if (isMobile) {
+      return;
+    }
+
+    // 데스크톱에서만 스크롤 잠금
     document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
-
-    // 모바일: 즉시 스크롤 활성화 (오버레이가 표시되지 않음)
-    // 데스크톱: 애니메이션 완료 후 스크롤 활성화
-    const delay = isMobile ? 0 : 6000;
 
     const unlockTimer = setTimeout(() => {
       document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
-    }, delay);
+    }, 6000); // 애니메이션 완료 후 해제
 
     return () => {
       clearTimeout(unlockTimer);

@@ -120,19 +120,18 @@ export function CustomCursor() {
           duration: 0.2,
         }}
       >
-        <div className="relative flex h-[142px] w-[142px] items-center justify-center rounded-full bg-black">
+        <div className="relative flex h-[100px] w-[100px] items-center justify-center rounded-full bg-black">
           <svg
-            width="61"
-            height="28"
-            viewBox="0 0 61 28"
+            width="45"
+            height="20"
+            viewBox="0 0 45 20"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="h-7 w-auto"
           >
             <path
-              d="M0 24.0317H54L33.75 2.03174"
+              d="M0 17.3679H40L25 1.36792"
               stroke="white"
-              strokeWidth="6"
+              strokeWidth="4"
               strokeMiterlimit="10"
             />
           </svg>

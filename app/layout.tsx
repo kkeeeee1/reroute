@@ -1,7 +1,7 @@
 import "./globals.css";
 import { IBM_Plex_Mono, PT_Serif, Inter, Inria_Serif } from "next/font/google";
 import { IntroAnimation } from "@/components/IntroAnimation";
-import { LenisScroll } from "@/components/LenisScroll";
+import { GSAPScroll } from "@/components/GSAPScroll";
 import { CustomCursor } from "@/components/CustomCursor";
 
 const serif = PT_Serif({
@@ -40,10 +40,10 @@ export default async function RootLayout({
     >
       <body>
         <CustomCursor />
-        <LenisScroll>
+        <GSAPScroll>
           <IntroAnimation />
           {children}
-        </LenisScroll>
+        </GSAPScroll>
       </body>
     </html>
   );
