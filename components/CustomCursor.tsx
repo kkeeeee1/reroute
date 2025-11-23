@@ -8,8 +8,23 @@ export function CustomCursor() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // 모바일 감지
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768 || "ontouchstart" in window);
+    };
+
+    checkIsMobile();
+    window.addEventListener("resize", checkIsMobile);
+
+    return () => window.removeEventListener("resize", checkIsMobile);
+  }, []);
+
+  useEffect(() => {
+    // 모바일에서는 커스텀 커서 실행 안 함
+    if (isMobile) return;
     const handleMouseMove = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY });
       setIsVisible(true);
@@ -60,7 +75,10 @@ export function CustomCursor() {
       document.documentElement.style.cursor = "auto";
       document.body.style.cursor = "auto";
     };
-  }, []);
+  }, [isMobile]);
+
+  // 모바일에서는 렌더링하지 않음
+  if (isMobile) return null;
 
   return (
     <>
