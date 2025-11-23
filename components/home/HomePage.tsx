@@ -38,7 +38,7 @@ export function HomePage() {
 
   return (
     <>
-      {/* 인트로 오버레이 - 데스크톱만 */}
+      {/* 오버레이 텍스트 애니메이션 - 데스크톱만 */}
       {!introCompleted && !isMobile && (
         <AnimatedIntroOverlay onDismiss={handleIntroDismiss} />
       )}
