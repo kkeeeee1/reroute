@@ -90,7 +90,7 @@ export function CustomCursor() {
         animate={{
           x: position.x - 12,
           y: position.y - 12,
-          opacity: isVisible ? 1 : 0,
+          opacity: isVisible && !isHovering ? 1 : 0,
         }}
         transition={{
           type: "tween",
