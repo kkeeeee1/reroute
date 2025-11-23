@@ -10,7 +10,7 @@ const IMAGES = [
   "main_hero_3.png",
   "main_hero_4.png",
 ];
-const IMAGE_CHANGE_INTERVAL = 3000; // ms
+const IMAGE_CHANGE_INTERVAL = 1000; // ms
 
 export function HeroImageCarousel() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
