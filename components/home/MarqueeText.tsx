@@ -50,7 +50,7 @@ export function MarqueeText() {
   }, []);
 
   return (
-    <section className="w-full py-8 sm:py-12 md:py-20 lg:py-24 xl:py-28 2xl:py-32">
+    <section className="w-full overflow-hidden py-8 sm:py-12 md:py-20 lg:py-24 xl:py-28 2xl:py-32">
       <div
         ref={containerRef}
         className="flex items-center gap-4 whitespace-nowrap sm:gap-6 md:gap-8 lg:gap-10"
@@ -86,7 +86,7 @@ export function MarqueeText() {
               alt="Reroute Logo"
               width={153}
               height={50}
-              className="w-[80px] shrink-0 object-contain sm:w-[100px] md:w-[140px] lg:w-[210px] xl:w-[300px] 2xl:w-[451px]"
+              className="w-[120px] shrink-0 object-contain md:w-[140px] lg:w-[210px] xl:w-[300px] 2xl:w-[451px]"
             />
           </Fragment>
         ))}
