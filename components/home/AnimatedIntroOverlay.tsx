@@ -61,12 +61,19 @@ export function AnimatedIntroOverlay({
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
 
-  // 스크롤 잠금
+  // 스크롤 잠금 - 애니메이션 완료 후 1초 후에 해제
   useEffect(() => {
     document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
 
+    // 모든 애니메이션이 완료된 후 (약 5초 후) 1초 더 기다렸다가 스크롤 활성화
+    const unlockTimer = setTimeout(() => {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    }, 6000); // STATIC_DURATION(5000) + 1000ms
+
     return () => {
+      clearTimeout(unlockTimer);
       document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
     };

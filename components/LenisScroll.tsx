@@ -2,12 +2,20 @@
 
 import { ReactLenis } from "@studio-freight/react-lenis";
 import { ReactNode } from "react";
+import { usePathname } from "next/navigation";
 
 interface LenisScrollProps {
   children: ReactNode;
 }
 
 export function LenisScroll({ children }: LenisScrollProps) {
+  const pathname = usePathname();
+
+  // /studio 경로에서는 Lenis 비활성화
+  if (pathname.startsWith("/studio")) {
+    return <>{children}</>;
+  }
+
   return (
     <ReactLenis
       root

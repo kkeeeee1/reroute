@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
+import { usePathname } from "next/navigation";
 
 const TEXT_LINES = ["WE DON'T JUST", "SOLVE PROBLEMS,", "WE REROUTE THEM"];
 const TYPING_SPEED = 50; // ms per character
@@ -11,6 +12,7 @@ const LOGO_TRANSITION_DURATION = 1000; // ms
 const BACKGROUND_SLIDE_DURATION = 800; // ms
 
 export function IntroAnimation() {
+  const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(false);
   const [displayedLines, setDisplayedLines] = useState<string[]>(["", "", ""]);
   const [startLogoTransition, setStartLogoTransition] = useState(false);
@@ -22,6 +24,11 @@ export function IntroAnimation() {
     height: 0,
   });
   const hasShownRef = useRef(false);
+
+  // /studio 경로에서는 인트로 표시 안 함
+  if (pathname.startsWith("/studio")) {
+    return null;
+  }
 
   useEffect(() => {
     // Only show on actual page load/refresh, not on client-side navigation
@@ -40,6 +47,9 @@ export function IntroAnimation() {
     body.style.position = "fixed";
     body.style.width = "100%";
     body.style.top = "0";
+
+    // 스크롤 잠금 해제할 타이머 변수
+    let scrollUnlockTimer: NodeJS.Timeout;
 
     // Get header logo position for transition target
     const updateLogoPosition = () => {
@@ -95,14 +105,16 @@ export function IntroAnimation() {
             // Step 3: Hide intro after background slides up
             setTimeout(() => {
               setIsVisible(false);
-              // 스크롤 다시 활성화
-              const html = document.documentElement;
-              const body = document.body;
-              html.style.overflow = "";
-              body.style.overflow = "";
-              body.style.position = "";
-              body.style.width = "";
-              body.style.top = "";
+              // 히어로 섹션이 보인 후 1초 후에 스크롤 활성화
+              scrollUnlockTimer = setTimeout(() => {
+                const html = document.documentElement;
+                const body = document.body;
+                html.style.overflow = "";
+                body.style.overflow = "";
+                body.style.position = "";
+                body.style.width = "";
+                body.style.top = "";
+              }, 1000);
             }, BACKGROUND_SLIDE_DURATION + 100);
           }, LOGO_TRANSITION_DURATION);
         }, PAUSE_AFTER_TYPING);
@@ -112,6 +124,9 @@ export function IntroAnimation() {
     return () => {
       clearInterval(typingInterval);
       window.removeEventListener("resize", updateLogoPosition);
+      if (scrollUnlockTimer) {
+        clearTimeout(scrollUnlockTimer);
+      }
     };
   }, []);
 
