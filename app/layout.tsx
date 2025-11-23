@@ -1,8 +1,8 @@
 import "./globals.css";
 import { IBM_Plex_Mono, PT_Serif, Inter, Inria_Serif } from "next/font/google";
 import { IntroAnimation } from "@/components/IntroAnimation";
-import { Footer } from "@/components/Footer";
 import { LenisScroll } from "@/components/LenisScroll";
+import { CustomCursor } from "@/components/CustomCursor";
 
 const serif = PT_Serif({
   variable: "--font-serif",
@@ -39,6 +39,7 @@ export default async function RootLayout({
       className={`${mono.variable} ${serif.variable} ${inter.variable} ${inriaSerif.variable}`}
     >
       <body>
+        <CustomCursor />
         <LenisScroll>
           <IntroAnimation />
           {children}
