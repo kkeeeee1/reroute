@@ -8,7 +8,7 @@ export function CustomCursor() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState<boolean | undefined>(undefined);
 
   useEffect(() => {
     // 모바일 감지
@@ -77,8 +77,9 @@ export function CustomCursor() {
     };
   }, [isMobile]);
 
+  // hydration 이전에는 렌더링 안 함 (undefined)
   // 모바일에서는 렌더링하지 않음
-  if (isMobile) return null;
+  if (isMobile !== false) return null;
 
   return (
     <>
