@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { HeroSection } from "./HeroSection";
-import { IntroOverlay } from "./IntroOverlay";
+import { AnimatedIntroOverlay } from "./AnimatedIntroOverlay";
 import { AboutSection } from "./AboutSection";
 import { ScrollDownIndicator } from "./ScrollDownIndicator";
 import { ServiceSection } from "./ServiceSection";
@@ -12,39 +12,51 @@ import { ScrollToTopButton } from "../ScrollToTopButton";
 
 export function HomePage() {
   const [introCompleted, setIntroCompleted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // 반응형 체크 (md 브레이크포인트 = 768px)
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const handleIntroDismiss = () => {
     setIntroCompleted(true);
-
-    // 메인페이지 렌더링 후 0.8초 동안 스크롤 방지
-    document.documentElement.style.overflow = "hidden";
-    document.body.style.overflow = "hidden";
-
-    const timer = setTimeout(() => {
-      document.documentElement.style.overflow = "";
-      document.body.style.overflow = "";
-    }, 800);
-
-    return () => clearTimeout(timer);
   };
+
+  // 모바일에서는 인트로 없이 바로 시작
+  useEffect(() => {
+    if (isMobile) {
+      setIntroCompleted(true);
+    }
+  }, [isMobile]);
 
   return (
     <>
-      <IntroOverlay onDismiss={handleIntroDismiss} />
-      {introCompleted && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-        >
-          <ScrollDownIndicator hideOnOverlay={false} />
-          <HeroSection />
-          <AboutSection />
-          <ServiceSection />
-          <MarqueeText />
-          <ScrollToTopButton />
-        </motion.div>
+      {/* 인트로 오버레이 - 데스크톱만 */}
+      {!introCompleted && !isMobile && (
+        <AnimatedIntroOverlay onDismiss={handleIntroDismiss} />
       )}
+
+      {/* 메인 컨텐츠 - 항상 렌더링하되 opacity로 제어 */}
+      <div
+        className="relative"
+        style={{ zIndex: 30 }}
+      >
+        <ScrollDownIndicator hideOnOverlay={false} />
+        <HeroSection />
+        <AboutSection />
+        <ServiceSection />
+        <MarqueeText />
+        <ScrollToTopButton />
+      </div>
     </>
   );
 }
+
+
