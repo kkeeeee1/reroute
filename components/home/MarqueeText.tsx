@@ -22,7 +22,7 @@ export function MarqueeText() {
 
   useEffect(() => {
     let frame = 0;
-    const speed = 1.6;
+    const speed = 1.2;
 
     const step = () => {
       setOffset((prev) => {
