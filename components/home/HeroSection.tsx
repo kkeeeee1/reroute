@@ -45,7 +45,7 @@ export function HeroSection() {
 
     // 초기 값 설정
     scrollY.set(window.scrollY);
-    
+
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isMobile, scrollY]);
@@ -62,7 +62,8 @@ export function HeroSection() {
       style={{ minHeight: heroHeight }}
     >
       <div className="flex w-full flex-col items-start justify-center gap-4 md:max-w-screen-max md:flex-row md:items-center md:justify-between md:gap-6">
-        <div className="flex w-full flex-col gap-6 md:hidden">
+        {/* 모바일 UI */}
+        <div className="flex w-full flex-col gap-3 md:hidden">
           {/* 모바일: 영문 텍스트 */}
           <div className="w-full text-left">
             <h1 className="text-[60px] font-bold leading-[60px] sm:text-[65px] sm:leading-[65px]">
@@ -84,12 +85,12 @@ export function HeroSection() {
           {/* 모바일: 한글 텍스트 */}
           <div className="w-full">
             <p className="text-[28px] font-normal leading-[32px] sm:text-[40px] sm:leading-[50px]">
-              브랜드와 비즈니스의 막힌 길에서 새로운 경로를 설계하는 전략
-              파트너
+              브랜드와 비즈니스의 막힌 길에서 새로운 경로를 설계하는 전략 파트너
             </p>
           </div>
         </div>
 
+        {/* 데스크탑 UI */}
         <div className="hidden w-full md:flex md:items-center md:justify-between md:gap-6">
           {/* 데스크톱: 좌측 텍스트 */}
           <div className="w-full text-left md:w-1/3">
@@ -131,7 +132,7 @@ export function HeroSection() {
                 <span data-word="business" className="w-fit">
                   비즈니스의
                 </span>
-                <span data-word="blocked" className="w-fit" >
+                <span data-word="blocked" className="w-fit">
                   막힌 길에서
                 </span>
                 <span data-word="new" className="w-fit">
