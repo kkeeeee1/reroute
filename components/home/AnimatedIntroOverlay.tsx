@@ -56,28 +56,43 @@ export function AnimatedIntroOverlay({
   const [wordPositions, setWordPositions] = useState<
     Record<string, WordPosition>
   >({});
+  const [isMobile, setIsMobile] = useState(false);
   const wordRefs = useRef<Record<string, HTMLSpanElement | null>>({});
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
+
+  // 모바일 감지
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkIsMobile();
+    window.addEventListener("resize", checkIsMobile);
+    return () => window.removeEventListener("resize", checkIsMobile);
+  }, []);
 
   // 스크롤 잠금 - 애니메이션 완료 후 1초 후에 해제
   useEffect(() => {
     document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
 
-    // 모든 애니메이션이 완료된 후 (약 5초 후) 1초 더 기다렸다가 스크롤 활성화
+    // 모바일: 즉시 스크롤 활성화 (오버레이가 표시되지 않음)
+    // 데스크톱: 애니메이션 완료 후 스크롤 활성화
+    const delay = isMobile ? 0 : 6000;
+
     const unlockTimer = setTimeout(() => {
       document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
-    }, 6000); // STATIC_DURATION(5000) + 1000ms
+    }, delay);
 
     return () => {
       clearTimeout(unlockTimer);
       document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
     };
-  }, []);
+  }, [isMobile]);
 
   // 위치 계산 함수 - 초기 위치와 타겟 위치 저장
   const calculateTargetPositions = () => {
