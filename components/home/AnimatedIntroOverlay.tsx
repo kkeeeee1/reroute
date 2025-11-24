@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Menu } from "../Menu";
 import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 
 // 애니메이션 타이밍 설정 (밀리초)
@@ -174,7 +175,8 @@ export function AnimatedIntroOverlay({
     return null;
   }
 
-  return (
+  // Portal을 사용하여 body에 직접 렌더링 (GSAP transform 영향 회피)
+  return createPortal(
     <div className="fixed inset-0 z-50 flex flex-col overflow-hidden bg-white">
       {/* 헤더 */}
       <header className="flex justify-center bg-transparent">
@@ -326,7 +328,8 @@ export function AnimatedIntroOverlay({
       </div>
 
       <Menu isOpen={isOpen} onClose={closeMenu} />
-    </div>
+    </div>,
+    document.body
   );
 }
 

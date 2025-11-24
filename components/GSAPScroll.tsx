@@ -31,7 +31,7 @@ export function GSAPScroll({ children }: GSAPScrollProps) {
     smootherRef.current = ScrollSmoother.create({
       wrapper: wrapperRef.current,
       content: contentRef.current,
-      smooth: 3, // 스크롤 부드러움 정도 (Lenis의 lerp: 0.1과 유사)
+      smooth: 2, // 스크롤 부드러움 정도
       effects: true, // data-speed 속성 활성화
       smoothTouch: 0.1, // 터치 디바이스에서의 부드러움
       normalizeScroll: true, // 크로스 브라우저 스크롤 정규화

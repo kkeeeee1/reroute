@@ -40,8 +40,8 @@ export default async function RootLayout({
     >
       <body>
         <CustomCursor />
+        <IntroAnimation />
         <GSAPScroll>
-          <IntroAnimation />
           {children}
         </GSAPScroll>
       </body>
