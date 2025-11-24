@@ -68,7 +68,7 @@ export default defineType({
       name: 'content',
       title: '프로젝트 상세 설명',
       type: 'array',
-      description: '텍스트와 이미지를 혼합하여 상세 콘텐츠를 작성합니다.',
+      description: '상세 콘텐츠를 작성해주세요.',
       of: [
         defineArrayMember({
           lists: [

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 
 export function CustomCursor() {
@@ -9,6 +10,8 @@ export function CustomCursor() {
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isMobile, setIsMobile] = useState<boolean | undefined>(undefined);
+  const pathname = usePathname();
+  const isStudio = pathname?.startsWith("/studio");
 
   useEffect(() => {
     // 모바일 감지
@@ -24,16 +27,16 @@ export function CustomCursor() {
 
   // 초기 커서 위치 설정
   useEffect(() => {
-    if (isMobile || !defaultCursorRef.current || !hoverCursorRef.current) return;
+    if (isMobile || isStudio || !defaultCursorRef.current || !hoverCursorRef.current) return;
 
     // GSAP로 초기 transform 설정
     gsap.set(defaultCursorRef.current, { x: 0, y: 0, opacity: 0 });
     gsap.set(hoverCursorRef.current, { x: 0, y: 0, opacity: 0, scale: 0 });
-  }, [isMobile]);
+  }, [isMobile, isStudio]);
 
   useEffect(() => {
-    // 모바일에서는 커스텀 커서 실행 안 함
-    if (isMobile) return;
+    // 모바일이거나 스튜디오 페이지에서는 커스텀 커서 실행 안 함
+    if (isMobile || isStudio) return;
     
     if (!defaultCursorRef.current || !hoverCursorRef.current) return;
 
@@ -108,7 +111,7 @@ export function CustomCursor() {
       document.documentElement.style.cursor = "auto";
       document.body.style.cursor = "auto";
     };
-  }, [isMobile]);
+  }, [isMobile, isStudio]);
 
   // GSAP opacity/scale 애니메이션
   useEffect(() => {
@@ -131,8 +134,8 @@ export function CustomCursor() {
   }, [isVisible, isHovering]);
 
   // hydration 이전에는 렌더링 안 함 (undefined)
-  // 모바일에서는 렌더링하지 않음
-  if (isMobile !== false) return null;
+  // 모바일이거나 스튜디오 페이지에서는 렌더링하지 않음
+  if (isMobile !== false || isStudio) return null;
 
   return (
     <>
