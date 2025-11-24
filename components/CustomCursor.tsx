@@ -181,8 +181,8 @@ export function CustomCursor() {
             <path
               d="M0 17.3679H40L25 1.36792"
               stroke="white"
-              stroke-width="4"
-              stroke-miterlimit="10"
+              strokeWidth="4"
+              strokeMiterlimit="10"
             />
           </svg>
         </div>
