@@ -1,10 +1,8 @@
 import { HomePage } from "@/components/home/HomePage";
-import { studioUrl } from "@/sanity/lib/api";
 import { sanityFetch } from "@/sanity/lib/live";
 import { homePageQuery, settingsQuery } from "@/sanity/lib/queries";
 import { urlForOpenGraphImage } from "@/sanity/lib/utils";
 import { Metadata } from "next";
-import Link from "next/link";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: pageData } = await sanityFetch({ query: homePageQuery });

@@ -12,7 +12,11 @@ const IMAGES = [
 ];
 const IMAGE_CHANGE_INTERVAL = 1000; // ms
 
-export function HeroImageCarousel() {
+interface HeroImageCarouselProps {
+  fullHeight?: boolean;
+}
+
+export function HeroImageCarousel({ fullHeight = false }: HeroImageCarouselProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [nextImageIndex, setNextImageIndex] = useState(1);
   const currentImageRef = useRef<HTMLDivElement>(null);
@@ -53,8 +57,8 @@ export function HeroImageCarousel() {
   }, [currentImageIndex]);
 
   return (
-    <div className="relative w-full overflow-hidden">
-      <div className="aspect-[4/5] w-full">
+    <div className="relative h-full w-full overflow-hidden">
+      <div className={fullHeight ? "h-full w-full" : "aspect-[4/5] w-full"}>
         {/* Current Image */}
         <div
           ref={currentImageRef}

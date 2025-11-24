@@ -43,6 +43,7 @@ export function HomePage() {
 
       {/* 메인 컨텐츠 - 항상 렌더링하되 opacity로 제어 */}
       <ScrollDownIndicator hideOnOverlay={false} />
+      
       <div className="relative" style={{ zIndex: 30 }}>
         <HeroSection />
         <AboutSection />
