@@ -1,6 +1,9 @@
 import '@/styles/index.css'
 import {Footer} from '@/components/Footer'
 import {Navbar} from '@/components/Navbar'
+import {CustomCursor} from '@/components/CustomCursor'
+import {IntroAnimation} from '@/components/IntroAnimation'
+import {ScrollToTopButton} from '@/components/ScrollToTopButton'
 import {sanityFetch, SanityLive} from '@/sanity/lib/live'
 import {homePageQuery} from '@/sanity/lib/queries'
 import {urlForOpenGraphImage} from '@/sanity/lib/utils'
@@ -41,7 +44,10 @@ export const viewport: Viewport = {
 export default async function IndexRoute({children}: {children: React.ReactNode}) {
   return (
     <>
-      <div className="flex min-h-screen flex-col bg-white text-black">
+      <CustomCursor />
+      <IntroAnimation />
+      <ScrollToTopButton />
+      <div className="flex min-h-screen flex-col bg-white text-black" style={{ paddingTop: 'var(--navbar-height, 96px)' }}>
         <Navbar />
         <div>{children}</div>
         <Footer />

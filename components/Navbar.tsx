@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
 import { Menu } from "./Menu";
@@ -8,9 +9,30 @@ import { Menu } from "./Menu";
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isOverBlueSection, setIsOverBlueSection] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
+
+  useEffect(() => {
+    setMounted(true);
+    
+    // 헤더 높이를 측정하고 CSS 변수로 설정
+    const updateNavbarHeight = () => {
+      const navbar = document.getElementById("navbar");
+      if (navbar) {
+        const height = navbar.offsetHeight;
+        document.documentElement.style.setProperty("--navbar-height", `${height}px`);
+      }
+    };
+
+    // 초기 설정
+    updateNavbarHeight();
+    
+    // 리사이즈 시 재측정
+    window.addEventListener("resize", updateNavbarHeight);
+    return () => window.removeEventListener("resize", updateNavbarHeight);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,11 +62,11 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  return (
+  const navbarContent = (
     <>
       <header
         id="navbar"
-        className={`sticky top-0 z-50 flex justify-center bg-transparent transition-colors duration-300`}
+        className={`fixed top-0 left-0 right-0 z-50 flex justify-center bg-transparent transition-colors duration-300`}
       >
         <div className="flex w-full max-w-screen-max items-center justify-between px-7 py-8 md:px-10 md:py-8 lg:px-20 lg:py-12">
 
@@ -104,4 +126,8 @@ export function Navbar() {
       <Menu isOpen={isOpen} onClose={closeMenu} />
     </>
   );
+
+  // Portal을 사용하여 body에 직접 렌더링
+  if (!mounted) return null;
+  return createPortal(navbarContent, document.body);
 }

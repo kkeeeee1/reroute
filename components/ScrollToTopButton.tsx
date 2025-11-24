@@ -1,12 +1,18 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { createPortal } from "react-dom";
 import gsap from "gsap";
 
 export function ScrollToTopButton() {
   const [isVisible, setIsVisible] = useState(false);
   const [showButton, setShowButton] = useState(true);
+  const [mounted, setMounted] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     // IntroOverlay가 보이는지 확인
@@ -60,7 +66,9 @@ export function ScrollToTopButton() {
     });
   };
 
-  return (
+  if (!mounted) return null;
+
+  const buttonContent = (
     <button
       ref={buttonRef}
       onClick={scrollToTop}
@@ -90,4 +98,6 @@ export function ScrollToTopButton() {
       </svg>
     </button>
   );
+
+  return createPortal(buttonContent, document.body);
 }

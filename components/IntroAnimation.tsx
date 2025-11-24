@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
-import { usePathname } from "next/navigation";
+import { createPortal } from "react-dom";
 import gsap from "gsap";
 
 const TEXT_LINES = ["WE DON'T JUST", "SOLVE PROBLEMS,", "WE REROUTE THEM"];
@@ -12,21 +12,18 @@ const LOGO_TRANSITION_DURATION = 1000; // ms
 const BACKGROUND_SLIDE_DURATION = 800; // ms
 
 export function IntroAnimation() {
-  const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(false);
   const [displayedLines, setDisplayedLines] = useState<string[]>(["", "", ""]);
+  const [mounted, setMounted] = useState(false);
   const hasShownRef = useRef(false);
   const backgroundRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
 
-  // /studio 경로에서는 인트로 표시 안 함
-  if (pathname.startsWith("/studio")) {
-    return null;
-  }
-
   useEffect(() => {
+    setMounted(true);
+
     // Only show on actual page load/refresh, not on client-side navigation
     if (hasShownRef.current) {
       return;
@@ -168,9 +165,9 @@ export function IntroAnimation() {
     };
   }, []);
 
-  if (!isVisible) return null;
+  if (!mounted || !isVisible) return null;
 
-  return (
+  const introContent = (
     <>
       <div
         ref={backgroundRef}
@@ -225,4 +222,6 @@ export function IntroAnimation() {
       </div>
     </>
   );
+
+  return createPortal(introContent, document.body);
 }
