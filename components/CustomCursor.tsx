@@ -85,19 +85,22 @@ export function CustomCursor() {
       const target = e.target as HTMLElement;
 
       // 푸터 연락처 링크는 제외
-      const isFooterContact = target.closest("footer")?.querySelector("a[href*='mailto:'], a[href*='kakao.com']") === target ||
-                              target.getAttribute("href")?.includes("mailto:") ||
-                              target.getAttribute("href")?.includes("kakao.com");
+      const isInFooter = !!target.closest("footer");
+      const href = target.getAttribute("href") || target.closest("a")?.getAttribute("href") || "";
+      const isContactLink = href.includes("mailto:") || href.includes("kakao.com");
+
+      if (isInFooter && isContactLink) {
+        setIsHovering(false);
+        return;
+      }
 
       const isClickable =
-        !isFooterContact && (
-          target.tagName === "A" ||
-          target.tagName === "BUTTON" ||
-          target.getAttribute("role") === "button" ||
-          target.closest("a") ||
-          target.closest("button") ||
-          target.closest("[role='button']")
-        );
+        target.tagName === "A" ||
+        target.tagName === "BUTTON" ||
+        target.getAttribute("role") === "button" ||
+        target.closest("a") ||
+        target.closest("button") ||
+        target.closest("[role='button']");
 
       setIsHovering(!!isClickable);
     };
