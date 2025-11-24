@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
+import gsap from "gsap";
 import { ServiceCard } from "./ServiceCard";
 
 export function ServiceSection() {
   const [hoveredCard, setHoveredCard] = useState<"b2b" | "b2c" | null>(null);
   const [isInView, setIsInView] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -26,6 +27,27 @@ export function ServiceSection() {
 
     return () => observer.disconnect();
   }, []);
+
+  // GSAP 애니메이션
+  useEffect(() => {
+    if (!isInView || !titleRef.current) return;
+
+    const anim = gsap.fromTo(
+      titleRef.current,
+      { opacity: 0, y: 20 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        delay: 0.1,
+        ease: "power2.out",
+      },
+    );
+
+    return () => {
+      anim.kill();
+    };
+  }, [isInView]);
 
   const serviceCards = [
     {
@@ -58,17 +80,16 @@ export function ServiceSection() {
     <section ref={sectionRef} className="w-full bg-white">
       <div className="mx-auto flex w-full max-w-screen-max flex-col gap-10 px-7 py-16 md:gap-20 md:px-10 md:py-24 lg:px-20 lg:py-32">
         {/* Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
+        <div
+          ref={titleRef}
+          style={{ opacity: 0, willChange: "transform, opacity" }}
         >
           <h2 className="text-[32px] font-extrabold leading-[40px] text-black sm:text-[36px] sm:leading-[45px] md:text-[40px] md:leading-[50px] lg:text-[48px] lg:leading-[60px] xl:text-[52px] xl:leading-[65px] 2xl:text-[56px] 2xl:leading-[70px]">
             OUR
             <br />
             SERVICE
           </h2>
-        </motion.div>
+        </div>
 
         {/* Service Cards Container - Staggered Layout */}
         <div className="flex w-full flex-col gap-5 md:flex-row md:items-center">

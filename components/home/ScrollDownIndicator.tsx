@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { createPortal } from "react-dom";
+import gsap from "gsap";
 
 export function ScrollDownIndicator({
   hideOnOverlay = false,
@@ -10,6 +11,12 @@ export function ScrollDownIndicator({
 }) {
   const [showIndicator, setShowIndicator] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const indicatorRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,14 +54,28 @@ export function ScrollDownIndicator({
     };
   }, []);
 
-  return (
-    <motion.div
-      initial={{ opacity: 1 }}
-      animate={{
-        opacity: showIndicator && !hideOnOverlay && !isMenuOpen ? 1 : 0,
-      }}
-      transition={{ duration: 0.3 }}
+  // GSAP 애니메이션
+  useEffect(() => {
+    if (!indicatorRef.current) return;
+
+    const shouldShow = showIndicator && !hideOnOverlay && !isMenuOpen;
+
+    gsap.to(indicatorRef.current, {
+      opacity: shouldShow ? 1 : 0,
+      duration: 0.3,
+      ease: "power2.out",
+    });
+  }, [showIndicator, hideOnOverlay, isMenuOpen]);
+
+  // SSR 방지
+  if (!mounted) return null;
+
+  // Portal을 사용하여 body에 직접 렌더링 (GSAP transform 영향 회피)
+  return createPortal(
+    <div
+      ref={indicatorRef}
       className="pointer-events-none fixed bottom-12 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2.5"
+      style={{ opacity: 1 }}
     >
       <span className="text-xs font-medium tracking-widest text-black md:text-base">
         SCROLL DOWN
@@ -74,6 +95,7 @@ export function ScrollDownIndicator({
           mask="url(#path-1-inside-1_210_263)"
         />
       </svg>
-    </motion.div>
+    </div>,
+    document.body
   );
 }

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Menu } from "../Menu";
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { motion } from "framer-motion";
+import gsap from "gsap";
 
 // 애니메이션 타이밍 설정 (밀리초)
 const STATIC_DURATION = 5000; // 초기 대기 시간
@@ -62,9 +62,15 @@ export function AnimatedIntroOverlay({
     return window.innerWidth < 768;
   });
   const wordRefs = useRef<Record<string, HTMLSpanElement | null>>({});
+  const [mounted, setMounted] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
+
+  // hydration 방지
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // 모바일 감지
   useEffect(() => {
@@ -175,6 +181,9 @@ export function AnimatedIntroOverlay({
     return null;
   }
 
+  // SSR 방지
+  if (!mounted) return null;
+
   // Portal을 사용하여 body에 직접 렌더링 (GSAP transform 영향 회피)
   return createPortal(
     <div className="fixed inset-0 z-50 flex flex-col overflow-hidden bg-white">
@@ -273,54 +282,16 @@ export function AnimatedIntroOverlay({
                 word.type === "english" ? ENGLISH_CLASSES : KOREAN_CLASSES;
 
               return (
-                <motion.span
+                <WordAnimation
                   key={word.id}
-                  data-intro-word={word.id}
-                  // 오버레이 클래스로 시작
-                  className={`${OVERLAY_TEXT_CLASSES} whitespace-nowrap ${
-                    word.type === "english" ? "font-bold" : "font-normal"
-                  }`}
-                  style={{
-                    position: "fixed",
-                    willChange: "transform",
-                  }}
-                  initial={{
-                    left: initialPosition.left,
-                    top: initialPosition.top,
-                  }}
-                  animate={{
-                    left: position.left,
-                    top: position.top,
-                  }}
-                  transition={{
-                    delay: delay,
-                    duration: MOVE_DURATION,
-                    ease: [0.4, 0, 0.2, 1],
-                  }}
-                >
-                  {/* 내부에서 히어로 클래스로 전환 */}
-                  <motion.span
-                    className={targetClass}
-                    initial={{ opacity: 0, position: "absolute" }}
-                    animate={{ opacity: 1 }}
-                    transition={{
-                      delay: delay + MOVE_DURATION * 0.3,
-                      duration: MOVE_DURATION * 0.3,
-                    }}
-                  >
-                    {word.text}
-                  </motion.span>
-                  <motion.span
-                    initial={{ opacity: 1 }}
-                    animate={{ opacity: 0 }}
-                    transition={{
-                      delay: delay + MOVE_DURATION * 0.3,
-                      duration: MOVE_DURATION * 0.3,
-                    }}
-                  >
-                    {word.text}
-                  </motion.span>
-                </motion.span>
+                  word={word}
+                  position={position}
+                  initialPosition={initialPosition}
+                  delay={delay}
+                  targetClass={targetClass}
+                  overlayClass={OVERLAY_TEXT_CLASSES}
+                  moveDuration={MOVE_DURATION}
+                />
               );
             })}
           </>
@@ -330,6 +301,108 @@ export function AnimatedIntroOverlay({
       <Menu isOpen={isOpen} onClose={closeMenu} />
     </div>,
     document.body
+  );
+}
+
+// WordAnimation 컴포넌트 - GSAP로 개별 단어 애니메이션
+interface WordAnimationProps {
+  word: typeof WORDS[0];
+  position: WordPosition;
+  initialPosition: WordPosition;
+  delay: number;
+  targetClass: string;
+  overlayClass: string;
+  moveDuration: number;
+}
+
+function WordAnimation({
+  word,
+  position,
+  initialPosition,
+  delay,
+  targetClass,
+  overlayClass,
+  moveDuration,
+}: WordAnimationProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current || !textRef.current) return;
+
+    const timeline = gsap.timeline();
+
+    // 위치 이동 애니메이션
+    timeline.fromTo(
+      containerRef.current,
+      {
+        left: initialPosition.left,
+        top: initialPosition.top,
+      },
+      {
+        left: position.left,
+        top: position.top,
+        duration: moveDuration,
+        ease: "power3.out",
+        delay: delay,
+      }
+    );
+
+    // 텍스트 크기 변환 (오버레이 -> 히어로 크기)
+    // 타겟 클래스를 임시로 적용해서 크기 측정
+    const tempElement = document.createElement("div");
+    tempElement.className = targetClass;
+    tempElement.style.visibility = "hidden";
+    tempElement.style.position = "fixed";
+    tempElement.textContent = word.text;
+    document.body.appendChild(tempElement);
+    
+    const overlaySize = textRef.current.getBoundingClientRect();
+    const targetSize = tempElement.getBoundingClientRect();
+    const scaleX = targetSize.width / overlaySize.width;
+    const scaleY = targetSize.height / overlaySize.height;
+    
+    document.body.removeChild(tempElement);
+
+    // 텍스트에 scale 적용 (이동과 동시에)
+    timeline.to(
+      textRef.current,
+      {
+        scaleX: scaleX,
+        scaleY: scaleY,
+        transformOrigin: "left top", // 모든 텍스트 동일하게 left top 기준
+        duration: moveDuration,
+        ease: "power3.out",
+      },
+      `-=${moveDuration}` // 위치 이동과 동시에
+    );
+
+    return () => {
+      timeline.kill();
+    };
+  }, [position, initialPosition, delay, moveDuration, targetClass, word]);
+
+  return (
+    <div
+      ref={containerRef}
+      data-intro-word={word.id}
+      style={{
+        position: "fixed",
+        willChange: "transform",
+        left: initialPosition.left,
+        top: initialPosition.top,
+      }}
+    >
+      <div
+        ref={textRef}
+        className={`${overlayClass} whitespace-nowrap ${
+          word.type === "english" ? "font-bold" : "font-normal"
+        }`}
+        style={{ willChange: "transform" }}
+      >
+        {word.text}
+      </div>
+    </div>
   );
 }
 

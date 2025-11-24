@@ -1,8 +1,8 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import gsap from "gsap";
 
 const IMAGES = [
   "main_hero_1.png",
@@ -14,36 +14,75 @@ const IMAGE_CHANGE_INTERVAL = 1000; // ms
 
 export function HeroImageCarousel() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [nextImageIndex, setNextImageIndex] = useState(1);
+  const currentImageRef = useRef<HTMLDivElement>(null);
+  const nextImageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % IMAGES.length);
+      // Prepare next image
+      const next = (currentImageIndex + 1) % IMAGES.length;
+      setNextImageIndex(next);
+
+      // Crossfade animation
+      if (currentImageRef.current && nextImageRef.current) {
+        const timeline = gsap.timeline({
+          onComplete: () => {
+            setCurrentImageIndex(next);
+          },
+        });
+
+        // Fade out current, fade in next simultaneously
+        timeline
+          .to(currentImageRef.current, {
+            opacity: 0,
+            duration: 0,
+          })
+          .to(
+            nextImageRef.current,
+            {
+              opacity: 1,
+              duration: 0,
+            },
+            0,
+          ); // Start at same time as previous
+      }
     }, IMAGE_CHANGE_INTERVAL);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [currentImageIndex]);
 
   return (
     <div className="relative w-full overflow-hidden">
       <div className="aspect-[4/5] w-full">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentImageIndex}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0 }}
-            className="absolute inset-0"
-          >
-            <Image
-              src={`/images/main/${IMAGES[currentImageIndex]}`}
-              alt={`Hero ${currentImageIndex + 1}`}
-              fill
-              className="object-cover"
-              priority={currentImageIndex === 0}
-            />
-          </motion.div>
-        </AnimatePresence>
+        {/* Current Image */}
+        <div
+          ref={currentImageRef}
+          className="absolute inset-0"
+          style={{ opacity: 1, willChange: "opacity" }}
+        >
+          <Image
+            src={`/images/main/${IMAGES[currentImageIndex]}`}
+            alt={`Hero ${currentImageIndex + 1}`}
+            fill
+            className="object-cover"
+            priority={currentImageIndex === 0}
+          />
+        </div>
+
+        {/* Next Image (for crossfade) */}
+        <div
+          ref={nextImageRef}
+          className="absolute inset-0"
+          style={{ opacity: 0, willChange: "opacity" }}
+        >
+          <Image
+            src={`/images/main/${IMAGES[nextImageIndex]}`}
+            alt={`Hero ${nextImageIndex + 1}`}
+            fill
+            className="object-cover"
+          />
+        </div>
       </div>
     </div>
   );

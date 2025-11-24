@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -39,6 +40,7 @@ export function ServiceCard({
   isInView = false,
   animationDelay = 0,
 }: ServiceCardProps) {
+  const cardRef = useRef<HTMLDivElement>(null);
   const isDesktop = typeof window !== "undefined" && window.innerWidth >= 768;
 
   // 데스크탑에서만 y-offset 적용
@@ -55,23 +57,48 @@ export function ServiceCard({
     return id === "b2b" ? 10 : 5;
   };
 
+  // Initial animation when isInView changes
+  useEffect(() => {
+    if (!isInView || !cardRef.current) return;
+
+    const anim = gsap.fromTo(
+      cardRef.current,
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: getYOffset(),
+        zIndex: getZIndex(),
+        duration: 0.5,
+        delay: animationDelay,
+        ease: "expo.out",
+      },
+    );
+
+    return () => {
+      anim.kill();
+    };
+  }, [isInView, animationDelay]);
+
+  // Hover animation
+  useEffect(() => {
+    if (!cardRef.current || !isInView) return;
+
+    gsap.to(cardRef.current, {
+      y: getYOffset(),
+      zIndex: getZIndex(),
+      duration: isHovered || otherHovered ? 0.6 : 0.5,
+      ease: "expo.out",
+    });
+  }, [isHovered, otherHovered, isInView]);
+
   return (
     <Link href={href} className="block w-full">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={
-          isInView
-            ? { opacity: 1, y: getYOffset(), zIndex: getZIndex() }
-            : { opacity: 0, y: 30 }
-        }
-        transition={{
-          duration: isHovered || otherHovered ? 0.6 : 0.5,
-          delay: animationDelay,
-          ease: [0.34, 1.56, 0.64, 1],
-        }}
+      <div
+        ref={cardRef}
         onMouseEnter={() => isDesktop && onHover(id)}
         onMouseLeave={() => isDesktop && onHover(null)}
         className="relative aspect-square w-full md:w-[calc(100%-10px)]"
+        style={{ opacity: 0, willChange: "transform, opacity" }}
       >
         <Image src={imageSrc} alt={title} fill className="object-cover" />
         {id === "b2b" && <div className="absolute inset-0 bg-[#003BB1B2]" />}
@@ -97,7 +124,7 @@ export function ServiceCard({
             </p>
           </div>
         </div>
-      </motion.div>
+      </div>
     </Link>
   );
 }

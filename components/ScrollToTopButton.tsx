@@ -1,11 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import gsap from "gsap";
 
 export function ScrollToTopButton() {
   const [isVisible, setIsVisible] = useState(false);
   const [showButton, setShowButton] = useState(true);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     // IntroOverlay가 보이는지 확인
@@ -37,6 +38,21 @@ export function ScrollToTopButton() {
     };
   }, []);
 
+  // GSAP 애니메이션
+  useEffect(() => {
+    if (!buttonRef.current) return;
+
+    const shouldShow = isVisible && showButton;
+
+    gsap.to(buttonRef.current, {
+      opacity: shouldShow ? 1 : 0,
+      scale: shouldShow ? 1 : 0.8,
+      pointerEvents: shouldShow ? "auto" : "none",
+      duration: 0.3,
+      ease: "power2.out",
+    });
+  }, [isVisible, showButton]);
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -45,18 +61,15 @@ export function ScrollToTopButton() {
   };
 
   return (
-    <motion.button
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{
-        opacity: isVisible && showButton ? 1 : 0,
-        scale: isVisible && showButton ? 1 : 0.8,
-        pointerEvents: isVisible && showButton ? "auto" : "none",
-      }}
-      transition={{ duration: 0.3 }}
+    <button
+      ref={buttonRef}
       onClick={scrollToTop}
       className="fixed bottom-8 right-8 z-50 hidden h-14 w-14 items-center justify-center rounded-full bg-white shadow-2xl transition-colors duration-300 hover:bg-gray-50 md:flex"
       style={{
         boxShadow: "0 8px 24px rgba(0, 0, 0, 0.15)",
+        opacity: 0,
+        scale: "0.8",
+        pointerEvents: "none",
       }}
       aria-label="Scroll to top"
     >
@@ -75,6 +88,6 @@ export function ScrollToTopButton() {
           strokeLinejoin="round"
         />
       </svg>
-    </motion.button>
+    </button>
   );
 }

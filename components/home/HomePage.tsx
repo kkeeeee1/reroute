@@ -1,14 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { HeroSection } from "./HeroSection";
 import { AnimatedIntroOverlay } from "./AnimatedIntroOverlay";
 import { AboutSection } from "./AboutSection";
 import { ScrollDownIndicator } from "./ScrollDownIndicator";
 import { ServiceSection } from "./ServiceSection";
 import { MarqueeText } from "./MarqueeText";
-import { ScrollToTopButton } from "../ScrollToTopButton";
 
 export function HomePage() {
   const [introCompleted, setIntroCompleted] = useState(false);
@@ -44,13 +42,12 @@ export function HomePage() {
       )}
 
       {/* 메인 컨텐츠 - 항상 렌더링하되 opacity로 제어 */}
+      <ScrollDownIndicator hideOnOverlay={false} />
       <div className="relative" style={{ zIndex: 30 }}>
-        <ScrollDownIndicator hideOnOverlay={false} />
         <HeroSection />
         <AboutSection />
         <ServiceSection />
         <MarqueeText />
-        <ScrollToTopButton />
       </div>
     </>
   );

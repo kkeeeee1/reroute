@@ -1,14 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { HeroImageCarousel } from "./HeroImageCarousel";
+
+// GSAP 플러그인 등록
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export function HeroSection() {
   const [isMobile, setIsMobile] = useState(false);
   const [heroHeight, setHeroHeight] = useState("100vh");
-  const scrollY = useMotionValue(0);
+  const imageContainerRef = useRef<HTMLDivElement>(null);
 
   // 모바일 체크
   useEffect(() => {
@@ -35,26 +41,28 @@ export function HeroSection() {
     return () => window.removeEventListener("resize", calculateHeight);
   }, []);
 
-  // 모바일 스크롤 애니메이션
+  // GSAP ScrollTrigger 애니메이션 (모바일만)
   useEffect(() => {
-    if (!isMobile) return;
+    if (!isMobile || !imageContainerRef.current) return;
 
-    const handleScroll = () => {
-      scrollY.set(window.scrollY);
+    const trigger = ScrollTrigger.create({
+      trigger: imageContainerRef.current,
+      start: "top bottom",
+      end: "top center",
+      scrub: 1,
+      onUpdate: (self) => {
+        const progress = self.progress;
+        gsap.set(imageContainerRef.current, {
+          opacity: progress,
+          maxHeight: `${progress * 500}px`,
+        });
+      },
+    });
+
+    return () => {
+      trigger.kill();
     };
-
-    // 초기 값 설정
-    scrollY.set(window.scrollY);
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isMobile, scrollY]);
-
-  // 스크롤에 따라 이미지 opacity와 max-height 변화 (모바일만)
-  // 0px: opacity 0, maxHeight 0px (공간 차지 안함)
-  // 300px: opacity 1, maxHeight 500px (완전히 보임)
-  const imageOpacity = useTransform(scrollY, [0, 300], [0, 1]);
-  const imageMaxHeight = useTransform(scrollY, [0, 300], ["0px", "500px"]);
+  }, [isMobile]);
 
   return (
     <section
@@ -72,15 +80,17 @@ export function HeroSection() {
           </div>
 
           {/* 모바일: 이미지 - 스크롤에 따라 공간을 차지하며 나타남 */}
-          <motion.div
+          <div
+            ref={imageContainerRef}
             className="w-full overflow-hidden"
             style={{
-              opacity: imageOpacity,
-              maxHeight: imageMaxHeight,
+              opacity: 0,
+              maxHeight: "0px",
+              willChange: "max-height, opacity",
             }}
           >
             <HeroImageCarousel />
-          </motion.div>
+          </div>
 
           {/* 모바일: 한글 텍스트 */}
           <div className="w-full">
