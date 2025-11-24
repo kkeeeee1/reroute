@@ -27,7 +27,13 @@ export function CustomCursor() {
 
   // 초기 커서 위치 설정
   useEffect(() => {
-    if (isMobile || isStudio || !defaultCursorRef.current || !hoverCursorRef.current) return;
+    if (
+      isMobile ||
+      isStudio ||
+      !defaultCursorRef.current ||
+      !hoverCursorRef.current
+    )
+      return;
 
     // GSAP로 초기 transform 설정
     gsap.set(defaultCursorRef.current, { x: 0, y: 0, opacity: 0 });
@@ -37,7 +43,7 @@ export function CustomCursor() {
   useEffect(() => {
     // 모바일이거나 스튜디오 페이지에서는 커스텀 커서 실행 안 함
     if (isMobile || isStudio) return;
-    
+
     if (!defaultCursorRef.current || !hoverCursorRef.current) return;
 
     // GSAP quickTo for smooth mouse tracking (최적화된 성능)
@@ -148,7 +154,7 @@ export function CustomCursor() {
         }}
       >
         <div
-          className="bg-primary h-6 w-6 rounded-full"
+          className="h-6 w-6 rounded-full bg-primary"
           style={{
             boxShadow:
               "inset 0 0 0 1px #56C5D0, 0 0 8px rgba(86, 197, 208, 0.3)",
@@ -164,7 +170,7 @@ export function CustomCursor() {
           willChange: "transform, opacity",
         }}
       >
-        <div className="relative flex h-[100px] w-[100px] items-center justify-center rounded-full bg-black">
+        <div className="relative flex h-[100px] w-[100px] items-center justify-center rounded-full bg-black pb-2">
           <svg
             width="45"
             height="20"
@@ -175,8 +181,8 @@ export function CustomCursor() {
             <path
               d="M0 17.3679H40L25 1.36792"
               stroke="white"
-              strokeWidth="4"
-              strokeMiterlimit="10"
+              stroke-width="4"
+              stroke-miterlimit="10"
             />
           </svg>
         </div>
