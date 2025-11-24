@@ -1,20 +1,12 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useState } from "react";
 
 import { HeroImageCarousel } from "./HeroImageCarousel";
-
-// GSAP 플러그인 등록
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 export function HeroSection() {
   const [isMobile, setIsMobile] = useState(false);
   const [heroHeight, setHeroHeight] = useState("100vh");
-  const imageContainerRef = useRef<HTMLDivElement>(null);
 
   // 모바일 체크
   useEffect(() => {
@@ -41,29 +33,6 @@ export function HeroSection() {
     return () => window.removeEventListener("resize", calculateHeight);
   }, []);
 
-  // GSAP ScrollTrigger 애니메이션 (모바일만)
-  useEffect(() => {
-    if (!isMobile || !imageContainerRef.current) return;
-
-    const trigger = ScrollTrigger.create({
-      trigger: imageContainerRef.current,
-      start: "top bottom",
-      end: "top center",
-      scrub: 1,
-      onUpdate: (self) => {
-        const progress = self.progress;
-        gsap.set(imageContainerRef.current, {
-          opacity: progress,
-          maxHeight: `${progress * 500}px`,
-        });
-      },
-    });
-
-    return () => {
-      trigger.kill();
-    };
-  }, [isMobile]);
-
   return (
     <section
       className="flex items-center justify-center px-7 py-10 md:px-10 md:py-0 lg:px-20"
@@ -79,16 +48,8 @@ export function HeroSection() {
             </h1>
           </div>
 
-          {/* 모바일: 이미지 - 스크롤에 따라 공간을 차지하며 나타남 */}
-          <div
-            ref={imageContainerRef}
-            className="w-full overflow-hidden"
-            style={{
-              opacity: 0,
-              maxHeight: "0px",
-              willChange: "max-height, opacity",
-            }}
-          >
+          {/* 모바일: 이미지 */}
+          <div className="w-full">
             <HeroImageCarousel />
           </div>
 

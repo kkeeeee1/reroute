@@ -33,7 +33,7 @@ export function GSAPScroll({ children }: GSAPScrollProps) {
       content: contentRef.current,
       smooth: 2, // 스크롤 부드러움 정도
       effects: true, // data-speed 속성 활성화
-      smoothTouch: 0.1, // 터치 디바이스에서의 부드러움
+      smoothTouch: 0, // 터치 디바이스에서의 부드러움
       normalizeScroll: true, // 크로스 브라우저 스크롤 정규화
     });
 

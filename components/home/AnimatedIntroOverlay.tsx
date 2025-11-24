@@ -325,56 +325,75 @@ function WordAnimation({
   moveDuration,
 }: WordAnimationProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLDivElement>(null);
+  const overlayTextRef = useRef<HTMLSpanElement>(null);
+  const targetTextRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current || !textRef.current) return;
+    if (!containerRef.current || !overlayTextRef.current || !targetTextRef.current) return;
 
-    const timeline = gsap.timeline();
-
-    // 위치 이동 애니메이션
-    timeline.fromTo(
-      containerRef.current,
-      {
-        left: initialPosition.left,
-        top: initialPosition.top,
-      },
-      {
-        left: position.left,
-        top: position.top,
-        duration: moveDuration,
-        ease: "power3.out",
-        delay: delay,
-      }
-    );
-
-    // 텍스트 크기 변환 (오버레이 -> 히어로 크기)
-    // 타겟 클래스를 임시로 적용해서 크기 측정
+    // 타겟 크기 측정
     const tempElement = document.createElement("div");
     tempElement.className = targetClass;
     tempElement.style.visibility = "hidden";
     tempElement.style.position = "fixed";
+    tempElement.style.whiteSpace = "nowrap";
     tempElement.textContent = word.text;
     document.body.appendChild(tempElement);
     
-    const overlaySize = textRef.current.getBoundingClientRect();
-    const targetSize = tempElement.getBoundingClientRect();
-    const scaleX = targetSize.width / overlaySize.width;
-    const scaleY = targetSize.height / overlaySize.height;
+    const overlayRect = overlayTextRef.current.getBoundingClientRect();
+    const targetRect = tempElement.getBoundingClientRect();
+    const scaleX = targetRect.width / overlayRect.width;
+    const scaleY = targetRect.height / overlayRect.height;
     
     document.body.removeChild(tempElement);
 
-    // 텍스트에 scale 적용 (이동과 동시에)
+    const timeline = gsap.timeline();
+
+    // 위치 이동
+    timeline.to(containerRef.current, {
+      left: position.left,
+      top: position.top,
+      duration: moveDuration,
+      ease: "power3.out",
+      delay: delay,
+    });
+
+    // 오버레이 텍스트 크기 서서히 변화 (위치와 동시에)
     timeline.to(
-      textRef.current,
+      overlayTextRef.current,
       {
         scaleX: scaleX,
         scaleY: scaleY,
-        transformOrigin: "left top", // 모든 텍스트 동일하게 left top 기준
+        transformOrigin: "left top",
         duration: moveDuration,
         ease: "power3.out",
       },
       `-=${moveDuration}` // 위치 이동과 동시에
+    );
+
+    // 부드러운 crossfade
+    const snapDuration = moveDuration * 0.3; // 더 길게
+    
+    // 타겟 텍스트 부드럽게 fade in
+    timeline.to(
+      targetTextRef.current,
+      {
+        opacity: 1,
+        duration: snapDuration,
+        ease: "power2.inOut",
+      },
+      `-=${snapDuration}` // 마지막 30% 구간
+    );
+
+    // 오버레이 텍스트 부드럽게 fade out
+    timeline.to(
+      overlayTextRef.current,
+      {
+        opacity: 0,
+        duration: snapDuration,
+        ease: "power2.inOut",
+      },
+      `-=${snapDuration}` // 타겟과 완전히 동시에
     );
 
     return () => {
@@ -386,6 +405,9 @@ function WordAnimation({
     <div
       ref={containerRef}
       data-intro-word={word.id}
+      className={`${overlayClass} whitespace-nowrap ${
+        word.type === "english" ? "font-bold" : "font-normal"
+      }`}
       style={{
         position: "fixed",
         willChange: "transform",
@@ -393,15 +415,21 @@ function WordAnimation({
         top: initialPosition.top,
       }}
     >
-      <div
-        ref={textRef}
-        className={`${overlayClass} whitespace-nowrap ${
-          word.type === "english" ? "font-bold" : "font-normal"
-        }`}
-        style={{ willChange: "transform" }}
+      {/* 타겟 텍스트 - 정확한 최종 크기, snap in */}
+      <span
+        ref={targetTextRef}
+        className={targetClass}
+        style={{ opacity: 0, position: "absolute", willChange: "opacity" }}
       >
         {word.text}
-      </div>
+      </span>
+      {/* 오버레이 텍스트 - 서서히 작아지다가 snap out */}
+      <span
+        ref={overlayTextRef}
+        style={{ opacity: 1, willChange: "transform, opacity", transformOrigin: "left top" }}
+      >
+        {word.text}
+      </span>
     </div>
   );
 }
