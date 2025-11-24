@@ -90,6 +90,7 @@ export function CustomPortableText({
     },
     types: {
       image: ({value}: {value: SanityImage & {alt?: string; caption?: string}}) => {
+        // hotspot/crop를 고려한 이미지 URL 생성
         const imageUrl = value && urlForImage(value)?.auto('format').url()
 
         // Get image dimensions from asset metadata
@@ -98,9 +99,9 @@ export function CustomPortableText({
         const aspectRatio = width / height
 
         return (
-          <div className="my-6 space-y-2">
+          <figure className="my-8 space-y-3 max-w-2xl">
             <div
-              className="relative w-full overflow-hidden rounded-lg bg-gray-100"
+              className="relative w-full overflow-hidden rounded-xl bg-gradient-to-br from-gray-100 to-gray-50 border border-gray-200 shadow-sm"
               style={{aspectRatio: `${aspectRatio}`}}
             >
               {imageUrl && (
@@ -108,15 +109,59 @@ export function CustomPortableText({
                   src={imageUrl}
                   alt={value?.alt || 'Image'}
                   fill
-                  className="object-contain"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 800px"
+                  className="object-contain p-3"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 85vw, 700px"
                 />
               )}
             </div>
             {value?.caption && (
-              <div className="text-center font-sans text-sm text-gray-600">{value.caption}</div>
+              <figcaption className="text-center font-sans text-sm text-gray-600 italic">
+                {value.caption}
+              </figcaption>
             )}
-          </div>
+          </figure>
+        )
+      },
+      imageWithSize: ({value}: {value: any}) => {
+        // hotspot/crop를 고려한 이미지 URL 생성
+        const imageUrl = value?.asset && urlForImage(value.asset)?.auto('format').url()
+
+        // Get image dimensions from asset metadata
+        const width = value?.asset?.metadata?.dimensions?.width || 1200
+        const height = value?.asset?.metadata?.dimensions?.height || 800
+        const aspectRatio = width / height
+
+        // 크기에 따른 maxWidth 결정
+        const sizeMap: Record<string, string> = {
+          small: 'max-w-sm',
+          medium: 'max-w-2xl',
+          large: 'max-w-4xl',
+          full: 'w-full',
+        }
+        const maxWidthClass = sizeMap[value?.size] || 'max-w-2xl'
+
+        return (
+          <figure className={`my-8 space-y-3 ${maxWidthClass}`}>
+            <div
+              className="relative w-full overflow-hidden rounded-xl bg-gradient-to-br from-gray-100 to-gray-50 border border-gray-200 shadow-sm"
+              style={{aspectRatio: `${aspectRatio}`}}
+            >
+              {imageUrl && (
+                <Image
+                  src={imageUrl}
+                  alt={value?.alt || 'Image'}
+                  fill
+                  className="object-contain p-3"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 85vw, 900px"
+                />
+              )}
+            </div>
+            {value?.caption && (
+              <figcaption className="text-center font-sans text-sm text-gray-600 italic">
+                {value.caption}
+              </figcaption>
+            )}
+          </figure>
         )
       },
       timeline: ({value}) => {
