@@ -98,6 +98,25 @@ export type Work = {
       }
     | {
         asset?: {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        };
+        size?: "small" | "medium" | "large" | "full";
+        alt?: string;
+        caption?: string;
+        _type: "imageWithSize";
+        _key: string;
+      }
+    | {
+        asset?: {
           _ref: string;
           _type: "reference";
           _weak?: boolean;
@@ -155,15 +174,21 @@ export type App = {
       }
     | {
         asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
         };
-        media?: unknown;
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        _type: "image";
+        size?: "small" | "medium" | "large" | "full";
+        alt?: string;
+        caption?: string;
+        _type: "imageWithSize";
         _key: string;
       }
   >;
@@ -661,15 +686,21 @@ export type AppDetailQueryResult = {
       }
     | {
         asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
         };
-        media?: unknown;
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        _type: "image";
+        size?: "full" | "large" | "medium" | "small";
+        alt?: string;
+        caption?: string;
+        _type: "imageWithSize";
         _key: string;
       }
   > | null;
@@ -747,6 +778,25 @@ export type WorkDetailQueryResult = {
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: "image";
+        _key: string;
+      }
+    | {
+        asset?: {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        };
+        size?: "full" | "large" | "medium" | "small";
+        alt?: string;
+        caption?: string;
+        _type: "imageWithSize";
         _key: string;
       }
   > | null;
