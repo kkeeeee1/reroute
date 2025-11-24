@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { DARK_SECTION_IDS } from "@/constants/sections";
 
 export function AboutSection() {
   const [isInView, setIsInView] = useState(false);
@@ -106,7 +107,7 @@ export function AboutSection() {
   }, [showImage]);
 
   return (
-    <section ref={sectionRef} className="w-full bg-deepnavy">
+    <section ref={sectionRef} id={DARK_SECTION_IDS.ABOUT} className="w-full bg-deepnavy">
       <div className="mx-auto flex w-full max-w-screen-max flex-col gap-12 px-7 py-16 md:gap-20 md:px-16 md:py-24 lg:gap-40 lg:px-32 lg:py-20 xl:px-[170px] xl:py-24 2xl:px-[226px] 2xl:py-32">
         <div className="flex flex-col gap-10 lg:gap-12">
           {/* WE and REROUTE with line */}

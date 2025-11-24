@@ -5,10 +5,11 @@ import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
 import { Menu } from "./Menu";
+import { DARK_SECTION_IDS } from "@/constants/sections";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isOverBlueSection, setIsOverBlueSection] = useState(false);
+  const [isOverDarkSection, setIsOverDarkSection] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -43,24 +44,33 @@ export function Navbar() {
       const navbarRect = navbar.getBoundingClientRect();
       const navbarCenter = navbarRect.top + navbarRect.height / 2;
 
-      // Find all elements with navy/blue backgrounds
-      const blueElements = document.querySelectorAll('[class*="bg-deepnavy"]');
+      // Check if navbar is over any dark section
+      const darkSectionIds = Object.values(DARK_SECTION_IDS);
+      let isOverDark = false;
 
-      let isOverBlue = false;
-      blueElements.forEach((element) => {
-        const rect = element.getBoundingClientRect();
-        // Check if navbar is over this blue section
-        if (navbarCenter >= rect.top && navbarCenter <= rect.bottom) {
-          isOverBlue = true;
+      for (const sectionId of darkSectionIds) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          const rect = section.getBoundingClientRect();
+          if (navbarCenter >= rect.top && navbarCenter <= rect.bottom) {
+            isOverDark = true;
+            break;
+          }
         }
-      });
+      }
 
-      setIsOverBlueSection(isOverBlue);
+      setIsOverDarkSection(isOverDark);
     };
 
     window.addEventListener("scroll", handleScroll);
+    // 초기 체크
+    handleScroll();
+    
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // 라이트 테마 여부 (메뉴 열림 또는 다크 섹션 위)
+  const isLightTheme = isOpen || isOverDarkSection;
 
   const navbarContent = (
     <>
@@ -77,7 +87,7 @@ export function Navbar() {
             id="header-logo"
           >
             <Image
-              src={isOpen || isOverBlueSection ? "/images/logo_white.png" : "/images/logo_black.png"}
+              src={isLightTheme ? "/images/logo_white.png" : "/images/logo_black.png"}
               alt="Reroute Logo"
               width={214}
               height={59}
@@ -92,8 +102,12 @@ export function Navbar() {
             aria-label={isOpen ? "Close menu" : "Open menu"}
           >
             <span
-              className={`hidden text-lg font-medium transition-opacity duration-300 md:inline md:text-xl lg:text-2xl ${
-                isOpen ? "text-white opacity-0" : "text-black opacity-100"
+              className={`hidden text-lg font-medium transition-all duration-300 md:inline md:text-xl lg:text-2xl ${
+                isOpen 
+                  ? "text-white opacity-0" 
+                  : isLightTheme 
+                    ? "text-white opacity-100" 
+                    : "text-black opacity-100"
               }`}
             >
               Menu
@@ -103,19 +117,27 @@ export function Navbar() {
                 className={`block h-0.5 w-5 transform transition-all duration-300 ease-in-out md:w-6 ${
                   isOpen
                     ? "translate-y-[6px] rotate-45 bg-white"
-                    : "translate-y-0 rotate-0 bg-black"
+                    : isLightTheme
+                      ? "translate-y-0 rotate-0 bg-white"
+                      : "translate-y-0 rotate-0 bg-black"
                 }`}
               />
               <span
                 className={`my-1 block h-0.5 w-5 transition-all duration-300 ease-in-out md:w-6 ${
-                  isOpen ? "bg-white opacity-0" : "bg-black opacity-100"
+                  isOpen 
+                    ? "bg-white opacity-0" 
+                    : isLightTheme 
+                      ? "bg-white opacity-100" 
+                      : "bg-black opacity-100"
                 }`}
               />
               <span
                 className={`block h-0.5 w-5 transform transition-all duration-300 ease-in-out md:w-6 ${
                   isOpen
                     ? "-translate-y-[6px] -rotate-45 bg-white"
-                    : "translate-y-0 rotate-0 bg-black"
+                    : isLightTheme
+                      ? "translate-y-0 rotate-0 bg-white"
+                      : "translate-y-0 rotate-0 bg-black"
                 }`}
               />
             </div>
