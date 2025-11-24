@@ -3,7 +3,7 @@ import {defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'b2b',
-  title: 'B2B',
+  title: 'Solution(B2B)',
   type: 'document',
   icon: HomeIcon,
   fields: [
@@ -48,7 +48,7 @@ export default defineType({
   preview: {
     prepare() {
       return {
-        title: 'B2B',
+        title: 'Solution(B2B)',
         subtitle: 'SEO 설정',
       }
     },

@@ -7,8 +7,8 @@ import gsap from "gsap";
 
 const NAV_ITEMS = [
   { label: "About", href: "/about" },
-  { label: "B2B", href: "/b2b" },
-  { label: "B2C", href: "/b2c" },
+  { label: "Solution", href: "/b2b", badge: "B2B" },
+  { label: "Labs", href: "/b2c", badge: "B2C" },
   { label: "Works", href: "/works" },
 ];
 
@@ -99,12 +99,19 @@ export function Menu({ isOpen, onClose }: MenuProps) {
                 <Link
                   href={item.href}
                   onClick={onClose}
-                  className="group relative w-fit text-[48px] font-bold leading-none text-white md:text-[80px] lg:text-[100px] xl:text-[110px] 2xl:text-[120px]"
+                  className="group flex w-fit items-start gap-3 md:gap-4 lg:gap-5"
                 >
-                  <span className="relative z-10">{item.label}</span>
-                  <span
-                    className={`absolute bottom-0 left-0 h-[2px] w-0 bg-[#5161B1] transition-all duration-300 ease-out group-hover:w-full ${isActive ? "w-full" : ""}`}
-                  />
+                  <span className="relative text-[48px] font-bold leading-none text-white md:text-[80px] lg:text-[100px] xl:text-[110px] 2xl:text-[120px]">
+                    <span className="relative z-10">{item.label}</span>
+                    <span
+                      className={`absolute bottom-0 left-0 h-[2px] w-0 bg-[#5161B1] transition-all duration-300 ease-out group-hover:w-full ${isActive ? "w-full" : ""}`}
+                    />
+                  </span>
+                  {item.badge && (
+                    <span className="rounded-full mt-2 bg-white px-3 py-1 text-[12px] font-bold text-black md:px-4 md:py-1.5 md:text-[16px] lg:px-5 lg:py-2 lg:text-[20px] xl:text-[22px] 2xl:px-6 2xl:py-2.5 2xl:text-[24px]">
+                      {item.badge}
+                    </span>
+                  )}
                 </Link>
               </div>
             );
