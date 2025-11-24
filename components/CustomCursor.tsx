@@ -83,13 +83,21 @@ export function CustomCursor() {
     // 링크, 버튼, 클릭 가능한 요소 감지
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
+
+      // 푸터 연락처 링크는 제외
+      const isFooterContact = target.closest("footer")?.querySelector("a[href*='mailto:'], a[href*='kakao.com']") === target ||
+                              target.getAttribute("href")?.includes("mailto:") ||
+                              target.getAttribute("href")?.includes("kakao.com");
+
       const isClickable =
-        target.tagName === "A" ||
-        target.tagName === "BUTTON" ||
-        target.getAttribute("role") === "button" ||
-        target.closest("a") ||
-        target.closest("button") ||
-        target.closest("[role='button']");
+        !isFooterContact && (
+          target.tagName === "A" ||
+          target.tagName === "BUTTON" ||
+          target.getAttribute("role") === "button" ||
+          target.closest("a") ||
+          target.closest("button") ||
+          target.closest("[role='button']")
+        );
 
       setIsHovering(!!isClickable);
     };
