@@ -144,6 +144,7 @@ export function IntroAnimation() {
             // Complete - hide intro and unlock scroll
             timeline.call(() => {
               setIsVisible(false);
+              // 스크롤 잠금 즉시 해제 (약간의 안전 마진 100ms)
               scrollUnlockTimer = setTimeout(() => {
                 const html = document.documentElement;
                 const body = document.body;
@@ -152,7 +153,7 @@ export function IntroAnimation() {
                 body.style.position = "";
                 body.style.width = "";
                 body.style.top = "";
-              }, 1000);
+              }, 100);
             });
           }, 50);
         }, PAUSE_AFTER_TYPING);

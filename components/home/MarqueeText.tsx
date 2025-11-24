@@ -74,7 +74,7 @@ export function MarqueeText() {
   }, []);
 
   return (
-    <section className="w-full py-8 sm:py-12 md:py-20 lg:py-24 xl:py-28 2xl:py-32">
+    <section className="w-full overflow-hidden py-8 sm:py-12 md:py-20 lg:py-24 xl:py-28 2xl:py-32">
       <div
         ref={containerRef}
         className="flex items-center gap-4 whitespace-nowrap sm:gap-6 md:gap-8 lg:gap-10"
