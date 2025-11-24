@@ -123,6 +123,56 @@ export default defineType({
           type: 'block',
         }),
         defineArrayMember({
+          type: 'object',
+          name: 'imageWithSize',
+          title: '이미지 (크기 조정 가능)',
+          fields: [
+            defineField({
+              name: 'asset',
+              title: '이미지',
+              type: 'image',
+              options: {
+                hotspot: true,
+              },
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'size',
+              title: '이미지 크기',
+              type: 'string',
+              description: '이미지의 표시 크기를 선택해주세요.',
+              options: {
+                list: [
+                  {title: '소형 (400px)', value: 'small'},
+                  {title: '중형 (600px)', value: 'medium'},
+                  {title: '대형 (900px)', value: 'large'},
+                  {title: '전체폭 (100%)', value: 'full'},
+                ],
+              },
+              initialValue: 'medium',
+            }),
+            defineField({
+              name: 'alt',
+              title: '이미지 설명 (SEO)',
+              type: 'string',
+              description: '접근성 및 검색 최적화를 위한 설명입니다.',
+            }),
+            defineField({
+              name: 'caption',
+              title: '캡션',
+              type: 'string',
+              description: '이미지 아래에 표시될 캡션입니다.(선택)',
+            }),
+          ],
+          preview: {
+            select: {
+              media: 'asset',
+              title: 'caption',
+              subtitle: 'size',
+            },
+          },
+        }),
+        defineArrayMember({
           type: 'image',
           options: {
             hotspot: true,

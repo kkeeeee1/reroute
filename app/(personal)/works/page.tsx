@@ -26,7 +26,18 @@ export default async function WorksPage() {
   const defaultImage = '/images/default_image.png'
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="px-7 md:px-10 lg:px-20">
+      <div className="space-y-16">
+        {/* 페이지 헤더 */}
+        <div className="space-y-4">
+          <h1 className="text-5xl lg:text-6xl font-bold">Works</h1>
+          <p className="text-lg text-gray-600 max-w-2xl">
+            우리가 진행한 프로젝트들을 통해 우리의 경험과 역량을 확인해보세요
+          </p>
+        </div>
+
+        {/* 작업 그리드 */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {works?.map((work: typeof works[number]) => {
         const imageUrl = work.thumbnail ? urlForImage(work.thumbnail)?.url() : null
         return (
@@ -46,6 +57,8 @@ export default async function WorksPage() {
           </Link>
         )
       })}
+        </div>
+      </div>
     </div>
   )
 }

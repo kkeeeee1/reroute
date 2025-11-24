@@ -28,17 +28,18 @@ export default async function B2CPage() {
   const defaultImage = '/images/default_image.png'
 
   return (
-    <div className="space-y-16">
-      {/* 페이지 헤더 */}
-      <div className="space-y-4">
-        <h1 className="text-5xl lg:text-6xl font-bold">B2C Solutions</h1>
-        <p className="text-lg text-gray-600 max-w-2xl">
-          우리의 혁신적인 앱들이 귀사의 비즈니스를 어떻게 변화시킬 수 있는지 살펴보세요
-        </p>
-      </div>
+    <div className="px-7 md:px-10 lg:px-20">
+      <div className="space-y-16">
+        {/* 페이지 헤더 */}
+        <div className="space-y-4">
+          <h1 className="text-5xl lg:text-6xl font-bold">B2C Solutions</h1>
+          <p className="text-lg text-gray-600 max-w-2xl">
+            우리의 혁신적인 앱들이 귀사의 비즈니스를 어떻게 변화시킬 수 있는지 살펴보세요
+          </p>
+        </div>
 
-      {/* 앱 그리드 */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* 앱 그리드 */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {apps?.map((app: typeof apps[number]) => {
           const imageUrl = app.thumbnail ? (urlForImage(app.thumbnail as any)?.url() || defaultImage) : defaultImage
           return (
@@ -88,6 +89,7 @@ export default async function B2CPage() {
             </Link>
           )
         })}
+      </div>
       </div>
     </div>
   )
