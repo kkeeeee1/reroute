@@ -39,11 +39,6 @@ export default async function B2CPage() {
   return (
     <div className="px-7 md:px-10 lg:px-20">
       <div className="space-y-16">
-        {/* 페이지 헤더 */}
-        <div className="space-y-4">
-          <h1 className="text-5xl font-bold lg:text-6xl">B2C Solutions</h1>
-        </div>
-
         {/* 앱 그리드 */}
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {apps?.map((app: (typeof apps)[number]) => {
