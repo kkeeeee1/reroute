@@ -1,3 +1,4 @@
+import { B2BPageContainer } from "@/components/b2b/B2BPage";
 import { sanityFetch } from "@/sanity/lib/live";
 import { b2bPageQuery, settingsQuery } from "@/sanity/lib/queries";
 import { urlForOpenGraphImage } from "@/sanity/lib/utils";
@@ -24,5 +25,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function B2BPage() {
-  return <div>{/* B2B Solution Content */}</div>;
+  return <div><B2BPageContainer /></div>;
 }
