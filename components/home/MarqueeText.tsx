@@ -2,19 +2,8 @@
 
 import { useRef, useEffect, useState, Fragment } from "react";
 import Image from "next/image";
-import { Inria_Serif, Inter } from "next/font/google";
 
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["600"],
-  style: "italic",
-});
 
-const inriaSerif = Inria_Serif({
-  subsets: ["latin"],
-  weight: ["700"],
-  style: "italic",
-});
 
 export function MarqueeText() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -86,22 +75,22 @@ export function MarqueeText() {
         {Array.from({ length: 5 }).map((_, i) => (
           <Fragment key={i}>
             <span
-              className={`${inter.className} shrink-0 text-[48px] font-semibold text-black sm:text-[64px] md:text-[96px] lg:text-[128px] xl:text-[140px] 2xl:text-[160px]`}
+              className={`font-inter shrink-0 italic text-[48px] font-semibold text-black sm:text-[64px] md:text-[96px] lg:text-[128px] xl:text-[140px] 2xl:text-[160px]`}
             >
               We don't just solve problems
             </span>
             <span
-              className={`${inter.className} shrink-0 text-[48px] font-semibold text-black sm:text-[64px] md:text-[96px] lg:text-[128px] xl:text-[140px] 2xl:text-[160px]`}
+              className={`font-inter shrink-0 italic text-[48px] font-semibold text-black sm:text-[64px] md:text-[96px] lg:text-[128px] xl:text-[140px] 2xl:text-[160px]`}
             >
               We
             </span>
             <span
-              className={`${inriaSerif.className} shrink-0 text-[48px] font-bold text-black sm:text-[64px] md:text-[96px] lg:text-[128px] xl:text-[140px] 2xl:text-[160px]`}
+              className={`font-inria-serif shrink-0 italic text-[48px] font-bold text-black sm:text-[64px] md:text-[96px] lg:text-[128px] xl:text-[140px] 2xl:text-[160px]`}
             >
               Reroute
             </span>
             <span
-              className={`${inter.className} shrink-0 text-[48px] font-semibold text-black sm:text-[64px] md:text-[96px] lg:text-[128px] xl:text-[140px] 2xl:text-[160px]`}
+              className={`font-inter shrink-0 italic text-[48px] font-semibold text-black sm:text-[64px] md:text-[96px] lg:text-[128px] xl:text-[140px] 2xl:text-[160px]`}
             >
               them
             </span>
