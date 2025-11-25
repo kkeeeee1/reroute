@@ -27,19 +27,47 @@ export function Navbar() {
       }
     };
 
-    // 초기 설정
-    updateNavbarHeight();
+    // 초기 설정 (약간의 딜레이로 DOM 준비 대기)
+    const initialTimeout = setTimeout(() => {
+      updateNavbarHeight();
+    }, 50);
+    
+    // MutationObserver로 navbar 변경 감지
+    const navbar = document.getElementById("navbar");
+    let observer: MutationObserver | null = null;
+    
+    if (navbar) {
+      observer = new MutationObserver(() => {
+        updateNavbarHeight();
+      });
+      
+      observer.observe(navbar, {
+        attributes: true,
+        childList: true,
+        subtree: true
+      });
+    }
     
     // 리사이즈 시 재측정
     window.addEventListener("resize", updateNavbarHeight);
-    return () => window.removeEventListener("resize", updateNavbarHeight);
+    
+    return () => {
+      clearTimeout(initialTimeout);
+      window.removeEventListener("resize", updateNavbarHeight);
+      if (observer) observer.disconnect();
+    };
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      // Get navbar position
+    // GSAP ScrollTrigger를 사용하여 실시간으로 navbar 색상 감지
+    let rafId: number;
+    
+    const checkNavbarPosition = () => {
       const navbar = document.getElementById("navbar");
-      if (!navbar) return;
+      if (!navbar) {
+        rafId = requestAnimationFrame(checkNavbarPosition);
+        return;
+      }
 
       const navbarRect = navbar.getBoundingClientRect();
       const navbarCenter = navbarRect.top + navbarRect.height / 2;
@@ -60,13 +88,17 @@ export function Navbar() {
       }
 
       setIsOverDarkSection(isOverDark);
+      rafId = requestAnimationFrame(checkNavbarPosition);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    // 초기 체크
-    handleScroll();
+    // 초기 체크 및 애니메이션 시작
+    rafId = requestAnimationFrame(checkNavbarPosition);
     
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
+    };
   }, []);
 
   // 라이트 테마 여부 (메뉴 열림 또는 다크 섹션 위)
@@ -85,6 +117,7 @@ export function Navbar() {
             onClick={closeMenu}
             className="relative z-50"
             id="header-logo"
+            scroll={false}
           >
             <Image
               src={isLightTheme ? "/images/logo_white.png" : "/images/logo_black.png"}

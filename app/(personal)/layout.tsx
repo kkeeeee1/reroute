@@ -50,6 +50,7 @@ export default async function IndexRoute({children}: {children: React.ReactNode}
         <Footer />
       </div>
       <Toaster />
+      
       {/* Sanity 스튜디오에 있는 데이터의 실시간 업데이트를 위한 라이브 구독 컴포넌트 */}
       <SanityLive onError={handleError} /> 
       <SpeedInsights />

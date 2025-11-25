@@ -31,6 +31,9 @@ export function IntroAnimation() {
 
     hasShownRef.current = true;
     setIsVisible(true);
+    
+    // Clear the flag when intro starts (새로고침 시 초기화)
+    sessionStorage.removeItem('introAnimationPlayed');
 
     // Lock scroll completely during intro
     const html = document.documentElement;
@@ -141,6 +144,10 @@ export function IntroAnimation() {
             // Complete - hide intro and unlock scroll
             timeline.call(() => {
               setIsVisible(false);
+              
+              // Mark that intro has played in this session (after completion)
+              sessionStorage.setItem('introAnimationPlayed', 'true');
+              
               // 스크롤 잠금 즉시 해제 (약간의 안전 마진 100ms)
               scrollUnlockTimer = setTimeout(() => {
                 const html = document.documentElement;

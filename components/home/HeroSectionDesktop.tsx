@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 import { HeroImageCarousel } from "./HeroImageCarousel";
 
 export function HeroSectionDesktop() {
   const [minHeroHeight, setMinHeroHeight] = useState("100vh");
+  const pathname = usePathname();
 
   // 히어로 섹션 높이 계산 (화면 높이 - 헤더 높이)
   useEffect(() => {
@@ -13,13 +15,25 @@ export function HeroSectionDesktop() {
       const header = document.querySelector("header");
       const headerHeight = header ? header.offsetHeight : 0;
       const viewportHeight = window.innerHeight;
-      setMinHeroHeight(`${viewportHeight - headerHeight}px`);
+      
+      if (headerHeight > 0) {
+        setMinHeroHeight(`${viewportHeight - headerHeight}px`);
+      }
     };
 
-    calculateMinHeroHeight();
+    // Calculate with slight delay for DOM readiness
+    const timeout = setTimeout(() => {
+      calculateMinHeroHeight();
+    }, 100);
+    
+    // Recalculate on resize
     window.addEventListener("resize", calculateMinHeroHeight);
-    return () => window.removeEventListener("resize", calculateMinHeroHeight);
-  }, []);
+    
+    return () => {
+      clearTimeout(timeout);
+      window.removeEventListener("resize", calculateMinHeroHeight);
+    };
+  }, [pathname]);
 
   return (
     <section

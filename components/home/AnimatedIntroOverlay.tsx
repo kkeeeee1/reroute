@@ -150,10 +150,32 @@ export function AnimatedIntroOverlay({
     } as any);
   };
 
-  // 메인 타이머: 5초 대기 후 애니메이션 시작
+  // 메인 타이머: 인트로 애니메이션 재생 여부에 따라 대기 시간 조정
   useEffect(() => {
+    // sessionStorage로 이번 세션에 인트로가 재생되었는지 확인
+    const introHasPlayed = sessionStorage.getItem('introAnimationPlayed') === 'true';
+    
+    // 인트로 애니메이션이 현재 표시되고 있는지 DOM에서 확인
+    const introElement = document.querySelector('[data-intro-logo="true"]');
+    const introPlaying = introElement !== null;
+    
+    // 결정 로직:
+    // - 인트로가 재생 중이면 5초 대기
+    // - 이번 세션에 인트로가 아직 안 재생됐으면 5초 대기 (곧 재생될 것)
+    // - 이미 재생됐으면 0.5초만 대기
+    const waitDuration = (introPlaying || !introHasPlayed) ? STATIC_DURATION : 500;
+    
+    console.log('AnimatedIntroOverlay timing:', {
+      introHasPlayed,
+      introPlaying,
+      waitDuration
+    });
+    
     const staticTimer = setTimeout(() => {
-      // DOM이 완전히 렌더링된 후 위치 계산
+      // 스크롤을 최상단으로 강제 이동 (위치 계산 전)
+      window.scrollTo(0, 0);
+      
+      // DOM이 완전히 렌더링되고 스크롤이 완료된 후 위치 계산
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           calculateTargetPositions();
@@ -172,7 +194,7 @@ export function AnimatedIntroOverlay({
       }, totalMoveTime + FADE_OUT_DELAY);
 
       return () => clearTimeout(removeTimer);
-    }, STATIC_DURATION);
+    }, waitDuration);
 
     return () => clearTimeout(staticTimer);
   }, [onDismiss]);
@@ -195,6 +217,7 @@ export function AnimatedIntroOverlay({
             onClick={closeMenu}
             className="relative z-50"
             id="header-logo"
+            scroll={false}
           >
             <Image
               src={isOpen ? "/images/logo_white.png" : "/images/logo_black.png"}

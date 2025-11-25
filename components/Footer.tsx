@@ -8,7 +8,7 @@ export function Footer() {
     <footer className="w-full bg-white">
       <div className="mx-auto flex w-full max-w-screen-max flex-col items-center gap-8 px-7 py-12 md:flex-row md:items-center md:justify-between md:gap-0 md:py-16 md:px-10 lg:px-20">
         {/* Left - Logo */}
-        <Link href="/" className="shrink-0">
+        <Link href="/" className="shrink-0" scroll={false}>
           <Image
             src="/images/logo_main.png"
             alt="Reroute Logo"
