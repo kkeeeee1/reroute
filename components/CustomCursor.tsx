@@ -86,6 +86,16 @@ export function CustomCursor() {
         return;
       }
 
+      // 스크롤 투 탑 버튼은 제외
+      const isScrollToTopButton = 
+        target.getAttribute("aria-label") === "Scroll to top" ||
+        target.closest('[aria-label="Scroll to top"]');
+
+      if (isScrollToTopButton) {
+        setIsHovering(false);
+        return;
+      }
+
       const isClickable =
         target.tagName === "A" ||
         target.tagName === "BUTTON" ||
