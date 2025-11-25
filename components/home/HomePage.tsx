@@ -9,7 +9,7 @@ import { ServiceSection } from "./ServiceSection";
 import { MarqueeText } from "./MarqueeText";
 import { useIsDesktop } from "@/hooks/useIsDesktop";
 
-export function HomePage() {
+export function HomePageContainer() {
   const [introCompleted, setIntroCompleted] = useState(false);
   const [mounted, setMounted] = useState(false);
   const isDesktop = useIsDesktop();

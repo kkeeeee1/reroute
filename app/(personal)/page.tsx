@@ -1,4 +1,4 @@
-import { HomePage } from "@/components/home/HomePage";
+import { HomePageContainer } from "@/components/home/HomePage";
 import { sanityFetch } from "@/sanity/lib/live";
 import { homePageQuery, settingsQuery } from "@/sanity/lib/queries";
 import { urlForOpenGraphImage } from "@/sanity/lib/utils";
@@ -25,5 +25,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function IndexRoute() {
-  return <HomePage />;
+  return <HomePageContainer />;
 }
