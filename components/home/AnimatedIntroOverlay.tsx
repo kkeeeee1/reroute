@@ -90,25 +90,19 @@ export function AnimatedIntroOverlay({
       return;
     }
 
-    // 데스크톱에서만 스크롤 잠금 (스크롤바 공간은 유지)
+    // 데스크톱에서만 스크롤 잠금
     document.documentElement.style.overflow = "hidden";
-    document.documentElement.style.scrollbarGutter = "stable";
     document.body.style.overflow = "hidden";
-    document.body.style.scrollbarGutter = "stable";
 
     const unlockTimer = setTimeout(() => {
       document.documentElement.style.overflow = "";
-      document.documentElement.style.scrollbarGutter = "";
       document.body.style.overflow = "";
-      document.body.style.scrollbarGutter = "";
     }, 6000); // 애니메이션 완료 후 해제
 
     return () => {
       clearTimeout(unlockTimer);
       document.documentElement.style.overflow = "";
-      document.documentElement.style.scrollbarGutter = "";
       document.body.style.overflow = "";
-      document.body.style.scrollbarGutter = "";
     };
   }, [isMobile]);
 
