@@ -9,11 +9,8 @@ import {homePageQuery} from '@/sanity/lib/queries'
 import {urlForOpenGraphImage} from '@/sanity/lib/utils'
 import type {Metadata, Viewport} from 'next'
 import {toPlainText} from 'next-sanity'
-import {VisualEditing} from 'next-sanity/visual-editing'
-import {draftMode} from 'next/headers'
 import {Toaster} from 'sonner'
 import {handleError} from './client-functions'
-import {DraftModeToast} from './DraftModeToast'
 import {SpeedInsights} from '@vercel/speed-insights/next'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -53,13 +50,8 @@ export default async function IndexRoute({children}: {children: React.ReactNode}
         <Footer />
       </div>
       <Toaster />
-      <SanityLive onError={handleError} />
-      {(await draftMode()).isEnabled && (
-        <>
-          <DraftModeToast />
-          <VisualEditing />
-        </>
-      )}
+      {/* Sanity 스튜디오에 있는 데이터의 실시간 업데이트를 위한 라이브 구독 컴포넌트 */}
+      <SanityLive onError={handleError} /> 
       <SpeedInsights />
     </>
   )
