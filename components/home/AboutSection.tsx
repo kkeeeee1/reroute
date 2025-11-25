@@ -95,8 +95,8 @@ export function AboutSection() {
       {
         scaleY: 1,
         opacity: 1,
-        duration: 0.4,
-        delay: 0.3,
+        duration: 0.3,
+        delay: 0.1,
         ease: "power2.inOut",
       },
     );

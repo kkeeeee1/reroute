@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import Image from "next/image";
 import Link from "next/link";
@@ -41,7 +41,18 @@ export function ServiceCard({
   animationDelay = 0,
 }: ServiceCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const isDesktop = typeof window !== "undefined" && window.innerWidth >= 768;
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  // 데스크탑 감지 (md breakpoint = 768px)
+  useEffect(() => {
+    const checkDesktop = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+    
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop);
+    return () => window.removeEventListener('resize', checkDesktop);
+  }, []);
 
   // 데스크탑에서만 y-offset 적용
   const getYOffset = () => {
@@ -77,7 +88,7 @@ export function ServiceCard({
     return () => {
       anim.kill();
     };
-  }, [isInView, animationDelay]);
+  }, [isInView, animationDelay, isDesktop]);
 
   // Hover animation
   useEffect(() => {
@@ -89,7 +100,7 @@ export function ServiceCard({
       duration: isHovered || otherHovered ? 0.6 : 0.5,
       ease: "expo.out",
     });
-  }, [isHovered, otherHovered, isInView]);
+  }, [isHovered, otherHovered, isInView, isDesktop]);
 
   return (
     <Link href={href} className="block w-full">

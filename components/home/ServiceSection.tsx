@@ -91,9 +91,9 @@ export function ServiceSection() {
           </h2>
         </div>
 
-        {/* Service Cards Container - Staggered Layout */}
+        {/* Service Cards Container - Staggered Layout on Desktop Only */}
         <div className="flex w-full flex-col gap-5 md:flex-row md:items-center">
-          {/* B2B Card Container - Top aligned on desktop */}
+          {/* B2B Card Container - Top aligned on desktop, normal on mobile */}
           <div className="flex w-full md:w-1/2 md:items-start">
             <ServiceCard
               key="b2b"
@@ -115,7 +115,7 @@ export function ServiceSection() {
             />
           </div>
 
-          {/* B2C Card Container - Bottom aligned on desktop */}
+          {/* B2C Card Container - Bottom aligned on desktop, normal on mobile */}
           <div className="flex w-full md:w-1/2 md:items-end">
             <ServiceCard
               key="b2c"
