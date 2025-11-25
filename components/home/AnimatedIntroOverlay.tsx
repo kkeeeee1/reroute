@@ -90,19 +90,25 @@ export function AnimatedIntroOverlay({
       return;
     }
 
-    // 데스크톱에서만 스크롤 잠금
+    // 데스크톱에서만 스크롤 잠금 (스크롤바 공간은 유지)
     document.documentElement.style.overflow = "hidden";
+    document.documentElement.style.scrollbarGutter = "stable";
     document.body.style.overflow = "hidden";
+    document.body.style.scrollbarGutter = "stable";
 
     const unlockTimer = setTimeout(() => {
       document.documentElement.style.overflow = "";
+      document.documentElement.style.scrollbarGutter = "";
       document.body.style.overflow = "";
+      document.body.style.scrollbarGutter = "";
     }, 6000); // 애니메이션 완료 후 해제
 
     return () => {
       clearTimeout(unlockTimer);
       document.documentElement.style.overflow = "";
+      document.documentElement.style.scrollbarGutter = "";
       document.body.style.overflow = "";
+      document.body.style.scrollbarGutter = "";
     };
   }, [isMobile]);
 
@@ -371,29 +377,29 @@ function WordAnimation({
       `-=${moveDuration}` // 위치 이동과 동시에
     );
 
-    // 부드러운 crossfade
-    const snapDuration = moveDuration * 0.3; // 더 길게
+    // 점진적인 crossfade - 처음부터 시작하여 전체 duration 동안 진행
+    const crossfadeDuration = moveDuration; // 전체 이동 시간 동안
     
-    // 타겟 텍스트 부드럽게 fade in
+    // 타겟 텍스트 점진적으로 fade in (처음부터 시작)
     timeline.to(
       targetTextRef.current,
       {
         opacity: 1,
-        duration: snapDuration,
+        duration: crossfadeDuration,
         ease: "power2.inOut",
       },
-      `-=${snapDuration}` // 마지막 30% 구간
+      `-=${moveDuration}` // 위치 이동 시작과 동시에
     );
 
-    // 오버레이 텍스트 부드럽게 fade out
+    // 오버레이 텍스트 점진적으로 fade out (처음부터 시작)
     timeline.to(
       overlayTextRef.current,
       {
         opacity: 0,
-        duration: snapDuration,
+        duration: crossfadeDuration,
         ease: "power2.inOut",
       },
-      `-=${snapDuration}` // 타겟과 완전히 동시에
+      `-=${moveDuration}` // 위치 이동 시작과 동시에, 타겟과 완전히 동시에
     );
 
     return () => {
