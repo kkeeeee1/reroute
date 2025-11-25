@@ -4,12 +4,10 @@ import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
 import { createPortal } from "react-dom";
 import gsap from "gsap";
+import { INTRO_ANIMATION } from "@/constants/animations";
+import { introState } from "@/utils/introState";
 
 const TEXT_LINES = ["WE DON'T JUST", "SOLVE PROBLEMS,", "WE REROUTE THEM"];
-const TYPING_SPEED = 50; // ms per character
-const PAUSE_AFTER_TYPING = 800; // ms
-const LOGO_TRANSITION_DURATION = 1000; // ms
-const BACKGROUND_SLIDE_DURATION = 800; // ms
 
 export function IntroAnimation() {
   const [isVisible, setIsVisible] = useState(false);
@@ -33,7 +31,7 @@ export function IntroAnimation() {
     setIsVisible(true);
     
     // Clear the flag when intro starts (새로고침 시 초기화)
-    sessionStorage.removeItem('introAnimationPlayed');
+    introState.clear();
 
     // Lock scroll completely during intro
     const html = document.documentElement;
@@ -114,7 +112,7 @@ export function IntroAnimation() {
                 x: deltaX,
                 y: deltaY,
                 scale: targetScale,
-                duration: LOGO_TRANSITION_DURATION / 1000,
+                duration: INTRO_ANIMATION.LOGO_TRANSITION_DURATION / 1000,
                 ease: "expo.out",
                 transformOrigin: "center center",
               },
@@ -126,7 +124,7 @@ export function IntroAnimation() {
               [backgroundRef.current, logoRef.current],
               {
                 opacity: 0,
-                duration: BACKGROUND_SLIDE_DURATION / 1000,
+                duration: INTRO_ANIMATION.BACKGROUND_SLIDE_DURATION / 1000,
                 ease: "expo.out",
               }
             );
@@ -146,7 +144,7 @@ export function IntroAnimation() {
               setIsVisible(false);
               
               // Mark that intro has played in this session (after completion)
-              sessionStorage.setItem('introAnimationPlayed', 'true');
+              introState.markComplete();
               
               // 스크롤 잠금 즉시 해제 (약간의 안전 마진 100ms)
               scrollUnlockTimer = setTimeout(() => {
@@ -160,9 +158,9 @@ export function IntroAnimation() {
               }, 100);
             });
           }, 50);
-        }, PAUSE_AFTER_TYPING);
+        }, INTRO_ANIMATION.PAUSE_AFTER_TYPING);
       }
-    }, TYPING_SPEED);
+    }, INTRO_ANIMATION.TYPING_SPEED);
 
     return () => {
       clearInterval(typingInterval);

@@ -7,32 +7,29 @@ import { AboutSection } from "./AboutSection";
 import { ScrollDownIndicator } from "./ScrollDownIndicator";
 import { ServiceSection } from "./ServiceSection";
 import { MarqueeText } from "./MarqueeText";
+import { useIsDesktop } from "@/hooks/useIsDesktop";
 
 export function HomePage() {
   const [introCompleted, setIntroCompleted] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const isDesktop = useIsDesktop();
+  const isMobile = !isDesktop;
 
-  // 반응형 체크 (md 브레이크포인트 = 768px)
+  // Mark as mounted on client
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    setMounted(true);
   }, []);
 
   const handleIntroDismiss = () => {
     setIntroCompleted(true);
   };
 
-  // 모바일에서는 인트로 없이 바로 시작
+  // 모바일에서는 인트로 없이 바로 시작 (hydration 후에만)
   useEffect(() => {
-    if (isMobile) {
+    if (mounted && isMobile) {
       setIntroCompleted(true);
     }
-  }, [isMobile]);
+  }, [isMobile, mounted]);
 
   return (
     <>
@@ -43,7 +40,6 @@ export function HomePage() {
 
       {/* 메인 컨텐츠 - 항상 렌더링하되 opacity로 제어 */}
       <ScrollDownIndicator hideOnOverlay={false} />
-      
       <div className="relative" style={{ zIndex: 30 }}>
         <HeroSection />
         <AboutSection />

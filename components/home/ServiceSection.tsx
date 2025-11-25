@@ -3,30 +3,14 @@
 import { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ServiceCard } from "./ServiceCard";
+import { useInView } from "@/hooks/useInView";
 
 export function ServiceSection() {
   const [hoveredCard, setHoveredCard] = useState<"b2b" | "b2c" | null>(null);
-  const [isInView, setIsInView] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.4 },
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+  
+  const isInView = useInView({ ref: sectionRef, threshold: 0.4 });
 
   // GSAP 애니메이션
   useEffect(() => {

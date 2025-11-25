@@ -6,12 +6,9 @@ import { Menu } from "../Menu";
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import gsap from "gsap";
-
-// 애니메이션 타이밍 설정 (밀리초)
-const STATIC_DURATION = 5000; // 초기 대기 시간
-const STAGGER_DELAY = 300; // 각 단어 시작 간격
-const MOVE_DURATION = 0.8; // 각 단어 이동 시간 (초)
-const FADE_OUT_DELAY = 200; // 마지막 단어 도착 후 페이드아웃까지 딜레이
+import { INTRO_OVERLAY } from "@/constants/animations";
+import { introState } from "@/utils/introState";
+import { useIsDesktop } from "@/hooks/useIsDesktop";
 
 // 단어 데이터
 const WORDS = [
@@ -52,35 +49,22 @@ export function AnimatedIntroOverlay({
 }: AnimatedIntroOverlayProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [phase, setPhase] = useState<
-    "static" | "animating" | "fading" | "completed"
+    "static" | "animating" | "completed"
   >("static");
   const [wordPositions, setWordPositions] = useState<
     Record<string, WordPosition>
   >({});
-  const [isMobile, setIsMobile] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    return window.innerWidth < 768;
-  });
+  const isDesktop = useIsDesktop();
+  const isMobile = !isDesktop;
   const wordRefs = useRef<Record<string, HTMLSpanElement | null>>({});
   const [mounted, setMounted] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
 
-  // hydration 방지
+  // 클라이언트 마운트 표시
   useEffect(() => {
     setMounted(true);
-  }, []);
-
-  // 모바일 감지
-  useEffect(() => {
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    checkIsMobile();
-    window.addEventListener("resize", checkIsMobile);
-    return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
   // 스크롤 잠금 - 데스크톱에서만 애니메이션 중 스크롤 차단
@@ -152,8 +136,7 @@ export function AnimatedIntroOverlay({
 
   // 메인 타이머: 인트로 애니메이션 재생 여부에 따라 대기 시간 조정
   useEffect(() => {
-    // sessionStorage로 이번 세션에 인트로가 재생되었는지 확인
-    const introHasPlayed = sessionStorage.getItem('introAnimationPlayed') === 'true';
+    const introHasPlayed = introState.hasPlayed();
     
     // 인트로 애니메이션이 현재 표시되고 있는지 DOM에서 확인
     const introElement = document.querySelector('[data-intro-logo="true"]');
@@ -163,13 +146,7 @@ export function AnimatedIntroOverlay({
     // - 인트로가 재생 중이면 5초 대기
     // - 이번 세션에 인트로가 아직 안 재생됐으면 5초 대기 (곧 재생될 것)
     // - 이미 재생됐으면 0.5초만 대기
-    const waitDuration = (introPlaying || !introHasPlayed) ? STATIC_DURATION : 500;
-    
-    console.log('AnimatedIntroOverlay timing:', {
-      introHasPlayed,
-      introPlaying,
-      waitDuration
-    });
+    const waitDuration = (introPlaying || !introHasPlayed) ? INTRO_OVERLAY.STATIC_DURATION : 500;
     
     const staticTimer = setTimeout(() => {
       // 스크롤을 최상단으로 강제 이동 (위치 계산 전)
@@ -183,15 +160,14 @@ export function AnimatedIntroOverlay({
         });
       });
 
-      // 모든 단어 이동 완료 후 오버레이 즉시 제거
-      const lastWordDelay = (WORDS.length - 1) * STAGGER_DELAY;
-      const totalMoveTime = lastWordDelay + MOVE_DURATION * 1000;
+      const lastWordDelay = (WORDS.length - 1) * INTRO_OVERLAY.STAGGER_DELAY;
+      const totalMoveTime = lastWordDelay + INTRO_OVERLAY.MOVE_DURATION * 1000;
       const removeTimer = setTimeout(() => {
         setPhase("completed");
         if (onDismiss) {
           onDismiss();
         }
-      }, totalMoveTime + FADE_OUT_DELAY);
+      }, totalMoveTime + INTRO_OVERLAY.FADE_OUT_DELAY);
 
       return () => clearTimeout(removeTimer);
     }, waitDuration);
@@ -297,7 +273,7 @@ export function AnimatedIntroOverlay({
               const initialPosition = (wordPositions as any)[
                 `${word.id}_initial`
               ];
-              const delay = (index * STAGGER_DELAY) / 1000;
+              const delay = (index * INTRO_OVERLAY.STAGGER_DELAY) / 1000;
 
               if (!position || !initialPosition) return null;
 
@@ -313,7 +289,7 @@ export function AnimatedIntroOverlay({
                   delay={delay}
                   targetClass={targetClass}
                   overlayClass={OVERLAY_TEXT_CLASSES}
-                  moveDuration={MOVE_DURATION}
+                  moveDuration={INTRO_OVERLAY.MOVE_DURATION}
                 />
               );
             })}

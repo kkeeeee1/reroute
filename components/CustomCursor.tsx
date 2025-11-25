@@ -3,27 +3,19 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import gsap from "gsap";
+import { useIsDesktop } from "@/hooks/useIsDesktop";
 
 export function CustomCursor() {
   const defaultCursorRef = useRef<HTMLDivElement>(null);
   const hoverCursorRef = useRef<HTMLDivElement>(null);
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [isMobile, setIsMobile] = useState<boolean | undefined>(undefined);
   const [mounted, setMounted] = useState(false);
+  const isDesktop = useIsDesktop();
+  const isMobile = !isDesktop;
 
   useEffect(() => {
     setMounted(true);
-    
-    // 모바일 감지
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 768 || "ontouchstart" in window);
-    };
-
-    checkIsMobile();
-    window.addEventListener("resize", checkIsMobile);
-
-    return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
   // 초기 커서 위치 설정

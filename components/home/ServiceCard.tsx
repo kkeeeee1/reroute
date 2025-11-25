@@ -1,9 +1,8 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import Image from "next/image";
 import Link from "next/link";
+import { useIsDesktop } from "@/hooks/useIsDesktop";
 
 interface ServiceCardProps {
   id: "b2b" | "b2c";
@@ -41,18 +40,7 @@ export function ServiceCard({
   animationDelay = 0,
 }: ServiceCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [isDesktop, setIsDesktop] = useState(false);
-
-  // 데스크탑 감지 (md breakpoint = 768px)
-  useEffect(() => {
-    const checkDesktop = () => {
-      setIsDesktop(window.innerWidth >= 768);
-    };
-    
-    checkDesktop();
-    window.addEventListener('resize', checkDesktop);
-    return () => window.removeEventListener('resize', checkDesktop);
-  }, []);
+  const isDesktop = useIsDesktop();
 
   // 데스크탑에서만 y-offset 적용
   const getYOffset = () => {
