@@ -1,3 +1,4 @@
+import { AboutPageContainer } from '@/components/about/AboutPage'
 import {sanityFetch} from '@/sanity/lib/live'
 import {aboutPageQuery, settingsQuery} from '@/sanity/lib/queries'
 import {urlForOpenGraphImage} from '@/sanity/lib/utils'
@@ -19,5 +20,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function AboutPage() {
-  return <div className="space-y-20">{/* About */}</div>
+  return <div ><AboutPageContainer/></div>
 }
