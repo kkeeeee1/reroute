@@ -1,8 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, PT_Serif, Inter, Inria_Serif } from "next/font/google";
-import { GSAPScroll } from "@/components/GSAPScroll";
-import { OverlayScrollbarsWrapper } from "@/components/OverlayScrollbarsWrapper";
 
 const serif = PT_Serif({
   variable: "--font-serif",
@@ -44,11 +42,7 @@ export default function RootLayout({
       className={`${mono.variable} ${serif.variable} ${inter.variable} ${inriaSerif.variable}`}
     >
       <body>
-        <OverlayScrollbarsWrapper>
-          <GSAPScroll>
-            {children}
-          </GSAPScroll>
-        </OverlayScrollbarsWrapper>
+        {children}
       </body>
     </html>
   );
