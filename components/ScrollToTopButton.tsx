@@ -72,6 +72,7 @@ export function ScrollToTopButton() {
     <button
       ref={buttonRef}
       onClick={scrollToTop}
+      data-no-cursor
       className="fixed bottom-8 right-8 z-50 hidden h-14 w-14 items-center justify-center rounded-full bg-white shadow-2xl transition-colors duration-300 hover:bg-gray-50 md:flex"
       style={{
         boxShadow: "0 8px 24px rgba(0, 0, 0, 0.15)",

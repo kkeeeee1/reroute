@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
@@ -102,6 +101,7 @@ export function Navbar() {
   }, []);
 
   // 라이트 테마 여부 (메뉴 열림 또는 다크 섹션 위)
+  // 기본은 검정색, 다크 섹션에서만 흰색으로 변경
   const isLightTheme = isOpen || isOverDarkSection;
 
   const navbarContent = (

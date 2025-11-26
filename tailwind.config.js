@@ -14,9 +14,11 @@ module.exports = {
     },
     extend: {
       colors: {
-        navy: "#0E1C62",
-        deepnavy: "#0C1D77",
         primary: "#56C5D0",
+        navy: "#003BB1",
+        deepnavy: "#0C1D77",
+        darknavy: "#0E1C62",
+        gray: "#2C3039"
       },
       maxWidth: {
         "screen-max": "1920px",

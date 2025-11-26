@@ -47,7 +47,7 @@ export default async function IndexRoute({children}: {children: React.ReactNode}
         <CustomCursor />
         <IntroAnimation />
         <ScrollToTopButton />
-        <div className="flex min-h-screen flex-col bg-white text-black" style={{ paddingTop: 'var(--navbar-height, 96px)' }}>
+        <div className="flex min-h-screen flex-col bg-white text-black">
           <Navbar />
           <div>{children}</div>
           <Footer />

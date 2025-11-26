@@ -28,6 +28,7 @@ export function Footer() {
           {/* 클릭 시 메일 보내기 */}
           <a
             href="mailto:contact@reroute.com"
+            data-no-cursor
             className="group relative text-sm font-black leading-[20px] text-black md:text-base md:leading-[24px] lg:text-lg"
           >
             <span className="relative z-10">MAIL</span>
@@ -38,6 +39,7 @@ export function Footer() {
             href="http://pf.kakao.com/_TLlpn/chat"
             target="_blank"
             rel="noopener noreferrer"
+            data-no-cursor
             className="group relative text-sm font-black leading-[20px] text-black md:text-base md:leading-[24px] lg:text-lg"
           >
             <span className="relative z-10">KAKAOTALK</span>

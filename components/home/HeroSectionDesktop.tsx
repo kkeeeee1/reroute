@@ -1,44 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
-
 import { HeroImageCarousel } from "./HeroImageCarousel";
 
 export function HeroSectionDesktop() {
-  const [minHeroHeight, setMinHeroHeight] = useState("100vh");
-  const pathname = usePathname();
-
-  // 히어로 섹션 높이 계산 (화면 높이 - 헤더 높이)
-  useEffect(() => {
-    const calculateMinHeroHeight = () => {
-      const header = document.querySelector("header");
-      const headerHeight = header ? header.offsetHeight : 0;
-      const viewportHeight = window.innerHeight;
-      
-      if (headerHeight > 0) {
-        setMinHeroHeight(`${viewportHeight - headerHeight}px`);
-      }
-    };
-
-    // Calculate with slight delay for DOM readiness
-    const timeout = setTimeout(() => {
-      calculateMinHeroHeight();
-    }, 100);
-    
-    // Recalculate on resize
-    window.addEventListener("resize", calculateMinHeroHeight);
-    
-    return () => {
-      clearTimeout(timeout);
-      window.removeEventListener("resize", calculateMinHeroHeight);
-    };
-  }, [pathname]);
-
   return (
     <section
-      className="flex items-center justify-center px-10 md:py-0 lg:px-20"
-      style={{ minHeight: minHeroHeight }}
+      className="flex min-h-screen items-center justify-center px-10 md:pb-0 md:pt-16 lg:px-20"
     >
       <div className="flex w-full items-center justify-between gap-6 max-w-screen-max">
         {/* 좌측 텍스트 */}

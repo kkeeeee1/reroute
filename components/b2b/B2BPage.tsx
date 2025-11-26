@@ -1,5 +1,17 @@
-'use client';
+import { HeroSection } from './HeroSection';
+import { SolutionsSection } from './SolutionsSection';
+import { CaseStudySection } from './CaseStudySection';
+import { WhyRerouteSection } from './WhyRerouteSection';
+import { CTASection } from './CTASection';
 
 export function B2BPageContainer() {
-    return <div>B2B Page</div>;
+    return (
+        <>
+            <HeroSection />
+            <SolutionsSection />
+            <CaseStudySection />
+            <WhyRerouteSection />
+            <CTASection />
+        </>
+    );
 }

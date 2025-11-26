@@ -63,7 +63,7 @@ export default async function WorkDetailPage(props: WorkDetailPageProps) {
     <div className="px-7 md:px-10 lg:px-20">
       <div className="space-y-16">
         {/* 뒤로가기 버튼 */}
-        <Link href="/works" className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-navy transition-colors duration-300 group">
+        <Link href="/works" className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-black transition-colors duration-300 group">
           <svg className="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
@@ -92,7 +92,7 @@ export default async function WorkDetailPage(props: WorkDetailPageProps) {
                 <div className="w-2 h-2 bg-primary rounded-full" />
                 <span className="text-sm font-semibold text-primary uppercase tracking-widest">Work</span>
               </div>
-              <h1 className="text-5xl lg:text-6xl font-bold text-navy leading-tight tracking-tight">
+              <h1 className="text-5xl lg:text-6xl font-bold text-gray-700 leading-tight tracking-tight">
                 {work.name}
               </h1>
             </div>

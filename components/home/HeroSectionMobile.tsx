@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -9,24 +9,9 @@ import { HeroImageCarousel } from "./HeroImageCarousel";
 gsap.registerPlugin(ScrollTrigger);
 
 export function HeroSectionMobile() {
-  const [minHeroHeight, setMinHeroHeight] = useState("100vh");
   const sectionRef = useRef<HTMLElement>(null);
   const topBlockRef = useRef<HTMLDivElement>(null);
   const bottomBlockRef = useRef<HTMLDivElement>(null);
-
-  // 히어로 섹션 높이 계산 (화면 높이 - 헤더 높이)
-  useEffect(() => {
-    const calculateMinHeroHeight = () => {
-      const header = document.querySelector("header");
-      const headerHeight = header ? header.offsetHeight : 0;
-      const viewportHeight = window.innerHeight;
-      setMinHeroHeight(`${viewportHeight - headerHeight}px`);
-    };
-
-    calculateMinHeroHeight();
-    window.addEventListener("resize", calculateMinHeroHeight);
-    return () => window.removeEventListener("resize", calculateMinHeroHeight);
-  }, []);
 
   // GSAP ScrollTrigger 애니메이션
   useEffect(() => {
@@ -34,15 +19,11 @@ export function HeroSectionMobile() {
       return;
     }
 
-    // 헤더 높이 계산
-    const header = document.querySelector("header");
-    const headerHeight = header ? header.offsetHeight : 0;
-
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: `top ${headerHeight}px`, // 헤더 높이만큼 offset
+          start: "top top", // 헤더가 투명하므로 top에서 시작
           end: "+=150%", // 블록 슬라이드 + 이미지 감상 시간
           pin: true,
           scrub: 1,
@@ -66,13 +47,12 @@ export function HeroSectionMobile() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [minHeroHeight]);
+  }, []);
 
   return (
     <section
       ref={sectionRef}
-      className="relative w-full overflow-hidden"
-      style={{ minHeight: minHeroHeight }}
+      className="relative min-h-screen w-full overflow-hidden"
     >
       {/* 배경: 이미지 캐러셀 */}
       <div className="absolute inset-0">
@@ -83,7 +63,7 @@ export function HeroSectionMobile() {
       {/* 윗블럭 (50%): 영문 텍스트를 맨 아래 왼쪽 정렬 */}
       <div 
         ref={topBlockRef}
-        className="absolute left-0 top-0 flex h-1/2 w-full items-end justify-start bg-white px-7 pb-4"
+        className="absolute left-0 top-0 flex h-3/5 w-full items-end justify-start bg-white px-7 pb-4"
       >
         <h1 className="text-left text-[60px] font-bold leading-[60px] sm:text-[65px] sm:leading-[65px]">
           <span>Never Stuck Always Reroute</span>
@@ -93,7 +73,7 @@ export function HeroSectionMobile() {
       {/* 밑블럭 (50%): 한글 텍스트를 맨 위 왼쪽 정렬 */}
       <div 
         ref={bottomBlockRef}
-        className="absolute bottom-0 left-0 flex h-1/2 w-full items-start justify-start bg-white px-7 pt-4"
+        className="absolute bottom-0 left-0 flex h-2/5 w-full items-start justify-start bg-white px-7 pt-4"
       >
         <p className="text-left text-[28px] font-normal leading-[32px] sm:text-[40px] sm:leading-[50px]">
           브랜드와 비즈니스의 막힌 길에서 새로운 경로를 설계하는 전략 파트너

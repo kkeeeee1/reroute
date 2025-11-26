@@ -25,5 +25,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function B2BPage() {
-  return <div><B2BPageContainer /></div>;
+  return <B2BPageContainer />
 }

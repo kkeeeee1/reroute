@@ -76,22 +76,12 @@ export function CustomCursor() {
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
 
-      // 푸터 연락처 링크는 제외
-      const isInFooter = !!target.closest("footer");
-      const href = target.getAttribute("href") || target.closest("a")?.getAttribute("href") || "";
-      const isContactLink = href.includes("mailto:") || href.includes("kakao.com");
+      // data-no-cursor 속성이 있는 요소는 제외
+      const hasNoCursor = 
+        target.hasAttribute("data-no-cursor") ||
+        target.closest("[data-no-cursor]");
 
-      if (isInFooter && isContactLink) {
-        setIsHovering(false);
-        return;
-      }
-
-      // 스크롤 투 탑 버튼은 제외
-      const isScrollToTopButton = 
-        target.getAttribute("aria-label") === "Scroll to top" ||
-        target.closest('[aria-label="Scroll to top"]');
-
-      if (isScrollToTopButton) {
+      if (hasNoCursor) {
         setIsHovering(false);
         return;
       }

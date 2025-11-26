@@ -176,7 +176,7 @@ export function IntroAnimation() {
     <>
       <div
         ref={backgroundRef}
-        className="fixed inset-0 z-[100] bg-navy"
+        className="fixed inset-0 z-[100] bg-darknavy"
         style={{ willChange: "opacity" }}
       />
 
