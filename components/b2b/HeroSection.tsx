@@ -125,8 +125,7 @@ export function HeroSection() {
                         SOLUTION
                     </h2>
                     <div className="text-[16px] md:text-[24px] xl:text-[28px] 2xl:text-[32px] leading-[28px] md:leading-[38px] xl:leading-[44px] 2xl:leading-[50px] flex flex-col gap-1 md:gap-2">
-                        <p ref={descLine1Ref} className="opacity-0">브랜드와 비즈니스를 움직이는 전문 솔루션</p>
-                        <p ref={descLine2Ref} className="opacity-0">리루트는 기업이 목표를 명확히 달성할 수 있도록 브랜드의 전략, 실행, 시스템을 통합 설계합니다</p>
+                        <span ref={descLine1Ref} className="opacity-0">{`브랜드와 비즈니스를 움직이는 전문 솔루션. 리루트는 기업이 목표를 명확히 달성할 수 있도록 브랜드의 전략, 실행, 시스템을 통합 설계합니다.`}</span>
                     </div>
                    </div>
 
