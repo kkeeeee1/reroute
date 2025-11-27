@@ -176,7 +176,14 @@ export function AppDetailContent({ app }: AppDetailContentProps) {
           className="relative aspect-[3/2] overflow-hidden bg-[#141B29] opacity-0"
           style={{ willChange: "transform, opacity" }}
         >
-          <Image src={imageUrl} alt={app.name || "리루트 앱"} fill className="object-cover" />
+          <Image
+            src={imageUrl}
+            alt={app.name || "리루트 앱"}
+            fill
+            className="object-cover"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+            priority
+          />
         </div>
 
         {/* 오른쪽 */}
