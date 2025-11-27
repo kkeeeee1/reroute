@@ -21,7 +21,7 @@ export function CustomPortableText({
   const components: PortableTextComponents = {
     block: {
       normal: ({children}) => {
-        return <p className={paragraphClasses}>{children}</p>
+        return <p className={`whitespace-pre-line ${paragraphClasses}`}>{children}</p>
       },
       h1: ({children}) => {
         return <h1 className="text-4xl font-bold mt-8 mb-4">{children}</h1>
@@ -98,22 +98,40 @@ export function CustomPortableText({
         const height = value?.asset?.metadata?.dimensions?.height || 800
         const aspectRatio = width / height
 
+        // B2C 앱 콘텐츠는 깔끔한 이미지 스타일 사용
+        const isAppContent = type === 'app' || type === 'work'
+
         return (
-          <figure className="my-8 space-y-3 max-w-2xl">
-            <div
-              className="relative w-full overflow-hidden rounded-xl bg-gradient-to-br from-gray-100 to-gray-50 border border-gray-200 shadow-sm"
-              style={{aspectRatio: `${aspectRatio}`}}
-            >
-              {imageUrl && (
+          <figure className={`${isAppContent ? 'my-6' : 'my-8'} space-y-3 max-w-2xl`}>
+            {isAppContent ? (
+              // 앱/워크 콘텐츠: 원본 비율 유지
+              imageUrl && (
                 <Image
                   src={imageUrl}
                   alt={value?.alt || 'Image'}
-                  fill
-                  className="object-contain p-3"
+                  width={width}
+                  height={height}
+                  className="w-full h-auto"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 85vw, 700px"
                 />
-              )}
-            </div>
+              )
+            ) : (
+              // 기타 콘텐츠: 기존 스타일 유지
+              <div
+                className="relative w-full overflow-hidden rounded-xl bg-gradient-to-br from-gray-100 to-gray-50 border border-gray-200 shadow-sm"
+                style={{aspectRatio: `${aspectRatio}`}}
+              >
+                {imageUrl && (
+                  <Image
+                    src={imageUrl}
+                    alt={value?.alt || 'Image'}
+                    fill
+                    className="object-contain p-3"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 85vw, 700px"
+                  />
+                )}
+              </div>
+            )}
             {value?.caption && (
               <figcaption className="text-center font-sans text-sm text-gray-600 italic">
                 {value.caption}
@@ -131,6 +149,9 @@ export function CustomPortableText({
         const height = value?.asset?.metadata?.dimensions?.height || 800
         const aspectRatio = width / height
 
+        // B2C 앱 콘텐츠는 깔끔한 이미지 스타일 사용
+        const isAppContent = type === 'app' || type === 'work'
+
         // 크기에 따른 maxWidth 결정
         const sizeMap: Record<string, string> = {
           small: 'max-w-sm',
@@ -141,21 +162,36 @@ export function CustomPortableText({
         const maxWidthClass = sizeMap[value?.size] || 'max-w-2xl'
 
         return (
-          <figure className={`my-8 space-y-3 ${maxWidthClass}`}>
-            <div
-              className="relative w-full overflow-hidden rounded-xl bg-gradient-to-br from-gray-100 to-gray-50 border border-gray-200 shadow-sm"
-              style={{aspectRatio: `${aspectRatio}`}}
-            >
-              {imageUrl && (
+          <figure className={`${isAppContent ? 'my-6' : 'my-8'} space-y-3 ${maxWidthClass}`}>
+            {isAppContent ? (
+              // 앱/워크 콘텐츠: 원본 비율 유지
+              imageUrl && (
                 <Image
                   src={imageUrl}
                   alt={value?.alt || 'Image'}
-                  fill
-                  className="object-contain p-3"
+                  width={width}
+                  height={height}
+                  className="w-full h-auto"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 85vw, 900px"
                 />
-              )}
-            </div>
+              )
+            ) : (
+              // 기타 콘텐츠: 기존 스타일 유지
+              <div
+                className="relative w-full overflow-hidden rounded-xl bg-gradient-to-br from-gray-100 to-gray-50 border border-gray-200 shadow-sm"
+                style={{aspectRatio: `${aspectRatio}`}}
+              >
+                {imageUrl && (
+                  <Image
+                    src={imageUrl}
+                    alt={value?.alt || 'Image'}
+                    fill
+                    className="object-contain p-3"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 85vw, 900px"
+                  />
+                )}
+              </div>
+            )}
             {value?.caption && (
               <figcaption className="text-center font-sans text-sm text-gray-600 italic">
                 {value.caption}

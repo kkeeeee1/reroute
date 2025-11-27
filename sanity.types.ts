@@ -650,7 +650,7 @@ export type AppListQueryResult = Array<{
   } | null;
 }>;
 // Variable: appDetailQuery
-// Query: *[_type == "app" && appId == $appId][0]{    _id,    appId,    name,    summary,    thumbnail,    content,    createdAt,  }
+// Query: *[_type == "app" && appId == $appId][0]{    _id,    appId,    name,    summary,    thumbnail,    content,    createdAt,    "prevApp": *[_type == "app" && createdAt < ^.createdAt] | order(createdAt desc)[0]{      appId,      name    },    "nextApp": *[_type == "app" && createdAt > ^.createdAt] | order(createdAt asc)[0]{      appId,      name    }  }
 export type AppDetailQueryResult = {
   _id: string;
   appId: string | null;
@@ -708,6 +708,14 @@ export type AppDetailQueryResult = {
       }
   > | null;
   createdAt: string | null;
+  prevApp: {
+    appId: string | null;
+    name: string | null;
+  } | null;
+  nextApp: {
+    appId: string | null;
+    name: string | null;
+  } | null;
 } | null;
 // Variable: workListQuery
 // Query: *[_type == "work"] | order(createdAt desc){    _id,    workId,    name,    summary,    thumbnail,  }
@@ -815,7 +823,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "works"][0]{\n    _id,\n    _type,\n    seo {\n      metaTitle,\n      metaDescription,\n      keywords,\n      ogImage,\n    },\n  }\n': WorksPageQueryResult;
     '\n  *[_type == "settings"][0]{\n    _id,\n    _type,\n    defaultSeo {\n      metaTitle,\n      metaDescription,\n      keywords,\n    },\n    ogImage,\n  }\n': SettingsQueryResult;
     '\n  *[_type == "app"] | order(createdAt desc){\n    _id,\n    appId,\n    name,\n    summary,\n    thumbnail,\n  }\n': AppListQueryResult;
-    '\n  *[_type == "app" && appId == $appId][0]{\n    _id,\n    appId,\n    name,\n    summary,\n    thumbnail,\n    content,\n    createdAt,\n  }\n': AppDetailQueryResult;
+    '\n  *[_type == "app" && appId == $appId][0]{\n    _id,\n    appId,\n    name,\n    summary,\n    thumbnail,\n    content,\n    createdAt,\n    "prevApp": *[_type == "app" && createdAt < ^.createdAt] | order(createdAt desc)[0]{\n      appId,\n      name\n    },\n    "nextApp": *[_type == "app" && createdAt > ^.createdAt] | order(createdAt asc)[0]{\n      appId,\n      name\n    }\n  }\n': AppDetailQueryResult;
     '\n  *[_type == "work"] | order(createdAt desc){\n    _id,\n    workId,\n    name,\n    summary,\n    thumbnail,\n  }\n': WorkListQueryResult;
     '\n  *[_type == "work" && workId == $workId][0]{\n    _id,\n    workId,\n    name,\n    summary,\n    thumbnail,\n    startDate,\n    endDate,\n    role,\n    content,\n    createdAt,\n  }\n': WorkDetailQueryResult;
   }

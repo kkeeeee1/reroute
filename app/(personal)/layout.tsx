@@ -4,6 +4,7 @@ import {Navbar} from '@/components/Navbar'
 import {CustomCursor} from '@/components/CustomCursor'
 import {IntroAnimation} from '@/components/IntroAnimation'
 import {ScrollToTopButton} from '@/components/ScrollToTopButton'
+import {ScrollToTop} from '@/components/ScrollToTop'
 import {GSAPScroll} from '@/components/GSAPScroll'
 import {OverlayScrollbarsWrapper} from '@/components/OverlayScrollbarsWrapper'
 import {sanityFetch, SanityLive} from '@/sanity/lib/live'
@@ -44,6 +45,7 @@ export default async function IndexRoute({children}: {children: React.ReactNode}
   return (
     <OverlayScrollbarsWrapper>
       <GSAPScroll>
+        <ScrollToTop />
         <CustomCursor />
         <IntroAnimation />
         <ScrollToTopButton />

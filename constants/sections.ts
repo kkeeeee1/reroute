@@ -8,4 +8,8 @@ export const DARK_SECTION_IDS = {
   B2B_SOLUTIONS: 'b2b-solutions-section',
   B2B_WHY_REROUTE: 'b2b-why-reroute-section',
   B2B_CTA: 'b2b-cta-section',
+  B2C_HERO: 'b2c-hero-section',
+  WORKS_HERO: 'works-hero-section',
+  ABOUT_HERO: 'about-hero-section',
+
 } as const;

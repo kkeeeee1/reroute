@@ -9,8 +9,9 @@
 - [B2C 페이지 컴포넌트](#4-b2c-페이지-컴포넌트-스타일)
 - [CustomPortableText 이미지](#5-customportabletext-이미지-스타일)
 - [상세 페이지 공통 컴포넌트](#6-상세-페이지-공통-컴포넌트)
-- [Navbar 섹션 ID](#7-navbar-섹션-id)
-- [커스텀 커서 제외](#8-커스텀-커서-제외)
+- [인트로 애니메이션과 콘텐츠 동기화](#7-인트로-애니메이션과-콘텐츠-동기화)
+- [Navbar 섹션 ID](#8-navbar-섹션-id)
+- [커스텀 커서 제외](#9-커스텀-커서-제외)
 
 ---
 
@@ -42,7 +43,143 @@ px-7 md:px-10 lg:px-20
 
 ---
 
-## 2. Navbar 섹션 ID
+## 7. GSAP 애니메이션 패턴
+
+### 개요
+
+모든 페이지 애니메이션은 **직접 GSAP** + **ScrollTrigger** 패턴으로 통일됩니다. AnimatedWrapper 래퍼 컴포넌트는 제거되었으며, 각 컴포넌트에서 애니메이션을 직접 관리합니다.
+
+### 구현 패턴
+
+#### 기본 구조
+
+```tsx
+'use client';
+
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+export function MyComponent() {
+  const elementRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      if (elementRef.current) {
+        gsap.fromTo(
+          elementRef.current,
+          { y: 50, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: elementRef.current,
+              start: 'top 75%',
+            },
+          }
+        );
+      }
+    });
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <div ref={elementRef} className="opacity-0" style={{ willChange: 'transform, opacity' }}>
+      {/* 콘텐츠 */}
+    </div>
+  );
+}
+```
+
+### 주요 규칙
+
+1. **'use client' 필수**: 모든 애니메이션 컴포넌트는 클라이언트 컴포넌트여야 함
+2. **ScrollTrigger 등록**: 파일 상단에 `gsap.registerPlugin(ScrollTrigger)` 필수
+3. **gsap.context() 사용**: 메모리 누수 방지를 위해 반드시 context로 감싸기
+4. **초기 상태**: 요소에 `opacity-0` 클래스와 `willChange` 스타일 적용
+5. **useRef**: 애니메이션할 각 요소에 ref 할당
+
+### 애니메이션 속성 표
+
+| 속성 | 용도 | 예시 |
+| --- | --- | --- |
+| `y` / `x` | 위치 이동 | `{ y: 50, opacity: 0 }` → `{ y: 0, opacity: 1 }` |
+| `scale` | 크기 변화 | `{ scale: 0.9 }` → `{ scale: 1 }` |
+| `opacity` | 투명도 | `{ opacity: 0 }` → `{ opacity: 1 }` |
+| `duration` | 애니메이션 시간 | `duration: 0.8` (초) |
+| `delay` | 지연 시간 | `delay: 0.2` (초) |
+| `ease` | 이징 함수 | `'power3.out'`, `'power2.out'` |
+| `stagger` | 요소 간 간격 | `stagger: 0.1` (0.1초 간격) |
+
+### ScrollTrigger 옵션
+
+```tsx
+scrollTrigger: {
+  trigger: element,           // 트리거할 요소
+  start: 'top 75%',          // 시작점 (요소 상단이 뷰포트 75% 위치)
+  end: 'top 25%',            // 끝점 (선택사항)
+  scrub: true,               // 스크롤 속도에 연결 (선택사항)
+}
+```
+
+**시작점 가이드:**
+- `'top 75%'`: 요소 상단이 뷰포트 중간 정도 내려왔을 때 (일반적)
+- `'top 80%'`: 요소가 조금 더 아래 보여졌을 때 (리스트/그리드)
+- `'top 85%'`: 요소가 더 늦게 시작 (하단 버튼 등)
+
+### 권장 설정값
+
+**상단 요소들 (제목, 이미지):**
+```tsx
+{ y: 40, opacity: 0 } → { y: 0, opacity: 1, duration: 0.8 }
+```
+
+**본문/콘텐츠:**
+```tsx
+{ y: 50, opacity: 0 } → { y: 0, opacity: 1, duration: 1 }
+```
+
+**카드/그리드:**
+```tsx
+{ y: 50, opacity: 0 } → { y: 0, opacity: 1, duration: 0.8, stagger: 0.1 }
+```
+
+### 實제 사용 예 (AppDetailContent)
+
+```tsx
+// Thumbnail
+gsap.fromTo(
+  thumbnailRef.current,
+  { scale: 0.9, opacity: 0 },
+  { scale: 1, opacity: 1, duration: 1, ease: 'power3.out', scrollTrigger: {...} }
+);
+
+// Title (delay로 시차)
+gsap.fromTo(
+  titleRef.current,
+  { y: 40, opacity: 0 },
+  { y: 0, opacity: 1, duration: 0.8, delay: 0.2, ease: 'power2.out', scrollTrigger: {...} }
+);
+```
+
+### 체크리스트 (새 섹션 추가 시)
+
+- [ ] `'use client'` 선언 추가
+- [ ] `gsap`, `ScrollTrigger` import
+- [ ] `gsap.registerPlugin(ScrollTrigger)` 실행
+- [ ] 애니메이션할 요소에 `useRef` 생성
+- [ ] `useEffect`에서 `gsap.context()` 사용
+- [ ] 모든 요소에 `opacity-0` + `willChange` 적용
+- [ ] `cleanup` 함수에서 `ctx.revert()` 호출
+
+---
+
+## 8. Navbar 섹션 ID
 
 ### Navbar 색상 자동 전환
 
@@ -77,7 +214,7 @@ export const DARK_SECTION_IDS = {
 
 ---
 
-## 3. 커스텀 커서 제외
+## 9. 커스텀 커서 제외
 
 ### 개요
 

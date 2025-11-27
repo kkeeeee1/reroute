@@ -71,13 +71,13 @@ export function CTASection() {
         <section 
             ref={containerRef}
             id="b2b-cta-section"
-            className="relative bg-cover bg-center bg-no-repeat py-16 md:py-24 xl:py-32 2xl:py-36 text-white overflow-hidden"
+            className="relative bg-cover bg-center bg-no-repeat text-white overflow-hidden"
             style={{ backgroundImage: 'url(/images/b2b/b2b_cta_bg.jpg)' }}
         >
             {/* 어두운 오버레이 */}
             <div className="absolute inset-0 bg-[#2C3039]/80"></div>
             
-            <div className="z-10 relative mx-auto max-w-screen-max text-center space-y-8 md:space-y-12 xl:space-y-14 2xl:space-y-[50px] px-5 md:px-16 xl:px-20">
+            <div className="z-10 relative mx-auto max-w-screen-max text-center space-y-8 md:space-y-12 xl:space-y-14 2xl:space-y-[50px] px-7 md:px-16 xl:px-20 py-16 md:py-24 xl:py-32 2xl:py-36">
                 <p ref={textRef} className="text-[18px] md:text-[28px] xl:text-[34px] 2xl:text-[40px] leading-[32px] md:leading-[50px] xl:leading-[60px] 2xl:leading-[70px] font-medium">
                     비즈니스의 핵심 문제를 정밀하게 진단하고, 가장 효과적인 전략적 방향을 설계합니다.
                 </p>

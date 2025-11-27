@@ -97,6 +97,14 @@ export const appDetailQuery = defineQuery(`
     thumbnail,
     content,
     createdAt,
+    "prevApp": *[_type == "app" && createdAt < ^.createdAt] | order(createdAt desc)[0]{
+      appId,
+      name
+    },
+    "nextApp": *[_type == "app" && createdAt > ^.createdAt] | order(createdAt asc)[0]{
+      appId,
+      name
+    }
   }
 `)
 

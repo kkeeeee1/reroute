@@ -107,11 +107,11 @@ export function HeroSection() {
     }, []);
 
     return (
-        <section ref={containerRef} id="b2b-hero-section" className="relative flex min-h-[70vh] md:min-h-[85vh] flex-col bg-black text-white overflow-hidden">
+        <section ref={containerRef} id="b2c-hero-section" className="relative flex min-h-[70vh] md:min-h-[85vh] flex-col bg-[#00002B] text-white overflow-hidden">
             <Image
                 ref={bgImageRef}
-                src="/images/b2b/solution_bg.png"
-                alt="Solution 3D Object"
+                src="/images/b2c/b2c_bg.png"
+                alt="Labs 3D Object"
                 className="absolute right-0 bottom-0 w-full h-auto object-contain opacity-0" // Added opacity-0
                 priority
                 width={500}
@@ -122,18 +122,18 @@ export function HeroSection() {
                 <div className="flex flex-1 flex-col justify-between md:max-w-[60%] xl:max-w-[55%] 2xl:max-w-[47%]">
                   <div className="space-y-5 md:space-y-7 xl:space-y-8 2xl:space-y-[36px]">
                     <h2 ref={titleRef} className="text-[48px] md:text-[64px] xl:text-[72px] 2xl:text-[80px] font-bold uppercase leading-none opacity-0"> {/* Added opacity-0 */}
-                        SOLUTION
+                        Labs
                     </h2>
-                    <div className="text-[16px] md:text-[24px] xl:text-[28px] 2xl:text-[32px] whitespace-pre-line leading-[28px] md:leading-[38px] xl:leading-[44px] 2xl:leading-[50px] flex flex-col gap-1 md:gap-2">
-                        <span ref={descLine1Ref} className="opacity-0">{`브랜드와 비즈니스를 움직이는 전문 솔루션. \n 리루트는 기업이 목표를 명확히 달성할 수 있도록 브랜드의 전략, 실행, 시스템을 통합 설계합니다.`}</span>
+                    <div className="text-[16px] md:text-[24px] xl:text-[28px] 2xl:text-[32px] leading-[28px] md:leading-[38px] xl:leading-[44px] 2xl:leading-[50px] flex flex-col gap-1 md:gap-2">
+                        <span ref={descLine1Ref} className="opacity-0">{`우리는 복잡함에 갇힌 문제를 다시 정의하고, 가장 본질적인 기능만 남긴 실행형 솔루션으로 재구성합니다. Labs는 리루트의 철학이 실제로 구현되는 공간입니다.`}</span>
                     </div>
                    </div>
 
                   <div ref={badgeRef} className="flex items-center gap-4 md:gap-6 xl:gap-7 2xl:gap-[34px] mt-8 md:mt-0 opacity-0"> {/* Added opacity-0 */}
                     <span className="rounded-full bg-white text-[18px] md:text-[22px] xl:text-[24px] 2xl:text-[26px] leading-[22px] md:leading-[26px] xl:leading-[28px] 2xl:leading-[30px] font-bold text-black px-4 py-1 md:px-5 md:py-1.5 xl:px-6 xl:py-1.5 2xl:px-6 2xl:py-1.5">
-                        B2B
+                        B2C
                     </span>
-                    <span className="text-[20px] md:text-[26px] xl:text-[29px] 2xl:text-[32px]">For Your Business</span>
+                    <span className="text-[20px] md:text-[26px] xl:text-[29px] 2xl:text-[32px]">For Your Life</span>
                     </div>
                 </div>
             </div>

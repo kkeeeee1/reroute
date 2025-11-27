@@ -78,8 +78,8 @@ export function WhyRerouteSection() {
     }, []);
 
     return (
-        <section ref={containerRef} id="b2b-why-reroute-section" className="bg-navy py-16 md:py-20 lg:py-24 xl:py-28 2xl:py-[150px] text-white overflow-hidden">
-            <div className="mx-auto max-w-screen-max space-y-16 md:space-y-20 lg:space-y-24 xl:space-y-28 2xl:space-y-[124px] px-5 md:px-10 lg:px-16 xl:px-20">
+        <section ref={containerRef} id="b2b-why-reroute-section" className="bg-navy text-white overflow-hidden">
+            <div className="mx-auto max-w-screen-max space-y-16 md:space-y-20 lg:space-y-24 xl:space-y-28 2xl:space-y-[124px] py-16 md:py-20 lg:py-24 xl:py-28 2xl:py-[150px] px-7 md:px-10 lg:px-16 xl:px-20">
                 <div ref={headerRef} className="space-y-4 md:space-y-5 lg:space-y-6 xl:space-y-7 2xl:space-y-[34px] opacity-0">
                     <h2 className="text-[28px] md:text-[32px] lg:text-[38px] xl:text-[44px] 2xl:text-[48px] leading-[40px] md:leading-[48px] lg:leading-[56px] xl:leading-[64px] 2xl:leading-[70px] font-extrabold">Why Reroute?</h2>
                     <p className="text-[16px] md:text-[20px] lg:text-[24px] xl:text-[28px] 2xl:text-[32px] leading-[28px] md:leading-[34px] lg:leading-[40px] xl:leading-[46px] 2xl:leading-[50px] font-medium">

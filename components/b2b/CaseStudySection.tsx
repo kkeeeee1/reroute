@@ -78,8 +78,8 @@ export function CaseStudySection() {
     }, []);
 
     return (
-        <section ref={containerRef} id="case-study-section" className="bg-white py-16 md:py-20 lg:py-24 xl:py-28 2xl:py-32 overflow-hidden">
-            <div className="mx-auto max-w-screen-max px-5 md:px-10 lg:px-16 xl:px-20">
+        <section ref={containerRef} id="case-study-section" className="bg-white overflow-hidden">
+            <div className="mx-auto max-w-screen-max px-7 md:px-10 lg:px-16 xl:px-20 py-16 md:py-20 lg:py-24 xl:py-28 2xl:py-32">
                 {/* 제목 */}
                 <div ref={titleRef}>
                     <h2 className="mb-5 md:mb-6 lg:mb-7 xl:mb-8 2xl:mb-[35px] text-[28px] md:text-[32px] lg:text-[38px] xl:text-[44px] 2xl:text-[48px] leading-[36px] md:leading-[42px] lg:leading-[48px] xl:leading-[54px] 2xl:leading-[58px] font-extrabold">

@@ -120,7 +120,7 @@ export function SolutionsSection() {
 
     return (
         <section ref={containerRef} id="b2b-solutions-section" className="relative bg-black text-white py-16 md:py-20 lg:py-24 xl:py-28 2xl:py-32 overflow-hidden">
-            <div className="mx-auto max-w-screen-max px-5 md:px-10 lg:px-16 xl:px-20">
+            <div className="mx-auto max-w-screen-max px-7 md:px-10 lg:px-16 xl:px-20">
                 <div className="flex flex-col md:flex-row gap-8 md:gap-12 xl:gap-14 2xl:gap-16">
                     {/* 좌측 타이틀 - 데스크탑만 */}
                     <div className="hidden md:block">
