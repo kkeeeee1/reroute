@@ -5,20 +5,30 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 interface AppListContentProps {
   apps: any[];
+  totalCount?: number;
 }
 
-export function AppListContent({ apps }: AppListContentProps) {
+export function AppListContent({ apps: initialApps, totalCount = 0 }: AppListContentProps) {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const defaultImage = "/images/default_image.png";
 
+  const [loadedApps, setLoadedApps] = useState<any[]>(initialApps || []);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(totalCount ? initialApps.length < totalCount : true);
+  const initializedRef = useRef(false);
+
+  // 초기 애니메이션 (제목 + 첫 카드들) - 초기 로드만
   useEffect(() => {
+    if (initializedRef.current || !titleRef.current) return;
+
     const ctx = gsap.context(() => {
       // Title animation
       gsap.fromTo(
@@ -36,29 +46,62 @@ export function AppListContent({ apps }: AppListContentProps) {
         }
       );
 
-      // Card stagger animation - WhyRerouteSection style
+      // Card stagger animation - 초기 카드들만
       if (gridRef.current) {
-        const cards = gridRef.current.children;
-        gsap.fromTo(
-          cards,
-          { y: 50, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            stagger: 0.1,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: gridRef.current,
-              start: "top 80%",
-            },
-          }
-        );
+        const cards = Array.from(gridRef.current.querySelectorAll(".app-card"));
+        if (cards.length > 0) {
+          gsap.fromTo(
+            cards,
+            { y: 50, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              stagger: 0.1,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: gridRef.current,
+                start: "top 80%",
+              },
+            }
+          );
+        }
       }
     });
 
+    initializedRef.current = true;
     return () => ctx.revert();
   }, []);
+
+  // 더 많은 앱 로드
+  const loadMoreApps = async () => {
+    if (isLoading || !hasMore) return;
+
+    setIsLoading(true);
+    try {
+      const url = `/api/apps?skip=${currentPage * 1}&limit=1`;
+
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      if (result.success && result.data) {
+        setLoadedApps((prev) => [...prev, ...result.data]);
+        setHasMore(result.hasMore);
+        setCurrentPage((prev) => prev + 1);
+      } else {
+        console.error("Invalid API response:", result);
+      }
+    } catch (error) {
+      console.error("앱 로드 실패:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <section>
@@ -76,12 +119,12 @@ export function AppListContent({ apps }: AppListContentProps) {
           ref={gridRef}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[40px] md:gap-[50px] lg:gap-[60px] xl:gap-[65px] 2xl:gap-[70px]"
         >
-          {apps?.map((app: (typeof apps)[number]) => {
+          {loadedApps?.map((app: any) => {
             const thumbnailUrl = app.thumbnail ? urlForImage(app.thumbnail as any)?.url() : null;
             const imageUrl = (thumbnailUrl || defaultImage) as string;
 
             return (
-              <div key={app.appId} className="opacity-0">
+              <div key={app.appId} className="app-card">
                 <Link href={`/b2c/${app.appId}`}>
                   <div className="group flex h-full cursor-pointer flex-col overflow-hidden border border-[#888888] bg-white transition-all duration-300">
                     {/* 이미지 컨테이너 */}
@@ -96,7 +139,7 @@ export function AppListContent({ apps }: AppListContentProps) {
                     </div>
 
                     {/* 콘텐츠 영역 */}
-                    <div className="flex flex-col space-y-[10px] md:space-y-[12px] lg:space-y-[13px] xl:space-y-[14px] 2xl:space-y-[15px] px-[25px] md:px-[33px] lg:px-[39px] xl:px-[42px] 2xl:px-[45px] pt-[19px] md:pt-[25px] lg:pt-[30px] xl:pt-[32px] 2xl:pt-[35px] pb-[25px] md:pb-[33px] lg:pb-[39px] xl:pb-[42px] 2xl:pb-[45px]">
+                    <div className="flex flex-col space-y-[10px] md:space-y-[12px] lg:space-y-[13px] xl:space-y-[14px] 2xl:space-y-[15px] px-[20px] md:px-[29px] lg:px-[34px] xl:px-[37px] 2xl:px-[40px] pt-[19px] md:pt-[25px] lg:pt-[30px] xl:pt-[32px] 2xl:pt-[35px] pb-[25px] md:pb-[33px] lg:pb-[39px] xl:pb-[42px] 2xl:pb-[45px]">
                       <h3 className="text-[22px] md:text-[26px] lg:text-[29px] xl:text-[30px] 2xl:text-[32px] font-bold">
                         {app.name}
                       </h3>
@@ -110,6 +153,20 @@ export function AppListContent({ apps }: AppListContentProps) {
             );
           })}
         </div>
+
+        {/* Load More Button */}
+        {hasMore && (
+          <div className="flex justify-center mt-12 md:mt-16 lg:mt-20">
+            <button
+              data-no-cursor
+              onClick={loadMoreApps}
+              disabled={isLoading}
+              className="border-2 rounded-full border-black px-4 md:px-5 lg:px-5 xl:px-5 2xl:px-5 py-1.5 md:py-2 lg:py-2 xl:py-2 2xl:py-2 text-[18px] font-bold leading-[100%] text-black lg:text-[20px] xl:text-[24px] 2xl:text-[28px] hover:bg-black hover:text-white transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Load More
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -1,9 +1,15 @@
 import { sanityFetch } from "@/sanity/lib/live";
-import { appListQuery } from "@/sanity/lib/queries";
+import { appListCountQuery, appListQuery } from "@/sanity/lib/queries";
 import { AppListContent } from "./AppListContent";
 
 export async function AppList() {
-  const { data: apps } = await sanityFetch({ query: appListQuery });
+  const [appsResult, countResult] = await Promise.all([
+    sanityFetch({ query: appListQuery }),
+    sanityFetch({ query: appListCountQuery }),
+  ]);
 
-  return <AppListContent apps={apps || []} />;
+  const apps = appsResult.data || [];
+  const totalCount = countResult.data || 0;
+
+  return <AppListContent apps={apps} totalCount={totalCount} />;
 }

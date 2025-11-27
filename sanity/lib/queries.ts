@@ -1,4 +1,4 @@
-import {defineQuery} from 'next-sanity'
+import { defineQuery } from "next-sanity";
 
 export const homePageQuery = defineQuery(`
   *[_type == "home"][0]{
@@ -11,7 +11,7 @@ export const homePageQuery = defineQuery(`
       ogImage,
     },
   }
-`)
+`);
 
 export const b2bPageQuery = defineQuery(`
   *[_type == "b2b"][0]{
@@ -24,7 +24,7 @@ export const b2bPageQuery = defineQuery(`
       ogImage,
     },
   }
-`)
+`);
 
 export const b2cPageQuery = defineQuery(`
   *[_type == "b2c"][0]{
@@ -37,7 +37,7 @@ export const b2cPageQuery = defineQuery(`
       ogImage,
     },
   }
-`)
+`);
 
 export const aboutPageQuery = defineQuery(`
   *[_type == "about"][0]{
@@ -50,7 +50,7 @@ export const aboutPageQuery = defineQuery(`
       ogImage,
     },
   }
-`)
+`);
 
 export const worksPageQuery = defineQuery(`
   *[_type == "works"][0]{
@@ -63,7 +63,7 @@ export const worksPageQuery = defineQuery(`
       ogImage,
     },
   }
-`)
+`);
 
 export const settingsQuery = defineQuery(`
   *[_type == "settings"][0]{
@@ -76,17 +76,31 @@ export const settingsQuery = defineQuery(`
     },
     ogImage,
   }
-`)
+`);
 
 export const appListQuery = defineQuery(`
-  *[_type == "app"] | order(createdAt desc){
+  *[_type == "app"] | order(createdAt desc)[0...12]{
     _id,
     appId,
     name,
     summary,
     thumbnail,
   }
-`)
+`);
+
+export const appListCountQuery = defineQuery(`
+  count(*[_type == "app"])
+`);
+
+export const appListPaginatedQuery = defineQuery(`
+  *[_type == "app"] | order(createdAt desc)[$skip...$skip + $limit]{
+    _id,
+    appId,
+    name,
+    summary,
+    thumbnail,
+  }
+`);
 
 export const appDetailQuery = defineQuery(`
   *[_type == "app" && appId == $appId][0]{
@@ -106,7 +120,7 @@ export const appDetailQuery = defineQuery(`
       name
     }
   }
-`)
+`);
 
 export const workListQuery = defineQuery(`
   *[_type == "work"] | order(createdAt desc){
@@ -116,7 +130,7 @@ export const workListQuery = defineQuery(`
     summary,
     thumbnail,
   }
-`)
+`);
 
 export const workDetailQuery = defineQuery(`
   *[_type == "work" && workId == $workId][0]{
@@ -131,4 +145,4 @@ export const workDetailQuery = defineQuery(`
     content,
     createdAt,
   }
-`)
+`);

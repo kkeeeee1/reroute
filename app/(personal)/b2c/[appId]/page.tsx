@@ -1,5 +1,4 @@
-import { AppDetailContent } from "@/components/b2c/AppDetailContent";
-import { HeroSection } from "@/components/b2c/HeroSection";
+import { AppDetailContainer } from "@/components/b2c/AppDetailContainer";
 import { sanityFetch } from "@/sanity/lib/live";
 import { appDetailQuery, settingsQuery } from "@/sanity/lib/queries";
 import { Metadata } from "next";
@@ -26,19 +25,6 @@ export async function generateMetadata(props: AppDetailPageProps): Promise<Metad
 
 export default async function AppDetailPage(props: AppDetailPageProps) {
   const params = await props.params;
-  const { data: app } = await sanityFetch({
-    query: appDetailQuery,
-    params: { appId: params.appId },
-  });
 
-  if (!app) {
-    return <div>App not found</div>;
-  }
-
-  return (
-    <>
-      <HeroSection />
-      <AppDetailContent app={app} />
-    </>
-  );
+  return <AppDetailContainer appId={params.appId} />;
 }
