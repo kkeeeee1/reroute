@@ -123,7 +123,21 @@ export const appDetailQuery = defineQuery(`
 `);
 
 export const workListQuery = defineQuery(`
-  *[_type == "work"] | order(createdAt desc){
+  *[_type == "work"] | order(createdAt desc)[0...12]{
+    _id,
+    workId,
+    name,
+    summary,
+    thumbnail,
+  }
+`);
+
+export const workListCountQuery = defineQuery(`
+  count(*[_type == "work"])
+`);
+
+export const workListPaginatedQuery = defineQuery(`
+  *[_type == "work"] | order(createdAt desc)[$skip...$skip + $limit]{
     _id,
     workId,
     name,
@@ -144,5 +158,13 @@ export const workDetailQuery = defineQuery(`
     role,
     content,
     createdAt,
+    "prevWork": *[_type == "work" && createdAt < ^.createdAt] | order(createdAt desc)[0]{
+      workId,
+      name
+    },
+    "nextWork": *[_type == "work" && createdAt > ^.createdAt] | order(createdAt asc)[0]{
+      workId,
+      name
+    }
   }
 `);

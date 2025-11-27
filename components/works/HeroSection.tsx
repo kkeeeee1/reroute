@@ -12,6 +12,7 @@ export function HeroSection() {
   const containerRef = useRef<HTMLElement>(null);
   const bgImageRef = useRef<HTMLImageElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const taglineRef = useRef<HTMLSpanElement>(null);
   const descLine1Ref = useRef<HTMLParagraphElement>(null);
   const descLine2Ref = useRef<HTMLParagraphElement>(null);
   const badgeRef = useRef<HTMLDivElement>(null);
@@ -51,6 +52,19 @@ export function HeroSection() {
             opacity: 1,
             duration: 1.2,
             delay: 0.3,
+            ease: "power3.out",
+          }
+        );
+
+        // Tagline Animation
+        gsap.fromTo(
+          taglineRef.current,
+          { y: 50, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            delay: 0.5,
             ease: "power3.out",
           }
         );
@@ -112,13 +126,13 @@ export function HeroSection() {
   return (
     <section
       ref={containerRef}
-      id="b2c-hero-section"
+      id="works-hero-section"
       className="relative flex min-h-[70vh] md:min-h-[85vh] flex-col bg-[#00002B] text-white overflow-hidden"
     >
       <Image
         ref={bgImageRef}
-        src="/images/b2c/b2c_bg.png"
-        alt="Labs 3D Object"
+        src="/images/works/works_bg.png"
+        alt="Works 3D Object"
         className="object-contain absolute bottom-0 right-0 opacity-0 w-full"
         priority
         width={2000}
@@ -132,26 +146,24 @@ export function HeroSection() {
               ref={titleRef}
               className="text-[48px] md:text-[64px] xl:text-[72px] 2xl:text-[80px] font-bold uppercase leading-none opacity-0"
             >
-              Labs
+              Works
             </h2>
-            <div className="text-[16px] md:text-[24px] xl:text-[28px] 2xl:text-[32px] leading-[28px] md:leading-[38px] xl:leading-[44px] 2xl:leading-[50px] lg:whitespace-pre-line">
+
+            <div>
+              <span
+                ref={taglineRef}
+                className="font-bold text-[16px] md:text-[24px] xl:text-[28px] 2xl:text-[32px] leading-[28px] md:leading-[38px] xl:leading-[44px] 2xl:leading-[50px] opacity-0"
+              >
+                "리루트는 결과로 이야기합니다"
+              </span>
+            </div>
+
+            <div className="text-[16px] md:text-[24px] xl:text-[28px] 2xl:text-[32px] leading-[28px] md:leading-[38px] xl:leading-[44px] 2xl:leading-[50px] md:whitespace-pre-line">
               <span
                 ref={descLine1Ref}
                 className="opacity-0"
-              >{`우리는 복잡함에 갇힌 문제를 다시 정의하고,\n가장 본질적인 기능만 남긴 실행형 솔루션으로 재구성합니다.\nLabs는 리루트의 철학이 실제로 구현되는 공간입니다.`}</span>
+              >{`전략, 디자인, 기술을 하나로 묶어\n실제로 변화가 일어나는 프로젝트만 수행합니다.\n우리의 방식이 어떻게 성과로 이어졌는지,\n다양한 제작사례를 확인하세요.`}</span>
             </div>
-          </div>
-
-          <div
-            ref={badgeRef}
-            className="flex items-center gap-4 md:gap-6 xl:gap-7 2xl:gap-[34px] mt-8 md:mt-0 opacity-0"
-          >
-            <span className="rounded-full bg-white text-[18px] md:text-[22px] xl:text-[24px] 2xl:text-[26px] leading-[22px] md:leading-[26px] xl:leading-[28px] 2xl:leading-[30px] font-bold text-black px-4 py-1 md:px-5 md:py-1.5 xl:px-6 xl:py-1.5 2xl:px-6 2xl:py-1.5">
-              B2C
-            </span>
-            <span className="text-[20px] md:text-[26px] xl:text-[29px] 2xl:text-[32px]">
-              For Your Life
-            </span>
           </div>
         </div>
       </div>

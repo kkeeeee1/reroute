@@ -1,5 +1,11 @@
-'use client';
+import { HeroSection } from "./HeroSection";
+import { WorkList } from "./WorkList";
 
 export function WorksPageContainer() {
-    return <div>Works Page</div>;
+  return (
+    <>
+      <HeroSection />
+      <WorkList />
+    </>
+  );
 }

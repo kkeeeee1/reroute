@@ -630,7 +630,7 @@ export type SettingsQueryResult = {
   } | null;
 } | null;
 // Variable: appListQuery
-// Query: *[_type == "app"] | order(createdAt desc){    _id,    appId,    name,    summary,    thumbnail,  }
+// Query: *[_type == "app"] | order(createdAt desc)[0...12]{    _id,    appId,    name,    summary,    thumbnail,  }
 export type AppListQueryResult = Array<{
   _id: string;
   appId: string | null;
@@ -649,6 +649,9 @@ export type AppListQueryResult = Array<{
     _type: "image";
   } | null;
 }>;
+// Variable: appListCountQuery
+// Query: count(*[_type == "app"])
+export type AppListCountQueryResult = number;
 // Variable: appDetailQuery
 // Query: *[_type == "app" && appId == $appId][0]{    _id,    appId,    name,    summary,    thumbnail,    content,    createdAt,    "prevApp": *[_type == "app" && createdAt < ^.createdAt] | order(createdAt desc)[0]{      appId,      name    },    "nextApp": *[_type == "app" && createdAt > ^.createdAt] | order(createdAt asc)[0]{      appId,      name    }  }
 export type AppDetailQueryResult = {
@@ -718,7 +721,7 @@ export type AppDetailQueryResult = {
   } | null;
 } | null;
 // Variable: workListQuery
-// Query: *[_type == "work"] | order(createdAt desc){    _id,    workId,    name,    summary,    thumbnail,  }
+// Query: *[_type == "work"] | order(createdAt desc)[0...12]{    _id,    workId,    name,    summary,    thumbnail,  }
 export type WorkListQueryResult = Array<{
   _id: string;
   workId: string | null;
@@ -737,6 +740,9 @@ export type WorkListQueryResult = Array<{
     _type: "image";
   } | null;
 }>;
+// Variable: workListCountQuery
+// Query: count(*[_type == "work"])
+export type WorkListCountQueryResult = number;
 // Variable: workDetailQuery
 // Query: *[_type == "work" && workId == $workId][0]{    _id,    workId,    name,    summary,    thumbnail,    startDate,    endDate,    role,    content,    createdAt,  }
 export type WorkDetailQueryResult = {
@@ -822,9 +828,11 @@ declare module "@sanity/client" {
     '\n  *[_type == "about"][0]{\n    _id,\n    _type,\n    seo {\n      metaTitle,\n      metaDescription,\n      keywords,\n      ogImage,\n    },\n  }\n': AboutPageQueryResult;
     '\n  *[_type == "works"][0]{\n    _id,\n    _type,\n    seo {\n      metaTitle,\n      metaDescription,\n      keywords,\n      ogImage,\n    },\n  }\n': WorksPageQueryResult;
     '\n  *[_type == "settings"][0]{\n    _id,\n    _type,\n    defaultSeo {\n      metaTitle,\n      metaDescription,\n      keywords,\n    },\n    ogImage,\n  }\n': SettingsQueryResult;
-    '\n  *[_type == "app"] | order(createdAt desc){\n    _id,\n    appId,\n    name,\n    summary,\n    thumbnail,\n  }\n': AppListQueryResult;
+    '\n  *[_type == "app"] | order(createdAt desc)[0...12]{\n    _id,\n    appId,\n    name,\n    summary,\n    thumbnail,\n  }\n': AppListQueryResult;
+    '\n  count(*[_type == "app"])\n': AppListCountQueryResult;
     '\n  *[_type == "app" && appId == $appId][0]{\n    _id,\n    appId,\n    name,\n    summary,\n    thumbnail,\n    content,\n    createdAt,\n    "prevApp": *[_type == "app" && createdAt < ^.createdAt] | order(createdAt desc)[0]{\n      appId,\n      name\n    },\n    "nextApp": *[_type == "app" && createdAt > ^.createdAt] | order(createdAt asc)[0]{\n      appId,\n      name\n    }\n  }\n': AppDetailQueryResult;
-    '\n  *[_type == "work"] | order(createdAt desc){\n    _id,\n    workId,\n    name,\n    summary,\n    thumbnail,\n  }\n': WorkListQueryResult;
+    '\n  *[_type == "work"] | order(createdAt desc)[0...12]{\n    _id,\n    workId,\n    name,\n    summary,\n    thumbnail,\n  }\n': WorkListQueryResult;
+    '\n  count(*[_type == "work"])\n': WorkListCountQueryResult;
     '\n  *[_type == "work" && workId == $workId][0]{\n    _id,\n    workId,\n    name,\n    summary,\n    thumbnail,\n    startDate,\n    endDate,\n    role,\n    content,\n    createdAt,\n  }\n': WorkDetailQueryResult;
   }
 }
