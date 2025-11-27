@@ -82,18 +82,16 @@ export function AppListContent({ apps }: AppListContentProps) {
 
             return (
               <div key={app.appId} className="opacity-0">
-                <Link
-                  href={`/b2c/${app.appId}`}
-                >
+                <Link href={`/b2c/${app.appId}`}>
                   <div className="group flex h-full cursor-pointer flex-col overflow-hidden border border-[#888888] bg-white transition-all duration-300">
                     {/* 이미지 컨테이너 */}
                     <div className="relative aspect-[3/2] overflow-hidden bg-[#141B29]">
                       <Image
                         src={imageUrl}
                         alt={app.name || "리루트 앱"}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover w-full h-full"
+                        height={1000}
+                        width={1000}
                       />
                     </div>
 

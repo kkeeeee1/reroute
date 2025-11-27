@@ -1,12 +1,9 @@
+import { AppList } from "@/components/b2c/AppList";
+import { B2CPageContainer } from "@/components/b2c/B2CPage";
 import { sanityFetch } from "@/sanity/lib/live";
-import {
-  b2cPageQuery,
-  settingsQuery,
-} from "@/sanity/lib/queries";
+import { b2cPageQuery, settingsQuery } from "@/sanity/lib/queries";
 import { urlForOpenGraphImage } from "@/sanity/lib/utils";
 import { Metadata } from "next";
-import { B2CPageContainer } from "@/components/b2c/B2CPage";
-import { AppList } from "@/components/b2c/AppList";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: pageData } = await sanityFetch({ query: b2cPageQuery });
@@ -22,8 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: pageData?.seo?.metaTitle || defaultSeo?.metaTitle || "B2C Labs",
-    description:
-      pageData?.seo?.metaDescription || defaultSeo?.metaDescription || "",
+    description: pageData?.seo?.metaDescription || defaultSeo?.metaDescription || "",
     openGraph: {
       images: ogImage ? [ogImage] : [],
     },
@@ -31,8 +27,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function B2CPage() {
-  return (
-      <B2CPageContainer />
-     
-  );
+  return <B2CPageContainer />;
 }
