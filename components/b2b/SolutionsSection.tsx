@@ -58,11 +58,12 @@ export function SolutionsSection() {
   const containerRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const verticalTextRef = useRef<HTMLDivElement>(null);
+  const mobileTitleRef = useRef<HTMLHeadingElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Title Animation
+      // Desktop Title Animation
       gsap.fromTo(
         titleRef.current,
         { x: -50, opacity: 0 },
@@ -96,9 +97,29 @@ export function SolutionsSection() {
         );
       }
 
-      // Accordion List Animation (Staggered)
+      // Mobile Title + Accordion List Animation (Together)
       if (listRef.current) {
         const items = listRef.current.children;
+
+        // Mobile title animation (same trigger as list)
+        if (mobileTitleRef.current) {
+          gsap.fromTo(
+            mobileTitleRef.current,
+            { y: 20, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.6,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: listRef.current,
+                start: "top 85%",
+              },
+            }
+          );
+        }
+
+        // List items animation (same trigger)
         gsap.fromTo(
           items,
           { y: 50, opacity: 0 },
@@ -149,7 +170,7 @@ export function SolutionsSection() {
           </div>
 
           {/* 모바일 타이틀 */}
-          <h2 className="mb-8 text-[28px] font-bold md:hidden">4가지 전문 솔루션</h2>
+          <h2 ref={mobileTitleRef} className="mb-8 text-[28px] font-bold md:hidden opacity-0">4가지 전문 솔루션</h2>
 
           {/* 솔루션 리스트 */}
           <div ref={listRef} className="flex-1">

@@ -81,32 +81,33 @@ export function AppListContent({ apps }: AppListContentProps) {
             const imageUrl = (thumbnailUrl || defaultImage) as string;
 
             return (
-              <Link
-                key={app.appId}
-                href={`/b2c/${app.appId}`}
-              >
-                <div className="group flex h-full cursor-pointer flex-col overflow-hidden border border-[#888888] bg-white transition-all duration-300">
-                  {/* 이미지 컨테이너 */}
-                  <div className="relative aspect-[3/2] overflow-hidden bg-[#141B29]">
-                    <Image
-                      src={imageUrl}
-                      alt={app.name || "리루트 앱"}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
+              <div key={app.appId} className="opacity-0">
+                <Link
+                  href={`/b2c/${app.appId}`}
+                >
+                  <div className="group flex h-full cursor-pointer flex-col overflow-hidden border border-[#888888] bg-white transition-all duration-300">
+                    {/* 이미지 컨테이너 */}
+                    <div className="relative aspect-[3/2] overflow-hidden bg-[#141B29]">
+                      <Image
+                        src={imageUrl}
+                        alt={app.name || "리루트 앱"}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
 
-                  {/* 콘텐츠 영역 */}
-                  <div className="flex flex-col space-y-[10px] md:space-y-[12px] lg:space-y-[13px] xl:space-y-[14px] 2xl:space-y-[15px] px-[25px] md:px-[33px] lg:px-[39px] xl:px-[42px] 2xl:px-[45px] pt-[19px] md:pt-[25px] lg:pt-[30px] xl:pt-[32px] 2xl:pt-[35px] pb-[25px] md:pb-[33px] lg:pb-[39px] xl:pb-[42px] 2xl:pb-[45px]">
-                    <h3 className="text-[22px] md:text-[26px] lg:text-[29px] xl:text-[30px] 2xl:text-[32px] font-bold">
-                      {app.name}
-                    </h3>
-                    <p className="text-[14px] md:text-[16px] lg:text-[18px] xl:text-[19px] 2xl:text-[20px]">
-                      {app.summary}
-                    </p>
+                    {/* 콘텐츠 영역 */}
+                    <div className="flex flex-col space-y-[10px] md:space-y-[12px] lg:space-y-[13px] xl:space-y-[14px] 2xl:space-y-[15px] px-[25px] md:px-[33px] lg:px-[39px] xl:px-[42px] 2xl:px-[45px] pt-[19px] md:pt-[25px] lg:pt-[30px] xl:pt-[32px] 2xl:pt-[35px] pb-[25px] md:pb-[33px] lg:pb-[39px] xl:pb-[42px] 2xl:pb-[45px]">
+                      <h3 className="text-[22px] md:text-[26px] lg:text-[29px] xl:text-[30px] 2xl:text-[32px] font-bold">
+                        {app.name}
+                      </h3>
+                      <p className="text-[14px] md:text-[16px] lg:text-[18px] xl:text-[19px] 2xl:text-[20px]">
+                        {app.summary}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </div>
             );
           })}
         </div>

@@ -48,8 +48,12 @@ export function AppDetailContent({ app }: AppDetailContentProps) {
   // Animation setup
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Thumbnail animation
+      // Determine if mobile (need to check at animation time)
+      const isMobile = window.innerWidth < 768;
+
+      // Thumbnail animation - uses different trigger on mobile vs desktop
       if (thumbnailRef.current) {
+        const triggerElement = isMobile ? titleRef.current : thumbnailRef.current;
         gsap.fromTo(
           thumbnailRef.current,
           { scale: 0.9, opacity: 0 },
@@ -59,14 +63,14 @@ export function AppDetailContent({ app }: AppDetailContentProps) {
             duration: 1,
             ease: "power3.out",
             scrollTrigger: {
-              trigger: thumbnailRef.current,
+              trigger: triggerElement || thumbnailRef.current,
               start: "top 80%",
             },
           }
         );
       }
 
-      // Title animation
+      // Title animation - uses own trigger on desktop, same as thumbnail on mobile
       if (titleRef.current) {
         gsap.fromTo(
           titleRef.current,
