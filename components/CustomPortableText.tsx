@@ -1,4 +1,3 @@
-import {TimelineSection} from '@/components/TimelineSection'
 import {urlForImage} from '@/sanity/lib/utils'
 import type {PathSegment} from '@sanity/client/csm'
 import {PortableText, type PortableTextBlock, type PortableTextComponents} from 'next-sanity'
@@ -198,18 +197,6 @@ export function CustomPortableText({
               </figcaption>
             )}
           </figure>
-        )
-      },
-      timeline: ({value}) => {
-        const {items, _key} = value || {}
-        return (
-          <TimelineSection
-            key={_key}
-            id={id}
-            type={type}
-            path={[...path, {_key}, 'items']}
-            timelines={items}
-          />
         )
       },
     },
