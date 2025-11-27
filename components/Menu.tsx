@@ -100,7 +100,6 @@ export function Menu({ isOpen, onClose }: MenuProps) {
                   href={item.href}
                   onClick={onClose}
                   className="group flex w-fit items-start gap-3 md:gap-4 lg:gap-5"
-                  scroll={false}
                 >
                   <span className="relative text-[48px] font-bold leading-none text-white md:text-[80px] lg:text-[100px] xl:text-[110px] 2xl:text-[120px]">
                     <span className="relative z-10">{item.label}</span>

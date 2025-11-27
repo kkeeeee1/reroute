@@ -117,7 +117,6 @@ export function Navbar() {
             onClick={closeMenu}
             className="relative z-50"
             id="header-logo"
-            scroll={false}
           >
             <Image
               src={isLightTheme ? "/images/logo_white.png" : "/images/logo_black.png"}

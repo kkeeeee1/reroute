@@ -1,6 +1,7 @@
 "use client";
 
 import { ReactNode, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -18,6 +19,7 @@ export function GSAPScroll({ children }: GSAPScrollProps) {
   const smootherRef = useRef<ScrollSmoother | null>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     if (!wrapperRef.current || !contentRef.current) return;
@@ -38,6 +40,13 @@ export function GSAPScroll({ children }: GSAPScrollProps) {
       smootherRef.current = null;
     };
   }, []);
+
+  // pathname 변경 시 스크롤을 최상단으로 리셋
+  useEffect(() => {
+    if (smootherRef.current) {
+      smootherRef.current.scrollTop(0);
+    }
+  }, [pathname]);
 
   return (
     <div id="smooth-wrapper" ref={wrapperRef}>

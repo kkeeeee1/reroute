@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Image from 'next/image';
-import Link from 'next/link';
-import { urlForImage } from '@/sanity/lib/utils';
+import { urlForImage } from "@/sanity/lib/utils";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,7 +16,7 @@ interface AppListContentProps {
 export function AppListContent({ apps }: AppListContentProps) {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
-  const defaultImage = '/images/default_image.png';
+  const defaultImage = "/images/default_image.png";
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -28,10 +28,10 @@ export function AppListContent({ apps }: AppListContentProps) {
           y: 0,
           opacity: 1,
           duration: 1,
-          ease: 'power3.out',
+          ease: "power3.out",
           scrollTrigger: {
             trigger: titleRef.current,
-            start: 'top 80%',
+            start: "top 80%",
           },
         }
       );
@@ -47,10 +47,10 @@ export function AppListContent({ apps }: AppListContentProps) {
             opacity: 1,
             duration: 0.8,
             stagger: 0.1,
-            ease: 'power3.out',
+            ease: "power3.out",
             scrollTrigger: {
               trigger: gridRef.current,
-              start: 'top 80%',
+              start: "top 80%",
             },
           }
         );
@@ -77,26 +77,27 @@ export function AppListContent({ apps }: AppListContentProps) {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[40px] md:gap-[50px] lg:gap-[60px] xl:gap-[65px] 2xl:gap-[70px]"
         >
           {apps?.map((app: (typeof apps)[number]) => {
-            const thumbnailUrl = app.thumbnail
-              ? urlForImage(app.thumbnail as any)?.url()
-              : null;
+            const thumbnailUrl = app.thumbnail ? urlForImage(app.thumbnail as any)?.url() : null;
             const imageUrl = (thumbnailUrl || defaultImage) as string;
 
             return (
-              <Link key={app.appId} href={`/b2c/${app.appId}`}>
+              <Link
+                key={app.appId}
+                href={`/b2c/${app.appId}`}
+              >
                 <div className="group flex h-full cursor-pointer flex-col overflow-hidden border border-[#888888] bg-white transition-all duration-300">
                   {/* 이미지 컨테이너 */}
                   <div className="relative aspect-[3/2] overflow-hidden bg-[#141B29]">
                     <Image
                       src={imageUrl}
-                      alt={app.name || '리루트 앱'}
+                      alt={app.name || "리루트 앱"}
                       fill
                       className="object-cover"
                     />
                   </div>
 
                   {/* 콘텐츠 영역 */}
-                  <div className="flex flex-col space-y-[10px] md:space-y-[12px] lg:space-y-[13px] xl:space-y-[14px] 2xl:space-y-[15px] px-[30px] md:px-[38px] lg:px-[44px] xl:px-[47px] 2xl:px-[50px] pt-[24px] md:pt-[30px] lg:pt-[35px] xl:pt-[37px] 2xl:pt-[40px] pb-[30px] md:pb-[38px] lg:pb-[44px] xl:pb-[47px] 2xl:pb-[50px]">
+                  <div className="flex flex-col space-y-[10px] md:space-y-[12px] lg:space-y-[13px] xl:space-y-[14px] 2xl:space-y-[15px] px-[25px] md:px-[33px] lg:px-[39px] xl:px-[42px] 2xl:px-[45px] pt-[19px] md:pt-[25px] lg:pt-[30px] xl:pt-[32px] 2xl:pt-[35px] pb-[25px] md:pb-[33px] lg:pb-[39px] xl:pb-[42px] 2xl:pb-[45px]">
                     <h3 className="text-[22px] md:text-[26px] lg:text-[29px] xl:text-[30px] 2xl:text-[32px] font-bold">
                       {app.name}
                     </h3>

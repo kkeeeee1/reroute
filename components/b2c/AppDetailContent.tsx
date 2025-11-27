@@ -60,7 +60,7 @@ export function AppDetailContent({ app }: AppDetailContentProps) {
             ease: "power3.out",
             scrollTrigger: {
               trigger: thumbnailRef.current,
-              start: "top 75%",
+              start: "top 80%",
             },
           }
         );
@@ -79,7 +79,7 @@ export function AppDetailContent({ app }: AppDetailContentProps) {
             ease: "power2.out",
             scrollTrigger: {
               trigger: titleRef.current,
-              start: "top 75%",
+              start: "top 80%",
             },
           }
         );
@@ -98,7 +98,7 @@ export function AppDetailContent({ app }: AppDetailContentProps) {
             ease: "power2.out",
             scrollTrigger: {
               trigger: summaryRef.current,
-              start: "top 75%",
+              start: "top 80%",
             },
           }
         );

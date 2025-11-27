@@ -1,14 +1,14 @@
 "use client";
 
+import { INTRO_OVERLAY } from "@/constants/animations";
+import { useIsDesktop } from "@/hooks/useIsDesktop";
+import { introState } from "@/utils/introState";
+import gsap from "gsap";
 import Image from "next/image";
 import Link from "next/link";
-import { Menu } from "../Menu";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import gsap from "gsap";
-import { INTRO_OVERLAY } from "@/constants/animations";
-import { introState } from "@/utils/introState";
-import { useIsDesktop } from "@/hooks/useIsDesktop";
+import { Menu } from "../Menu";
 
 // 단어 데이터
 const WORDS = [
@@ -44,16 +44,10 @@ interface AnimatedIntroOverlayProps {
   onDismiss?: () => void;
 }
 
-export function AnimatedIntroOverlay({
-  onDismiss,
-}: AnimatedIntroOverlayProps) {
+export function AnimatedIntroOverlay({ onDismiss }: AnimatedIntroOverlayProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [phase, setPhase] = useState<
-    "static" | "animating" | "completed"
-  >("static");
-  const [wordPositions, setWordPositions] = useState<
-    Record<string, WordPosition>
-  >({});
+  const [phase, setPhase] = useState<"static" | "animating" | "completed">("static");
+  const [wordPositions, setWordPositions] = useState<Record<string, WordPosition>>({});
   const isDesktop = useIsDesktop();
   const isMobile = !isDesktop;
   const wordRefs = useRef<Record<string, HTMLSpanElement | null>>({});
@@ -107,9 +101,7 @@ export function AnimatedIntroOverlay({
       }
 
       // 히어로 섹션에서의 타겟 위치
-      const targetEl = document.querySelector(
-        `[data-word="${word.id}"]`,
-      ) as HTMLElement;
+      const targetEl = document.querySelector(`[data-word="${word.id}"]`) as HTMLElement;
 
       if (targetEl) {
         const targetRect = targetEl.getBoundingClientRect();
@@ -126,10 +118,7 @@ export function AnimatedIntroOverlay({
     setWordPositions({
       ...positions,
       ...Object.fromEntries(
-        Object.entries(initialPositions).map(([key, val]) => [
-          `${key}_initial`,
-          val,
-        ]),
+        Object.entries(initialPositions).map(([key, val]) => [`${key}_initial`, val])
       ),
     } as any);
   };
@@ -137,21 +126,21 @@ export function AnimatedIntroOverlay({
   // 메인 타이머: 인트로 애니메이션 재생 여부에 따라 대기 시간 조정
   useEffect(() => {
     const introHasPlayed = introState.hasPlayed();
-    
+
     // 인트로 애니메이션이 현재 표시되고 있는지 DOM에서 확인
     const introElement = document.querySelector('[data-intro-logo="true"]');
     const introPlaying = introElement !== null;
-    
+
     // 결정 로직:
     // - 인트로가 재생 중이면 5초 대기
     // - 이번 세션에 인트로가 아직 안 재생됐으면 5초 대기 (곧 재생될 것)
     // - 이미 재생됐으면 0.5초만 대기
-    const waitDuration = (introPlaying || !introHasPlayed) ? INTRO_OVERLAY.STATIC_DURATION : 500;
-    
+    const waitDuration = introPlaying || !introHasPlayed ? INTRO_OVERLAY.STATIC_DURATION : 500;
+
     const staticTimer = setTimeout(() => {
       // 스크롤을 최상단으로 강제 이동 (위치 계산 전)
       window.scrollTo(0, 0);
-      
+
       // DOM이 완전히 렌더링되고 스크롤이 완료된 후 위치 계산
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
@@ -188,13 +177,7 @@ export function AnimatedIntroOverlay({
       {/* 헤더 */}
       <header className="flex justify-center bg-transparent">
         <div className="flex w-full max-w-screen-max items-center justify-between px-7 py-8 md:px-10 md:py-8 lg:px-20 lg:py-12">
-          <Link
-            href="/"
-            onClick={closeMenu}
-            className="relative z-50"
-            id="header-logo"
-            scroll={false}
-          >
+          <Link href="/" onClick={closeMenu} className="relative z-50" id="header-logo">
             <Image
               src={isOpen ? "/images/logo_white.png" : "/images/logo_black.png"}
               alt="Reroute Logo"
@@ -270,15 +253,12 @@ export function AnimatedIntroOverlay({
           <>
             {WORDS.map((word, index) => {
               const position = wordPositions[word.id];
-              const initialPosition = (wordPositions as any)[
-                `${word.id}_initial`
-              ];
+              const initialPosition = (wordPositions as any)[`${word.id}_initial`];
               const delay = (index * INTRO_OVERLAY.STAGGER_DELAY) / 1000;
 
               if (!position || !initialPosition) return null;
 
-              const targetClass =
-                word.type === "english" ? ENGLISH_CLASSES : KOREAN_CLASSES;
+              const targetClass = word.type === "english" ? ENGLISH_CLASSES : KOREAN_CLASSES;
 
               return (
                 <WordAnimation
@@ -305,7 +285,7 @@ export function AnimatedIntroOverlay({
 
 // WordAnimation 컴포넌트 - GSAP로 개별 단어 애니메이션
 interface WordAnimationProps {
-  word: typeof WORDS[0];
+  word: (typeof WORDS)[0];
   position: WordPosition;
   initialPosition: WordPosition;
   delay: number;
@@ -338,12 +318,12 @@ function WordAnimation({
     tempElement.style.whiteSpace = "nowrap";
     tempElement.textContent = word.text;
     document.body.appendChild(tempElement);
-    
+
     const overlayRect = overlayTextRef.current.getBoundingClientRect();
     const targetRect = tempElement.getBoundingClientRect();
     const scaleX = targetRect.width / overlayRect.width;
     const scaleY = targetRect.height / overlayRect.height;
-    
+
     document.body.removeChild(tempElement);
 
     const timeline = gsap.timeline();
@@ -372,7 +352,7 @@ function WordAnimation({
 
     // 점진적인 crossfade - 처음부터 시작하여 전체 duration 동안 진행
     const crossfadeDuration = moveDuration; // 전체 이동 시간 동안
-    
+
     // 타겟 텍스트 점진적으로 fade in (처음부터 시작)
     timeline.to(
       targetTextRef.current,
@@ -432,4 +412,3 @@ function WordAnimation({
     </div>
   );
 }
-
