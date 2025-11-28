@@ -5,9 +5,9 @@ import { CBOIntroSection } from "@/components/about/CBOIntroSection";
 
 export function AboutPageContainer() {
   return (
-    <>
+    <div>
       <AboutHeroSection />
       <CBOIntroSection />
-    </>
+    </div>
   );
 }

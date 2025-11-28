@@ -1,7 +1,7 @@
-import { WorkDetailContent } from "./WorkDetailContent";
-import { HeroSection } from "./HeroSection";
 import { sanityFetch } from "@/sanity/lib/live";
 import { workDetailQuery } from "@/sanity/lib/queries";
+import { HeroSection } from "./HeroSection";
+import { WorkDetailContent } from "./WorkDetailContent";
 
 interface WorkDetailContainerProps {
   workId: string;

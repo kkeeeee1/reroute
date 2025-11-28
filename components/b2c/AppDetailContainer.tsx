@@ -1,7 +1,7 @@
-import { AppDetailContent } from "./AppDetailContent";
-import { HeroSection } from "./HeroSection";
 import { sanityFetch } from "@/sanity/lib/live";
 import { appDetailQuery } from "@/sanity/lib/queries";
+import { AppDetailContent } from "./AppDetailContent";
+import { HeroSection } from "./HeroSection";
 
 interface AppDetailContainerProps {
   appId: string;

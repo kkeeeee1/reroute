@@ -108,11 +108,16 @@ export function AboutHeroSection() {
     }, sectionRef);
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => {
-        if (trigger.trigger === sectionRef.current) {
-          trigger.kill();
-        }
-      });
+      // 컴포넌트 언마운트 직전 모든 GSAP 애니메이션과 ScrollTrigger 정리
+      gsap.killTweensOf([
+        sectionRef.current,
+        bgRef.current,
+        aboutTitleRef.current,
+        item1Ref.current,
+        item2Ref.current,
+        item3Ref.current,
+      ]);
+
       ctx.revert();
     };
   }, []);
