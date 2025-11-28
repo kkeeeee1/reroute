@@ -38,7 +38,7 @@ const expertiseAreas = [
     subtitle: ["Marketing", "Strategy"],
     items: [
       "SNS · 바이럴 전략 설계 및 퍼포먼스 마케팅 운영",
-      "B2C 앱 기획·노코딩 개발 총괄  -  ‘리쿡’, ‘루티장부’, ‘리스코프’",
+      "B2C 앱 기획·노코딩 개발 총괄",
       "로컬 F&B 네트워크 구축 및 협업 인프라 보유",
     ],
     imageSrc: "/images/about/about_마케팅기술.png",

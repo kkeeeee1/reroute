@@ -22,17 +22,17 @@ export function AboutSection() {
 
     const ctx = gsap.context(() => {
       // 모든 디바이스: 스크롤 시 타이틀과 설명이 페이드인
-      
+
       // 초기 상태: 모두 숨김
       gsap.set([headerContainerRef.current, descriptionRef.current, buttonRef.current], {
         opacity: 0,
       });
-      
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "+=1800",
+          end: "+=2500",
           scrub: 1,
           pin: true,
         },
@@ -87,7 +87,6 @@ export function AboutSection() {
     >
       {/* Content section */}
       <div className="flex h-screen flex-col justify-between md:justify-around px-7 py-[70px] md:px-16 md:py-28 lg:px-32 lg:py-32 xl:px-[170px] xl:py-36 2xl:px-[226px] 2xl:py-36">
-        
         {/* WE (선) REROUTE */}
         <div
           ref={headerContainerRef}
@@ -102,7 +101,7 @@ export function AboutSection() {
           </h2>
 
           {/* Line */}
-          <div className="relative flex w-[60px] h-[80px] md:h-[60px] md:w-[200px] shrink-0 items-center justify-center">
+          <div className="relative flex w-[60px] h-[40px] md:h-[60px] md:w-[140px] lg:w-[200px] shrink-0 items-center justify-center">
             <div
               ref={lineRef}
               className="w-[1px] h-full md:w-full md:h-[1px] origin-center bg-white"
@@ -116,7 +115,7 @@ export function AboutSection() {
             REROUTE
           </h2>
         </div>
-        
+
         {/* Description Text - 중앙 */}
         <p
           ref={descriptionRef}

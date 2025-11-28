@@ -132,7 +132,7 @@ export function AboutHeroSection() {
         <div className="w-full h-fit">
           <h2
             ref={aboutTitleRef}
-            className="font-bold leading-none text-white text-[32px] sm:text-[44px] md:text-[56px] lg:text-[68px] 2xl:text-[80px]"
+            className="font-bold leading-none text-white text-[32px] sm:text-[44px] md:text-[56px] lg:text-[68px] 2xl:text-[80px] py-4"
           >
             ABOUT
           </h2>
