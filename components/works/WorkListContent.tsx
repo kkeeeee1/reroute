@@ -20,7 +20,6 @@ export function WorkListContent({ works: initialWorks, totalCount = 0 }: WorkLis
   const defaultImage = "/images/default_image.png";
 
   const [loadedWorks, setLoadedWorks] = useState<any[]>(initialWorks || []);
-  const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(totalCount ? initialWorks.length < totalCount : true);
   const initializedRef = useRef(false);
@@ -79,7 +78,7 @@ export function WorkListContent({ works: initialWorks, totalCount = 0 }: WorkLis
 
     setIsLoading(true);
     try {
-      const url = `/api/works?skip=${currentPage * 1}&limit=1`;
+      const url = `/api/works?skip=${loadedWorks.length}&limit=12`;
 
       const response = await fetch(url);
 
@@ -92,7 +91,6 @@ export function WorkListContent({ works: initialWorks, totalCount = 0 }: WorkLis
       if (result.success && result.data) {
         setLoadedWorks((prev) => [...prev, ...result.data]);
         setHasMore(result.hasMore);
-        setCurrentPage((prev) => prev + 1);
       } else {
         console.error("Invalid API response:", result);
       }
