@@ -45,15 +45,21 @@ export function HeroSection() {
         delay,
       });
 
-      // ScrollTrigger 애니메이션
+      // ScrollTrigger 애니메이션 with Snap (자석 효과)
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "+=3000",
+          end: "+=4500",
           pin: true,
           scrub: 1,
           markers: false,
+          snap: {
+            snapTo: [0, 0.27, 0.55, 0.85, 1],
+            duration: { min: 0.2, max: 0.4 },
+            delay: 0.08,
+            ease: "back.out",
+          },
           onEnter: () => {
             // 스크롤 시작 시 1번 요소가 보이도록 보장
             gsap.set(item1Ref.current, { opacity: 1 });
@@ -71,12 +77,13 @@ export function HeroSection() {
 
       // 1번 요소는 이미 보이는 상태에서 시작
       // 배경은 전체 타임라인 동안 연속적으로 확대 (1.0 → 1.35)
+      // power1.inOut으로 각 단계에서 느려지는 느낌
       tl.to(
         bgRef.current,
         {
           scale: 1.35,
-          duration: 6.0, // 전체 타임라인 동안 천천히
-          ease: "none", // 선형으로 계속 확대
+          duration: 6.0,
+          ease: "power1.inOut", // 시작/끝에서 느려져서 단계별 멈춤 느낌
         },
         0
       );
@@ -117,6 +124,9 @@ export function HeroSection() {
         },
         4.4
       );
+
+      // 이미지 나타난 후 일정 시간 유지 후 섹션 끝냄 (스크롤 해제)
+      tl.to({}, {}, 7.5);
     }, sectionRef);
 
     return () => {
