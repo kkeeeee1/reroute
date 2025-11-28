@@ -32,7 +32,7 @@ export function AboutSection() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "+=2500",
+          end: "+=3500",
           scrub: 1,
           pin: true,
         },
@@ -62,7 +62,7 @@ export function AboutSection() {
         0.3
       );
 
-      // 버튼 페이드인
+      // 버튼 페이드인 (더 늦게 나타나고 오래 체류)
       tl.fromTo(
         buttonRef.current,
         { opacity: 0, y: 20 },
@@ -72,7 +72,7 @@ export function AboutSection() {
           duration: 0.3,
           ease: "power2.out",
         },
-        0.6
+        0.8
       );
     }, sectionRef);
 
