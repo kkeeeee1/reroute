@@ -107,7 +107,14 @@ export function AboutHeroSection() {
       );
     }, sectionRef);
 
-    return () => ctx.revert();
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => {
+        if (trigger.trigger === sectionRef.current) {
+          trigger.kill();
+        }
+      });
+      ctx.revert();
+    };
   }, []);
 
   return (
