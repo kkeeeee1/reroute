@@ -19,6 +19,6 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default async function AboutPage() {
-  return <div ><AboutPageContainer/></div>
+export default function AboutPage() {
+  return <AboutPageContainer />;
 }

@@ -7,18 +7,19 @@
 @layer base {
   :root {
     --font-sans:
-      "Pretendard Variable", -apple-system, BlinkMacSystemFont, system-ui,
-      "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      "Pretendard Variable", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI",
+      "Helvetica Neue", Arial, sans-serif;
   }
   * {
     user-select: none;
+    word-break: keep-all;
   }
 
   /* GSAP ScrollSmoother styles */
   #smooth-wrapper {
     overflow: hidden;
   }
-  
+
   #smooth-content {
     overflow: visible;
     width: 100%;

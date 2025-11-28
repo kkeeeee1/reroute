@@ -114,7 +114,7 @@ export function ServiceCard({
           </div>
           <div>
             <span
-              className={`inline-block rounded-full ${tagBgColor} mb-2 px-3 py-0.5 text-xs font-bold sm:mb-3 sm:px-3 sm:text-[11px] md:mb-3 md:px-3 md:py-0.5 md:text-[11px] lg:text-sm lg:px-4 lg:py-1 xl:px-5 xl:py-2 xl:text-base 2xl:mb-[15px] 2xl:text-lg 2xl:leading-[18px] ${tagTextColor}`}
+              className={`inline-block rounded-full ${tagBgColor} mb-2 px-3 py-0.5 text-xs font-bold sm:mb-3 sm:px-3 sm:text-[11px] md:mb-3 md:px-3 md:py-0.5 md:text-[11px] lg:text-sm lg:px-4 lg:py-1 xl:px-5 xl:py-1 xl:text-base 2xl:mb-[15px] 2xl:text-lg 2xl:leading-[18px] ${tagTextColor}`}
             >
               {tagText}
             </span>

@@ -8,11 +8,6 @@ p:not(:last-child) {
   margin-bottom: 0.875rem;
 }
 
-span,
-p {
-  word-break: keep-all;
-}
-
 ol,
 ul {
   margin-left: 1rem;
