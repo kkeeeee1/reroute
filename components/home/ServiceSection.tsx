@@ -117,7 +117,7 @@ export function ServiceSection() {
               tagTextColor={serviceCards[1].tagTextColor}
               otherHovered={hoveredCard !== null && hoveredCard !== "b2c"}
               isInView={isInView}
-              animationDelay={0.35}
+              animationDelay={1}
             />
           </div>
         </div>

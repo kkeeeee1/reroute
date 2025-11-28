@@ -129,12 +129,13 @@ export function Navbar() {
           </Link>
 
           <button
+            data-no-cursor
             onClick={toggleMenu}
             className="relative z-50 flex items-center gap-5 md:gap-[30px]"
             aria-label={isOpen ? "Close menu" : "Open menu"}
           >
             <span
-              className={`hidden text-lg font-medium transition-all duration-300 md:inline md:text-xl lg:text-2xl ${
+              className={`hidden text-lg font-medium transition-all duration-300 md:inline md:text-[15px] lg:text-[18px] ${
                 isOpen 
                   ? "text-white opacity-0" 
                   : isLightTheme 

@@ -2,6 +2,9 @@
 
 import { useState, useRef, useEffect } from 'react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface AccordionItemProps {
     number: string;
@@ -20,7 +23,12 @@ export function AccordionItem({
 }: AccordionItemProps) {
     const [isOpen, setIsOpen] = useState(false);
     const contentRef = useRef<HTMLDivElement>(null);
+    const itemRef = useRef<HTMLElement>(null);
+    const titleRef = useRef<HTMLHeadingElement>(null);
+    const descRef = useRef<HTMLParagraphElement>(null);
+    const buttonRef = useRef<HTMLDivElement>(null);
 
+    // Accordion toggle animation
     useEffect(() => {
         if (!contentRef.current) return;
 
@@ -41,27 +49,56 @@ export function AccordionItem({
         }
     }, [isOpen]);
 
+    // Scroll-triggered fade-up animation
+    useEffect(() => {
+        if (!itemRef.current) return;
+
+        const ctx = gsap.context(() => {
+            // 초기 상태 설정
+            gsap.set([titleRef.current, descRef.current, buttonRef.current], {
+                opacity: 0,
+                y: 30,
+            });
+
+            // ScrollTrigger로 화면에 들어올 때 애니메이션
+            gsap.to([titleRef.current, descRef.current, buttonRef.current], {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: itemRef.current,
+                    start: "top 85%",
+                    once: true,
+                },
+            });
+        }, itemRef);
+
+        return () => ctx.revert();
+    }, []);
+
     return (
-        <article className={`pb-8 md:pb-10 lg:pb-12 xl:pb-14 2xl:pb-[60px] flex flex-col gap-8 md:gap-10 lg:gap-12 xl:gap-14 2xl:gap-[70px] ${!isLast ? 'border-b border-[#333333]' : ''} mb-10 md:mb-12 lg:mb-16 xl:mb-20 2xl:mb-[80px]`}>
+        <article ref={itemRef} className={`pb-8 md:pb-10 lg:pb-12 xl:pb-14 2xl:pb-[60px] flex flex-col gap-8 md:gap-10 lg:gap-12 xl:gap-14 2xl:gap-[70px] ${!isLast ? 'border-b border-[#333333]' : ''} mb-10 md:mb-12 lg:mb-16 xl:mb-20 2xl:mb-[80px]`}>
             <div className="mb-2 md:mb-3 lg:mb-4 flex flex-col gap-4 md:gap-5 lg:gap-6 xl:gap-7 2xl:gap-[30px]">
-                {/* 번호 */}
+                {/* 번호 - 애니메이션 없음 */}
                 <div className='flex gap-2 md:gap-2.5 lg:gap-3 xl:gap-3.5 2xl:gap-[10px] items-end'>
                     <span className='text-[40px] md:text-[48px] lg:text-[56px] xl:text-[64px] 2xl:text-[70px] leading-[30px] md:leading-[36px] lg:leading-[42px] xl:leading-[46px] 2xl:leading-[50px] font-thin'>{number}</span>
                     <div className="h-[8px] w-[8px] md:h-[9px] md:w-[9px] lg:h-[10px] lg:w-[10px] xl:h-[11px] xl:w-[11px] 2xl:h-[12.5px] 2xl:w-[12.5px] rounded-full bg-primary"/>
                 </div>
 
-                {/* 타이틀 */}
-                <h3 className="text-[28px] md:text-[36px] lg:text-[44px] xl:text-[52px] 2xl:text-[60px] leading-[32px] md:leading-[40px] lg:leading-[48px] xl:leading-[56px] 2xl:leading-[60px]">
+                {/* 타이틀 - 애니메이션 적용 */}
+                <h3 ref={titleRef} className="text-[28px] md:text-[36px] lg:text-[44px] xl:text-[52px] 2xl:text-[60px] leading-[32px] md:leading-[40px] lg:leading-[48px] xl:leading-[56px] 2xl:leading-[60px]">
                     {title}
                 </h3>
 
-                {/* 설명 */}
-                <p className="text-[14px] md:text-[16px] lg:text-[18px] xl:text-[20px] 2xl:text-[24px] text-[#999999]">
+                {/* 설명 - 애니메이션 적용 */}
+                <p ref={descRef} className="text-[14px] md:text-[16px] lg:text-[18px] xl:text-[20px] 2xl:text-[24px] text-[#999999]">
                     {description}
                 </p>
             </div>
             
-            <div className='space-y-4 md:space-y-5 lg:space-y-6 xl:space-y-7 2xl:space-y-[30px]'>
+            <div ref={buttonRef} className='space-y-4 md:space-y-5 lg:space-y-6 xl:space-y-7 2xl:space-y-[30px]'>
                 <button 
                 onClick={() => setIsOpen(!isOpen)}
                 data-no-cursor

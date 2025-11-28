@@ -5,15 +5,15 @@ import { useEffect, useState, useRef } from "react";
 import gsap from "gsap";
 
 const IMAGES = [
-  "main_hero_1.png",
-  "main_hero_2.png",
-  "main_hero_3.png",
-  "main_hero_4.png",
   "main_hero_5.png",
   "main_hero_6.png",
+  "main_hero_3.png",
   "main_hero_7.png",
   "main_hero_8.png",
+  "main_hero_2.png",
   "main_hero_9.png",
+  "main_hero_4.png",
+  "main_hero_1.png",
 ];
 const IMAGE_CHANGE_INTERVAL = 1000; // ms
 

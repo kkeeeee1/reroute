@@ -18,12 +18,12 @@ export function CaseStudySection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Title Animation
+      // Title Animation - 왼쪽에서 슥 나오기
       gsap.fromTo(
         titleRef.current,
-        { y: 30, opacity: 0 },
+        { x: -50, opacity: 0 },
         {
-          y: 0,
+          x: 0,
           opacity: 1,
           duration: 1,
           ease: "power3.out",

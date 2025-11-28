@@ -25,6 +25,11 @@ export function HeroSection() {
         opacity: 0,
       });
 
+      // 배경 이미지 초기 scale 설정
+      gsap.set(bgRef.current, {
+        scale: 1.0,
+      });
+
       // ABOUT 텍스트는 초기에 투명
       gsap.set(aboutTitleRef.current, {
         opacity: 0,
@@ -45,31 +50,39 @@ export function HeroSection() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "+=4000",
+          end: "+=3000",
           pin: true,
           scrub: 1,
           markers: false,
+          onEnter: () => {
+            // 스크롤 시작 시 1번 요소가 보이도록 보장
+            gsap.set(item1Ref.current, { opacity: 1 });
+          },
         },
       });
 
-      // 1번 요소 나타나면서 배경 확대 (1.0 → 1.15)
+      // 초기 진입 시에만 1번 요소 부드럽게 보여주기 (ScrollTrigger 전)
+      gsap.to(item1Ref.current, {
+        opacity: 1,
+        duration: 1,
+        delay: delay + 0.8,
+        ease: "power2.out",
+      });
+
+      // 1번 요소는 이미 보이는 상태에서 시작
+      // 배경은 전체 타임라인 동안 연속적으로 확대 (1.0 → 1.35)
       tl.to(
         bgRef.current,
         {
-          scale: 1.15,
-          duration: 0.8,
+          scale: 1.35,
+          duration: 6.0, // 전체 타임라인 동안 천천히
+          ease: "none", // 선형으로 계속 확대
         },
         0
       );
 
+      // 1번 요소 유지 후 사라짐
       tl.to(
-        item1Ref.current,
-        {
-          opacity: 1,
-          duration: 0.15,
-        },
-        0.2
-      ).to(
         item1Ref.current,
         {
           opacity: 0,
@@ -78,16 +91,7 @@ export function HeroSection() {
         2.0
       );
 
-      // 2번 요소 나타나면서 배경 더 확대 (1.15 → 1.25)
-      tl.to(
-        bgRef.current,
-        {
-          scale: 1.25,
-          duration: 0.8,
-        },
-        2.1
-      );
-
+      // 2번 요소 나타남
       tl.to(
         item2Ref.current,
         {
@@ -104,16 +108,7 @@ export function HeroSection() {
         4.1
       );
 
-      // 3번 요소 나타나면서 배경 최종 확대 (1.25 → 1.35)
-      tl.to(
-        bgRef.current,
-        {
-          scale: 1.35,
-          duration: 1.0,
-        },
-        4.2
-      );
-
+      // 3번 요소 나타남
       tl.to(
         item3Ref.current,
         {
@@ -173,6 +168,7 @@ export function HeroSection() {
           <div
             ref={item1Ref}
             className="absolute inset-0 flex flex-col items-center justify-center gap-6 sm:gap-8 md:gap-10 lg:gap-12 2xl:gap-12"
+            style={{ willChange: "opacity" }}
           >
             <h2 className="text-[24px] sm:text-[32px] md:text-[40px] lg:text-[48px] 2xl:text-[56px] font-bold leading-[1.2] sm:leading-[1.3] md:leading-[1.3] lg:leading-[48px] 2xl:leading-[48px]">
               금융 전략, 현장 운영, 기술 실행까지 책임지는 리루트
@@ -187,6 +183,7 @@ export function HeroSection() {
           <div
             ref={item2Ref}
             className="absolute inset-0 flex flex-col items-center justify-center gap-6 sm:gap-8 md:gap-10 lg:gap-12 2xl:gap-12"
+            style={{ willChange: "opacity" }}
           >
             <h2 className="text-[24px] sm:text-[32px] md:text-[40px] lg:text-[48px] 2xl:text-[56px] font-bold leading-[1.2] sm:leading-[1.3] md:leading-[1.3] lg:leading-[48px] 2xl:leading-[48px]">
               실행되는 전략, 숫자로 증명되는 성장
@@ -207,6 +204,7 @@ export function HeroSection() {
           <div
             ref={item3Ref}
             className="absolute inset-0 flex flex-col items-center justify-center"
+            style={{ willChange: "opacity" }}
           >
             <Image
               src="/images/logo_main.png"

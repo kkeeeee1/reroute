@@ -60,6 +60,7 @@ export function SolutionsSection() {
   const verticalTextRef = useRef<HTMLDivElement>(null);
   const mobileTitleRef = useRef<HTMLHeadingElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
+  const leftSectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -96,6 +97,37 @@ export function SolutionsSection() {
           }
         );
       }
+
+      // Desktop only: Pin left section while right scrolls
+      const mm = gsap.matchMedia();
+
+      mm.add("(min-width: 768px)", () => {
+        if (leftSectionRef.current && listRef.current) {
+          ScrollTrigger.create({
+            trigger: containerRef.current,
+            start: "top top",
+            end: () => `+=${listRef.current!.offsetHeight}`, // 04 아이템 끝까지
+            pin: leftSectionRef.current,
+            pinSpacing: false,
+            onEnter: () => {
+              // 픽스될 때 패딩 추가
+              gsap.to(leftSectionRef.current, {
+                paddingTop: "80px",
+                duration: 0.3,
+                ease: "power2.out",
+              });
+            },
+            onLeaveBack: () => {
+              // 픽스 해제될 때 패딩 제거
+              gsap.to(leftSectionRef.current, {
+                paddingTop: "0px",
+                duration: 0.3,
+                ease: "power2.out",
+              });
+            },
+          });
+        }
+      });
 
       // Mobile Title + Accordion List Animation (Together)
       if (listRef.current) {
@@ -149,8 +181,8 @@ export function SolutionsSection() {
     >
       <div className="mx-auto max-w-screen-max px-7 md:px-10 lg:px-16 xl:px-20">
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 xl:gap-14 2xl:gap-16">
-          {/* 좌측 타이틀 - 데스크탑만 */}
-          <div className="hidden md:block">
+          {/* 좌측 타이틀 - 데스크탑에서 고정 */}
+          <div ref={leftSectionRef} className="hidden md:block md:w-[200px] lg:w-[240px] xl:w-[280px] flex-shrink-0">
             <h2
               ref={titleRef}
               className="mb-16 md:mb-20 xl:mb-28 2xl:mb-32 text-2xl md:text-3xl xl:text-4xl font-bold"

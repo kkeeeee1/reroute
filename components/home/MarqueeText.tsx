@@ -97,8 +97,8 @@ export function MarqueeText() {
             <Image
               src="/images/logo_main.png"
               alt="Reroute Logo"
-              width={153}
-              height={50}
+              width={500}
+              height={150}
               className="w-[120px] shrink-0 object-contain md:w-[140px] lg:w-[210px] xl:w-[300px] 2xl:w-[451px]"
             />
           </Fragment>
