@@ -4,7 +4,7 @@ import { HeroImageCarousel } from "./HeroImageCarousel";
 
 export function HeroSectionDesktop() {
   return (
-    <section className="flex min-h-screen items-center justify-center px-10 md:pb-0 md:pt-16 lg:px-20">
+    <section className="flex min-h-dvh items-center justify-center px-10 md:pb-0 md:pt-16 lg:px-20">
       <div className="flex w-full items-center justify-between gap-6 max-w-screen-max">
         {/* 좌측 텍스트 */}
         <div className="w-1/3 text-left">

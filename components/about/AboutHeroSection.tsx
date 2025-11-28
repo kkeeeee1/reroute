@@ -114,7 +114,7 @@ export function AboutHeroSection() {
     <section
       ref={sectionRef}
       id={DARK_SECTION_IDS.ABOUT}
-      className="relative h-screen bg-black w-full overflow-hidden"
+      className="relative h-dvh bg-black w-full overflow-hidden"
     >
       {/* Background Image */}
       <div ref={bgRef} className="absolute inset-0 z-0">

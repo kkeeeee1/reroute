@@ -83,10 +83,10 @@ export function AboutSection() {
     <section
       ref={sectionRef}
       id={DARK_SECTION_IDS.ABOUT}
-      className="relative w-full bg-deepnavy md:h-screen md:overflow-hidden"
+      className="relative w-full bg-deepnavy md:h-dvh md:overflow-hidden"
     >
       {/* Content section */}
-      <div className="flex h-screen flex-col justify-between md:justify-around px-7 py-[70px] md:px-16 md:py-28 lg:px-32 lg:py-32 xl:px-[170px] xl:py-36 2xl:px-[226px] 2xl:py-36">
+      <div className="flex h-dvh flex-col justify-between md:justify-around px-7 py-[70px] md:px-16 md:py-28 lg:px-32 lg:py-32 xl:px-[170px] xl:py-36 2xl:px-[226px] 2xl:py-36">
         {/* WE (선) REROUTE */}
         <div
           ref={headerContainerRef}

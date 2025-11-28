@@ -52,7 +52,7 @@ export function HeroSectionMobile() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen w-full overflow-hidden"
+      className="relative min-h-dvh w-full overflow-hidden"
     >
       {/* 배경: 이미지 캐러셀 */}
       <div className="absolute inset-0">

@@ -47,7 +47,7 @@ export default async function IndexRoute({ children }: { children: React.ReactNo
         <CustomCursor />
         <IntroAnimation />
         <ScrollToTopButton />
-        <div className="flex min-h-screen flex-col bg-white text-black">
+        <div className="flex min-h-dvh flex-col bg-white text-black">
           <Navbar />
           <div>{children}</div>
           <Footer />

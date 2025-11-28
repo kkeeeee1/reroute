@@ -113,7 +113,7 @@ export function HeroSection() {
     <section
       ref={containerRef}
       id="b2b-hero-section"
-      className="relative flex min-h-[70vh] md:min-h-[85vh] flex-col bg-black text-white overflow-hidden"
+      className="relative flex min-h-[70dvh] md:min-h-[85dvh] flex-col bg-black text-white overflow-hidden"
     >
       <Image
         ref={bgImageRef}

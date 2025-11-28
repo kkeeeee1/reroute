@@ -81,7 +81,7 @@ export function Menu({ isOpen, onClose }: MenuProps) {
     <div
       ref={menuRef}
       id="menu"
-      className="fixed inset-0 z-40 flex h-screen w-screen flex-col bg-darknavy"
+      className="fixed inset-0 z-40 flex h-dvh w-screen flex-col bg-darknavy"
       style={{ opacity: 0, willChange: "opacity" }}
     >
       <div className="mx-auto flex h-full w-full max-w-screen-max flex-col justify-center px-5 pt-5 md:px-10 md:pt-10 lg:px-20 lg:pt-20">
