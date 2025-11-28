@@ -122,7 +122,7 @@ export function WorkListContent({ works: initialWorks, totalCount = 0 }: WorkLis
             const imageUrl = (thumbnailUrl || defaultImage) as string;
 
             return (
-              <div key={work.workId} className="work-card">
+              <div key={work.workId} className="work-card" style={{ opacity: 1, willChange: "opacity, transform" }}>
                 <Link href={`/works/${work.workId}`}>
                   <div className="group flex h-full cursor-pointer flex-col overflow-hidden border border-[#888888] bg-white transition-all duration-300">
                     {/* 이미지 컨테이너 */}

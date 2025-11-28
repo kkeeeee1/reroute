@@ -122,7 +122,7 @@ export function AppListContent({ apps: initialApps, totalCount = 0 }: AppListCon
             const imageUrl = (thumbnailUrl || defaultImage) as string;
 
             return (
-              <div key={app.appId} className="app-card">
+              <div key={app.appId} className="app-card" style={{ opacity: 1, willChange: "opacity, transform" }}>
                 <Link href={`/b2c/${app.appId}`}>
                   <div className="group flex h-full cursor-pointer flex-col overflow-hidden border border-[#888888] bg-white transition-all duration-300">
                     {/* 이미지 컨테이너 */}
