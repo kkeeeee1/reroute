@@ -20,7 +20,6 @@ export function AppListContent({ apps: initialApps, totalCount = 0 }: AppListCon
   const defaultImage = "/images/default_image.png";
 
   const [loadedApps, setLoadedApps] = useState<any[]>(initialApps || []);
-  const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(totalCount ? initialApps.length < totalCount : true);
   const initializedRef = useRef(false);
@@ -79,7 +78,7 @@ export function AppListContent({ apps: initialApps, totalCount = 0 }: AppListCon
 
     setIsLoading(true);
     try {
-      const url = `/api/apps?skip=${currentPage * 1}&limit=1`;
+      const url = `/api/apps?skip=${loadedApps.length}&limit=12`;
 
       const response = await fetch(url);
 
@@ -92,7 +91,6 @@ export function AppListContent({ apps: initialApps, totalCount = 0 }: AppListCon
       if (result.success && result.data) {
         setLoadedApps((prev) => [...prev, ...result.data]);
         setHasMore(result.hasMore);
-        setCurrentPage((prev) => prev + 1);
       } else {
         console.error("Invalid API response:", result);
       }
