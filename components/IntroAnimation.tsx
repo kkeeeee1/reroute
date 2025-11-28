@@ -13,7 +13,6 @@ export function IntroAnimation() {
   const [isVisible, setIsVisible] = useState(false);
   const [displayedLines, setDisplayedLines] = useState<string[]>(["", "", ""]);
   const [mounted, setMounted] = useState(false);
-  const hasShownRef = useRef(false);
   const backgroundRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
@@ -22,12 +21,11 @@ export function IntroAnimation() {
   useEffect(() => {
     setMounted(true);
 
-    // Only show on actual page load/refresh, not on client-side navigation
-    if (hasShownRef.current) {
+    // Only show on actual page load/refresh, not if already played in this session
+    if (introState.hasPlayed()) {
       return;
     }
 
-    hasShownRef.current = true;
     setIsVisible(true);
     
     // Clear the flag when intro starts (새로고침 시 초기화)
