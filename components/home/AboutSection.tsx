@@ -21,99 +21,59 @@ export function AboutSection() {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      const isDesktop = window.innerWidth >= 768;
+      // 모든 디바이스: 스크롤 시 타이틀과 설명이 페이드인
+      
+      // 초기 상태: 모두 숨김
+      gsap.set([headerContainerRef.current, descriptionRef.current, buttonRef.current], {
+        opacity: 0,
+      });
+      
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "+=1800",
+          scrub: 1,
+          pin: true,
+        },
+      });
 
-      // 모바일: 간단한 fade-in
-      if (!isDesktop) {
-        gsap.fromTo(
-          headerContainerRef.current,
-          { opacity: 0 },
-          {
-            opacity: 1,
-            duration: 0.6,
-            delay: 0.2,
-            ease: "power2.out",
-          }
-        );
+      // 타이틀 페이드인
+      tl.to(
+        headerContainerRef.current,
+        {
+          opacity: 1,
+          duration: 0.3,
+          ease: "power2.out",
+        },
+        0
+      );
 
-        gsap.fromTo(
-          descriptionRef.current,
-          { opacity: 0, y: 20 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            delay: 0.4,
-            ease: "power2.out",
-          }
-        );
+      // 설명 텍스트 페이드인 (y 이동 포함)
+      tl.fromTo(
+        descriptionRef.current,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.4,
+          ease: "power2.out",
+        },
+        0.3
+      );
 
-        gsap.fromTo(
-          buttonRef.current,
-          { opacity: 0, y: 20 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            delay: 0.6,
-            ease: "power2.out",
-          }
-        );
-      } else {
-        // 데스크탑: 스크롤 시 타이틀과 설명이 페이드인
-        
-        // 초기 상태: 모두 숨김
-        gsap.set([headerContainerRef.current, descriptionRef.current, buttonRef.current], {
-          opacity: 0,
-        });
-        
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top top",
-            end: "+=1800",
-            scrub: 1,
-            pin: true,
-          },
-        });
-
-        // 타이틀 페이드인
-        tl.to(
-          headerContainerRef.current,
-          {
-            opacity: 1,
-            duration: 0.3,
-            ease: "power2.out",
-          },
-          0
-        );
-
-        // 설명 텍스트 페이드인 (y 이동 포함)
-        tl.fromTo(
-          descriptionRef.current,
-          { opacity: 0, y: 30 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.4,
-            ease: "power2.out",
-          },
-          0.3
-        );
-
-        // 버튼 페이드인
-        tl.fromTo(
-          buttonRef.current,
-          { opacity: 0, y: 20 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.3,
-            ease: "power2.out",
-          },
-          0.6
-        );
-      }
+      // 버튼 페이드인
+      tl.fromTo(
+        buttonRef.current,
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.3,
+          ease: "power2.out",
+        },
+        0.6
+      );
     }, sectionRef);
 
     return () => ctx.revert();
@@ -126,7 +86,7 @@ export function AboutSection() {
       className="relative w-full bg-deepnavy md:h-screen md:overflow-hidden"
     >
       {/* Content section */}
-      <div className="flex h-screen flex-col justify-around px-7 py-28 md:px-16 md:py-32 lg:px-32 lg:py-32 xl:px-[170px] xl:py-36 2xl:px-[226px] 2xl:py-36">
+      <div className="flex h-screen flex-col justify-around px-7 py-24 md:px-16 md:py-28 lg:px-32 lg:py-32 xl:px-[170px] xl:py-36 2xl:px-[226px] 2xl:py-36">
         
         {/* WE (선) REROUTE */}
         <div
