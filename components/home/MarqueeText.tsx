@@ -1,9 +1,7 @@
 "use client";
 
-import { useRef, useEffect, useState, Fragment } from "react";
 import Image from "next/image";
-
-
+import { Fragment, useEffect, useRef, useState } from "react";
 
 export function MarqueeText() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -11,7 +9,7 @@ export function MarqueeText() {
 
   useEffect(() => {
     let frame = 0;
-    const speed = 0.5;
+    const speed = 1.8;
     let singleSetWidth = 0;
 
     // 한 세트의 실제 너비를 계산 (컴포넌트 마운트 후)
@@ -19,12 +17,12 @@ export function MarqueeText() {
       if (containerRef.current) {
         const children = containerRef.current.children;
         const itemsPerSet = 5; // 4개 텍스트 span + 1개 이미지
-        
+
         if (children.length >= itemsPerSet) {
           let totalWidth = 0;
           const gapStyle = window.getComputedStyle(containerRef.current).gap;
           const gap = parseFloat(gapStyle) || 0;
-          
+
           // 첫 번째 세트의 너비를 계산
           for (let i = 0; i < itemsPerSet; i++) {
             const child = children[i] as HTMLElement;
@@ -34,7 +32,7 @@ export function MarqueeText() {
               totalWidth += gap;
             }
           }
-          
+
           singleSetWidth = totalWidth;
         }
       }
