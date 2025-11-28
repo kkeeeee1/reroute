@@ -2,13 +2,9 @@
 
 import { CustomPortableText } from "@/components/CustomPortableText";
 import { urlForImage } from "@/sanity/lib/utils";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
-
-gsap.registerPlugin(ScrollTrigger);
+import { useRef } from "react";
 
 interface AppDetailContentProps {
   app: {
@@ -37,7 +33,7 @@ export function AppDetailContent({ app }: AppDetailContentProps) {
       })
     : "";
 
-  // Animation refs
+  // Refs for styling
   const thumbnailRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const summaryRef = useRef<HTMLParagraphElement>(null);
@@ -45,136 +41,13 @@ export function AppDetailContent({ app }: AppDetailContentProps) {
   const introRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
 
-  // Animation setup
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Determine if mobile (need to check at animation time)
-      const isMobile = window.innerWidth < 768;
-
-      // Thumbnail animation - uses different trigger on mobile vs desktop
-      if (thumbnailRef.current) {
-        const triggerElement = isMobile ? titleRef.current : thumbnailRef.current;
-        gsap.fromTo(
-          thumbnailRef.current,
-          { scale: 0.9, opacity: 0 },
-          {
-            scale: 1,
-            opacity: 1,
-            duration: 1,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: triggerElement || thumbnailRef.current,
-              start: "top 80%",
-            },
-          }
-        );
-      }
-
-      // Title animation - uses own trigger on desktop, same as thumbnail on mobile
-      if (titleRef.current) {
-        gsap.fromTo(
-          titleRef.current,
-          { y: 40, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            delay: 0.2,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: titleRef.current,
-              start: "top 80%",
-            },
-          }
-        );
-      }
-
-      // Summary animation
-      if (summaryRef.current) {
-        gsap.fromTo(
-          summaryRef.current,
-          { y: 30, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            delay: 0.4,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: summaryRef.current,
-              start: "top 80%",
-            },
-          }
-        );
-      }
-
-      // Date animation
-      if (dateRef.current) {
-        gsap.fromTo(
-          dateRef.current,
-          { y: 20, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.6,
-            delay: 0.6,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: dateRef.current,
-              start: "top 75%",
-            },
-          }
-        );
-      }
-
-      // Intro section animation
-      if (introRef.current) {
-        gsap.fromTo(
-          introRef.current,
-          { y: 50, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 1,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: introRef.current,
-              start: "top 75%",
-            },
-          }
-        );
-      }
-
-      // Nav animation
-      if (navRef.current) {
-        gsap.fromTo(
-          navRef.current,
-          { y: 30, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: navRef.current,
-              start: "top 85%",
-            },
-          }
-        );
-      }
-    });
-
-    return () => ctx.revert();
-  }, []);
-
   return (
     <section>
       <div className="max-w-screen-max px-7 md:px-10 lg:px-20 py-16 md:py-20 lg:py-24 mx-auto grid grid-cols-1 md:grid-cols-[300px_1fr] xl:grid-cols-[400px_1fr] gap-12 md:gap-16 xl:gap-20">
         {/* 왼쪽: 썸네일 */}
         <div
           ref={thumbnailRef}
-          className="relative aspect-[3/2] overflow-hidden bg-[#141B29] opacity-0"
-          style={{ willChange: "transform, opacity" }}
+          className="relative aspect-[3/2] overflow-hidden bg-[#141B29]"
         >
           <Image
             src={imageUrl}
@@ -192,8 +65,7 @@ export function AppDetailContent({ app }: AppDetailContentProps) {
               {/* 앱 이름*/}
               <h1
                 ref={titleRef}
-                className="text-[36px] md:text-[44px] lg:text-[50px] xl:text-[53px] 2xl:text-[56px] leading-[36px] md:leading-[42px] lg:leading-[45px] xl:leading-[46px] 2xl:leading-[48px] font-extrabold opacity-0"
-                style={{ willChange: "transform, opacity" }}
+                className="text-[36px] md:text-[44px] lg:text-[50px] xl:text-[53px] 2xl:text-[56px] leading-[36px] md:leading-[42px] lg:leading-[45px] xl:leading-[46px] 2xl:leading-[48px] font-extrabold"
               >
                 {app.name}
               </h1>
@@ -235,8 +107,7 @@ export function AppDetailContent({ app }: AppDetailContentProps) {
             {/* 앱 설명 */}
             <p
               ref={summaryRef}
-              className="text-[18px] md:text-[22px] lg:text-[25px] xl:text-[26px] 2xl:text-[28px] leading-[28px] md:leading-[38px] lg:leading-[43px] xl:leading-[45px] 2xl:leading-[48px] font-medium mb-[24px] md:mb-[30px] lg:mb-[35px] xl:mb-[37px] 2xl:mb-[39px] opacity-0"
-              style={{ willChange: "transform, opacity" }}
+              className="text-[18px] md:text-[22px] lg:text-[25px] xl:text-[26px] 2xl:text-[28px] leading-[28px] md:leading-[38px] lg:leading-[43px] xl:leading-[45px] 2xl:leading-[48px] font-medium mb-[24px] md:mb-[30px] lg:mb-[35px] xl:mb-[37px] 2xl:mb-[39px]"
             >
               {app.summary}
             </p>
@@ -244,15 +115,14 @@ export function AppDetailContent({ app }: AppDetailContentProps) {
             {formattedDate && (
               <p
                 ref={dateRef}
-                className="text-[14px] md:text-[16px] lg:text-[18px] xl:text-[19px] 2xl:text-[20px] leading-[28px] md:leading-[38px] lg:leading-[43px] xl:leading-[45px] 2xl:leading-[48px] font-medium text-[#999999] opacity-0"
-                style={{ willChange: "transform, opacity" }}
+                className="text-[14px] md:text-[16px] lg:text-[18px] xl:text-[19px] 2xl:text-[20px] leading-[28px] md:leading-[38px] lg:leading-[43px] xl:leading-[45px] 2xl:leading-[48px] font-medium text-[#999999]"
               >
                 {formattedDate}
               </p>
             )}
           </div>
 
-          <div ref={introRef} className="opacity-0" style={{ willChange: "transform, opacity" }}>
+          <div ref={introRef}>
             <div className="border-b-[2px] md:border-b-[2.5px] lg:border-b-[2.75px] xl:border-b-[2.85px] 2xl:border-b-[3px] border-black px-[24px] md:px-[30px] lg:px-[34px] xl:px-[36px] 2xl:px-[36px] py-[8px] md:py-[10px] lg:py-[11px] xl:py-[11.5px] 2xl:py-[12px] w-fit">
               <h2 className="text-[18px] md:text-[21px] lg:text-[23px] xl:text-[24px] 2xl:text-[26px] leading-[28px] md:leading-[33px] lg:leading-[37px] xl:leading-[38px] 2xl:leading-[40px] font-bold">
                 소개
@@ -281,8 +151,7 @@ export function AppDetailContent({ app }: AppDetailContentProps) {
           {/* 이전글/다음글 버튼 */}
           <div
             ref={navRef}
-            className="flex items-center justify-center gap-[12px] md:gap-[15px] lg:gap-[17px] xl:gap-[18px] 2xl:gap-[20px] opacity-0"
-            style={{ willChange: "transform, opacity" }}
+            className="flex items-center justify-center gap-[12px] md:gap-[15px] lg:gap-[17px] xl:gap-[18px] 2xl:gap-[20px]"
           >
             {/* 이전글 버튼 */}
             <div className="group flex flex-col items-center">

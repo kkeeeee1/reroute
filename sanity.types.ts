@@ -744,7 +744,7 @@ export type WorkListQueryResult = Array<{
 // Query: count(*[_type == "work"])
 export type WorkListCountQueryResult = number;
 // Variable: workDetailQuery
-// Query: *[_type == "work" && workId == $workId][0]{    _id,    workId,    name,    summary,    thumbnail,    startDate,    endDate,    role,    content,    createdAt,  }
+// Query: *[_type == "work" && workId == $workId][0]{    _id,    workId,    name,    summary,    thumbnail,    startDate,    endDate,    role,    content,    createdAt,    "prevWork": *[_type == "work" && createdAt < ^.createdAt] | order(createdAt desc)[0]{      workId,      name    },    "nextWork": *[_type == "work" && createdAt > ^.createdAt] | order(createdAt asc)[0]{      workId,      name    }  }
 export type WorkDetailQueryResult = {
   _id: string;
   workId: string | null;
@@ -818,6 +818,14 @@ export type WorkDetailQueryResult = {
       }
   > | null;
   createdAt: string | null;
+  prevWork: {
+    workId: string | null;
+    name: string | null;
+  } | null;
+  nextWork: {
+    workId: string | null;
+    name: string | null;
+  } | null;
 } | null;
 
 declare module "@sanity/client" {
@@ -833,6 +841,6 @@ declare module "@sanity/client" {
     '\n  *[_type == "app" && appId == $appId][0]{\n    _id,\n    appId,\n    name,\n    summary,\n    thumbnail,\n    content,\n    createdAt,\n    "prevApp": *[_type == "app" && createdAt < ^.createdAt] | order(createdAt desc)[0]{\n      appId,\n      name\n    },\n    "nextApp": *[_type == "app" && createdAt > ^.createdAt] | order(createdAt asc)[0]{\n      appId,\n      name\n    }\n  }\n': AppDetailQueryResult;
     '\n  *[_type == "work"] | order(createdAt desc)[0...12]{\n    _id,\n    workId,\n    name,\n    summary,\n    thumbnail,\n  }\n': WorkListQueryResult;
     '\n  count(*[_type == "work"])\n': WorkListCountQueryResult;
-    '\n  *[_type == "work" && workId == $workId][0]{\n    _id,\n    workId,\n    name,\n    summary,\n    thumbnail,\n    startDate,\n    endDate,\n    role,\n    content,\n    createdAt,\n  }\n': WorkDetailQueryResult;
+    '\n  *[_type == "work" && workId == $workId][0]{\n    _id,\n    workId,\n    name,\n    summary,\n    thumbnail,\n    startDate,\n    endDate,\n    role,\n    content,\n    createdAt,\n    "prevWork": *[_type == "work" && createdAt < ^.createdAt] | order(createdAt desc)[0]{\n      workId,\n      name\n    },\n    "nextWork": *[_type == "work" && createdAt > ^.createdAt] | order(createdAt asc)[0]{\n      workId,\n      name\n    }\n  }\n': WorkDetailQueryResult;
   }
 }
