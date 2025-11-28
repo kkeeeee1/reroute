@@ -50,9 +50,9 @@ export function AboutSection() {
             chars.forEach((char, index) => {
               timeline.fromTo(
                 char,
-                { 
-                  opacity: 0, 
-                  y: 30 
+                {
+                  opacity: 0,
+                  y: 30,
                 },
                 {
                   opacity: 1,
@@ -84,7 +84,7 @@ export function AboutSection() {
               duration: 0.8,
               ease: "power2.out",
             },
-            2.2 // 파도 애니메이션 후
+            1.6 // 파도 애니메이션 후
           );
 
           // 3. VIEW MORE - 아래에서 위로 (description 애니메이션 후)
@@ -96,7 +96,7 @@ export function AboutSection() {
               duration: 0.6,
               ease: "power2.out",
             },
-            3.2 // description 애니메이션 후
+            2.4 // description 애니메이션 후
           );
         },
       });
@@ -162,9 +162,21 @@ export function AboutSection() {
             href="/about"
             className="text-[18px] font-bold leading-[100%] text-white transition-opacity duration-300 hover:opacity-70 lg:text-[20px] xl:text-[24px] 2xl:text-[28px] flex items-end gap-2 md:gap-3"
           >
-            VIEW MORE 
-            <svg width="35" height="16" viewBox="0 0 35 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="md:mb-0.5 lg:mb-1 w-[22px] md:w-[28px] lg:w-[35px]">
-              <path d="M0 13.3679H30L18.75 1.36792" stroke="white" strokeWidth="4" strokeMiterlimit="10"/>
+            VIEW MORE
+            <svg
+              width="35"
+              height="16"
+              viewBox="0 0 35 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="md:mb-0.5 lg:mb-1 w-[22px] md:w-[28px] lg:w-[35px]"
+            >
+              <path
+                d="M0 13.3679H30L18.75 1.36792"
+                stroke="white"
+                strokeWidth="4"
+                strokeMiterlimit="10"
+              />
             </svg>
           </Link>
         </div>
