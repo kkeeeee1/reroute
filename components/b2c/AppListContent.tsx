@@ -161,7 +161,7 @@ export function AppListContent({ apps: initialApps, totalCount = 0 }: AppListCon
               data-no-cursor
               onClick={loadMoreApps}
               disabled={isLoading}
-              className="border-2 rounded-full border-black px-4 md:px-5 lg:px-5 xl:px-5 2xl:px-5 py-1.5 md:py-2 lg:py-2 xl:py-2 2xl:py-2 text-[18px] font-bold leading-[100%] text-black lg:text-[20px] xl:text-[24px] 2xl:text-[28px] hover:bg-black hover:text-white transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="border md:border-2 border-black px-5 py-2 md:px-7 md:py-3.5 xl:px-8 xl:py-4 text-[14px] md:text-[18px] xl:text-[20px] font-bold leading-[28px] md:leading-[36px] xl:leading-[40px] hover:bg-black hover:text-white transition-colors"
             >
               Load More
             </button>
