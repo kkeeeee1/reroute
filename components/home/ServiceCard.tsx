@@ -1,8 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useIsDesktop } from "@/hooks/useIsDesktop";
 import gsap from "gsap";
 import Image from "next/image";
 import Link from "next/link";
-import { useIsDesktop } from "@/hooks/useIsDesktop";
+import { useEffect, useRef } from "react";
 
 interface ServiceCardProps {
   id: "b2b" | "b2c";
@@ -70,7 +70,7 @@ export function ServiceCard({
         duration: 0.5,
         delay: animationDelay,
         ease: "expo.out",
-      },
+      }
     );
 
     return () => {
@@ -105,20 +105,20 @@ export function ServiceCard({
           className={`absolute inset-0 flex flex-col justify-between bg-gradient-to-b from-transparent via-transparent ${gradientColor} xl:p-15 p-6 sm:p-10 md:p-12 lg:p-14 2xl:p-16`}
         >
           <div>
-            <h3 className="mb-4 text-[32px] font-black leading-[40px] text-white sm:mb-[25px] sm:text-[50px] sm:leading-[62px] md:mb-[20px] md:text-[45px] md:leading-[60px] lg:text-[55px] lg:leading-[65px] xl:mb-[28px] xl:text-[65px] xl:leading-[72px] 2xl:mb-[43px] 2xl:text-[80px] 2xl:leading-[70px]">
+            <h3 className="mb-4 text-[32px] font-black leading-[35px] text-white sm:mb-[20px] sm:text-[40px] sm:leading-[50px] md:mb-[22px] md:text-[38px] md:leading-[50px] lg:text-[48px] lg:leading-[56px] xl:mb-[24px] xl:text-[56px] xl:leading-[64px] 2xl:mb-[30px] 2xl:text-[64px] 2xl:leading-[70px]">
               {title}
             </h3>
-            <p className="text-base font-medium leading-[18px] text-white sm:text-[24px] sm:leading-[30px] md:text-[18px] md:leading-[26px] lg:text-[20px] lg:leading-[32px] xl:text-[22px] xl:leading-[35px] 2xl:text-[32px] 2xl:leading-[70px]">
+            <p className="text-sm font-medium text-white sm:text-[16px] sm:leading-[24px] md:text-[18px] md:leading-[22px] lg:text-[20px] lg:leading-[24px] xl:text-[22px] xl:leading-[28px] 2xl:text-[25px] 2xl:leading-[32px]">
               {description}
             </p>
           </div>
           <div>
             <span
-              className={`inline-block rounded-full ${tagBgColor} mb-2 px-3 py-0.5 text-xs font-bold sm:mb-5 sm:px-4 sm:text-base md:mb-4 md:px-5 md:py-1 md:text-base lg:text-lg xl:px-5 xl:py-1 xl:text-xl 2xl:mb-[30px] 2xl:py-2 2xl:text-[32px] 2xl:leading-[30px] ${tagTextColor}`}
+              className={`inline-block rounded-full ${tagBgColor} mb-2 px-3 py-0.5 text-xs font-bold sm:mb-3 sm:px-3 sm:text-[11px] md:mb-3 md:px-3 md:py-0.5 md:text-[11px] lg:text-sm lg:px-4 lg:py-1 xl:px-5 xl:py-2 xl:text-base 2xl:mb-[15px] 2xl:text-lg 2xl:leading-[18px] ${tagTextColor}`}
             >
               {tagText}
             </span>
-            <p className="text-sm font-medium text-white sm:text-[20px] md:text-[22px] md:leading-[30px] lg:text-[22px] lg:leading-[32px] xl:text-[26px] xl:leading-[40px] 2xl:text-[40px] 2xl:leading-[40px]">
+            <p className="text-sm font-medium text-white sm:text-[16px] sm:leading-[20px] md:text-[18px] md:leading-[22px] lg:text-[20px] lg:leading-[24px] xl:text-[22px] xl:leading-[28px] 2xl:text-[25px] 2xl:leading-[32px]">
               {callToAction}
             </p>
           </div>
