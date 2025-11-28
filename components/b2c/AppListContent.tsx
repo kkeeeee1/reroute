@@ -26,50 +26,45 @@ export function AppListContent({ apps: initialApps, totalCount = 0 }: AppListCon
 
   // 초기 애니메이션 (제목 + 첫 카드들) - 초기 로드만
   useEffect(() => {
-    if (initializedRef.current || !titleRef.current) return;
+    if (initializedRef.current || !titleRef.current || !gridRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Title animation
+      // Title animation - ScrollTrigger 없이 즉시 시작
       gsap.fromTo(
         titleRef.current,
         { y: 50, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 1,
+          duration: 0.8,
           ease: "power3.out",
-          scrollTrigger: {
-            trigger: titleRef.current,
-            start: "top 80%",
-          },
         }
       );
 
-      // Card stagger animation - 초기 카드들만
-      if (gridRef.current) {
-        const cards = Array.from(gridRef.current.querySelectorAll(".app-card"));
-        if (cards.length > 0) {
-          gsap.fromTo(
-            cards,
-            { y: 50, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              duration: 0.8,
-              stagger: 0.1,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: gridRef.current,
-                start: "top 80%",
-              },
-            }
-          );
-        }
+      // Card stagger animation - ScrollTrigger 없이 즉시 시작
+      const cards = Array.from(gridRef.current!.querySelectorAll(".app-card"));
+      if (cards.length > 0) {
+        gsap.fromTo(
+          cards,
+          { y: 50, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power3.out",
+          }
+        );
       }
     });
 
     initializedRef.current = true;
-    return () => ctx.revert();
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => {
+        trigger.kill();
+      });
+      ctx.revert();
+    };
   }, []);
 
   // 더 많은 앱 로드
@@ -107,7 +102,7 @@ export function AppListContent({ apps: initialApps, totalCount = 0 }: AppListCon
         {/* Our Apps 제목 */}
         <h2
           ref={titleRef}
-          className="text-[32px] md:text-[40px] lg:text-[44px] xl:text-[46px] 2xl:text-[48px] leading-tight md:leading-[48px] font-extrabold mb-[50px] md:mb-[70px] lg:mb-[85px] xl:mb-[92px] 2xl:mb-[100px] opacity-0"
+          className="text-[32px] md:text-[40px] lg:text-[44px] xl:text-[46px] 2xl:text-[48px] leading-tight md:leading-[48px] font-extrabold mb-[50px] md:mb-[70px] lg:mb-[85px] xl:mb-[92px] 2xl:mb-[100px]"
         >
           Our Apps
         </h2>
@@ -122,7 +117,7 @@ export function AppListContent({ apps: initialApps, totalCount = 0 }: AppListCon
             const imageUrl = (thumbnailUrl || defaultImage) as string;
 
             return (
-              <div key={app.appId} className="app-card" style={{ opacity: 1, willChange: "opacity, transform" }}>
+              <div key={app.appId} className="app-card">
                 <Link href={`/b2c/${app.appId}`}>
                   <div className="group flex h-full cursor-pointer flex-col overflow-hidden border border-[#888888] bg-white transition-all duration-300">
                     {/* 이미지 컨테이너 */}
