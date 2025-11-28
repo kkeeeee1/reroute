@@ -52,58 +52,75 @@ export function HeroSection() {
         },
       });
 
-      // 배경 확대 (처음부터 0.15까지만 진행) - 빠르게 끊김
+      // 1번 요소 나타나면서 배경 확대 (1.0 → 1.15)
       tl.to(
         bgRef.current,
         {
-          scale: 1.3,
-          duration: 0.2,
+          scale: 1.15,
+          duration: 0.8,
         },
         0
       );
 
-      // 1번 요소 나타났다 사라짐 (체류 시간: 2초) - 배경 확대 후 추가 스크롤 필요
       tl.to(
         item1Ref.current,
         {
           opacity: 1,
           duration: 0.15,
         },
-        0.8
+        0.2
       ).to(
         item1Ref.current,
         {
           opacity: 0,
           duration: 0.15,
         },
-        2.8
+        2.0
       );
 
-      // 2번 요소 나타났다 사라짐 (체류 시간: 2초)
+      // 2번 요소 나타나면서 배경 더 확대 (1.15 → 1.25)
+      tl.to(
+        bgRef.current,
+        {
+          scale: 1.25,
+          duration: 0.8,
+        },
+        2.1
+      );
+
       tl.to(
         item2Ref.current,
         {
           opacity: 1,
           duration: 0.15,
         },
-        2.9
+        2.3
       ).to(
         item2Ref.current,
         {
           opacity: 0,
           duration: 0.15,
         },
-        4.9
+        4.1
       );
 
-      // 3번 요소 나타남 (자석처럼 멈추는 효과 - 사라지지 않음)
+      // 3번 요소 나타나면서 배경 최종 확대 (1.25 → 1.35)
+      tl.to(
+        bgRef.current,
+        {
+          scale: 1.35,
+          duration: 1.0,
+        },
+        4.2
+      );
+
       tl.to(
         item3Ref.current,
         {
           opacity: 1,
           duration: 1.5,
         },
-        5.0
+        4.4
       );
     }, sectionRef);
 
