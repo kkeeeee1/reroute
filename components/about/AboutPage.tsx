@@ -1,12 +1,12 @@
 'use client';
 
-import { AboutHeroSection } from "@/components/about/AboutHeroSection";
+import { HeroSection } from "@/components/about/HeroSection";
 import { CBOIntroSection } from "@/components/about/CBOIntroSection";
 
 export function AboutPageContainer() {
   return (
     <div>
-      <AboutHeroSection />
+      <HeroSection />
       <CBOIntroSection />
     </div>
   );

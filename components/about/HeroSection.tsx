@@ -8,7 +8,7 @@ import { useEffect, useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function AboutHeroSection() {
+export function HeroSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
   const aboutTitleRef = useRef<HTMLHeadingElement>(null);
@@ -180,7 +180,8 @@ export function AboutHeroSection() {
                 많은 회사가 전략을 이야기하지만 실행하지 못하고,
                 <br />
                 많은 개발사는 기술만 제시하고 사업의 본질을 이해하지 못합니다.
-                {` 리루트는 ROI 중심 사고 + 현장 운영 역량 + 기술력을 결합해\n브랜드가 실제로 성장할 수 있는 솔루션을 제공합니다.`}
+                <br />
+                {`리루트는 ROI 중심 사고 + 현장 운영 역량 + 기술력을 결합해\n브랜드가 실제로 성장할 수 있는 솔루션을 제공합니다.`}
               </span>
             </div>
           </div>
