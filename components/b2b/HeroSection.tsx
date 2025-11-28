@@ -127,7 +127,7 @@ export function HeroSection() {
 
       <div className="relative z-10 mx-auto max-w-screen-max flex w-full flex-1 flex-col px-7 md:px-10 lg:px-16 xl:px-20 pt-32 pb-12 md:pt-48 xl:pt-56 2xl:pt-64 lg:pb-16">
         <div className="flex flex-1 flex-col justify-between md:max-w-[60%] xl:max-w-[55%] 2xl:max-w-[47%]">
-          <div className="space-y-5 md:space-y-7 xl:space-y-8 2xl:space-y-[36px]">
+          <div className="space-y-7 md:space-y-10 xl:space-y-12 2xl:space-y-14">
             <h2
               ref={titleRef}
               className="text-[48px] md:text-[64px] xl:text-[72px] 2xl:text-[80px] font-bold uppercase leading-none opacity-0"
