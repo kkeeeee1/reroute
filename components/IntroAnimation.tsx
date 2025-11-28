@@ -21,14 +21,23 @@ export function IntroAnimation() {
   useEffect(() => {
     setMounted(true);
 
-    // Only show on actual page load/refresh, not if already played in this session
+    // Check if this is a page reload (refresh) vs client-side navigation
+    const navigationEntries = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
+    const isReload = navigationEntries.length > 0 && navigationEntries[0].type === 'reload';
+
+    // If it's a reload, clear the intro state so it plays again
+    if (isReload) {
+      introState.clear();
+    }
+
+    // Only show if intro hasn't played in this session (skips on client-side navigation)
     if (introState.hasPlayed()) {
       return;
     }
 
     setIsVisible(true);
     
-    // Clear the flag when intro starts (새로고침 시 초기화)
+    // Clear the flag when intro starts
     introState.clear();
 
     // Lock scroll completely during intro
