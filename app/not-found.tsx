@@ -1,5 +1,6 @@
 "use client";
 
+import { DARK_SECTION_IDS } from "@/constants/sections";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -11,7 +12,10 @@ export default function NotFound() {
   }, []);
 
   return (
-    <div className="relative flex min-h-dvh w-full flex-col items-center justify-center bg-deepnavy px-7 py-10 md:px-16 lg:px-32">
+    <div
+      id={DARK_SECTION_IDS.NOT_FOUND}
+      className="relative flex min-h-dvh w-full flex-col items-center justify-center bg-deepnavy px-7 py-10 md:px-16 lg:px-32"
+    >
       {/* Fade in animation */}
       <div
         className={`flex flex-col items-center gap-8 md:gap-12 transition-all duration-700 ${

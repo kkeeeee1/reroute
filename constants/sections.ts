@@ -3,13 +3,13 @@
  * Default navbar color is black, only switches to white on these sections
  */
 export const DARK_SECTION_IDS = {
-  ABOUT: 'about-section',
-  B2B_HERO: 'b2b-hero-section',
-  B2B_SOLUTIONS: 'b2b-solutions-section',
-  B2B_WHY_REROUTE: 'b2b-why-reroute-section',
-  B2B_CTA: 'b2b-cta-section',
-  B2C_HERO: 'b2c-hero-section',
-  WORKS_HERO: 'works-hero-section',
-  ABOUT_HERO: 'about-hero-section',
-
+  ABOUT: "about-section",
+  B2B_HERO: "b2b-hero-section",
+  B2B_SOLUTIONS: "b2b-solutions-section",
+  B2B_WHY_REROUTE: "b2b-why-reroute-section",
+  B2B_CTA: "b2b-cta-section",
+  B2C_HERO: "b2c-hero-section",
+  WORKS_HERO: "works-hero-section",
+  ABOUT_HERO: "about-hero-section",
+  NOT_FOUND: "not-found",
 } as const;
