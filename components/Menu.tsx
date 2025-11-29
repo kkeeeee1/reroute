@@ -87,6 +87,11 @@ export function Menu({ isOpen, onClose }: MenuProps) {
       <div className="mx-auto flex h-full w-full max-w-screen-max flex-col justify-center px-5 pt-5 md:px-10 md:pt-10 lg:px-20 lg:pt-20">
         <nav className="flex h-full flex-col justify-center gap-6 md:gap-8 lg:gap-[40px]">
           {NAV_ITEMS.map((item, index) => {
+            // Works 페이지 활성화 여부 확인
+            if (item.href === "/works" && process.env.NEXT_PUBLIC_ENABLE_WORKS_PAGE !== "true") {
+              return null;
+            }
+
             const isActive = pathname === item.href;
             return (
               <div
