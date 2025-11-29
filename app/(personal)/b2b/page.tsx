@@ -10,16 +10,18 @@ export async function generateMetadata(): Promise<Metadata> {
 
   const defaultSeo = settingsData?.defaultSeo;
 
+  const ogImage = pageData?.seo?.ogImage
+    ? urlForOpenGraphImage(pageData.seo.ogImage as any)
+    : settingsData?.ogImage
+      ? urlForOpenGraphImage(settingsData.ogImage as any)
+      : undefined;
+
   return {
     title: pageData?.seo?.metaTitle || defaultSeo?.metaTitle || "B2B Solution",
     description:
       pageData?.seo?.metaDescription || defaultSeo?.metaDescription || "",
     openGraph: {
-      images: pageData?.seo?.ogImage
-        ? [urlForOpenGraphImage(pageData.seo.ogImage)]
-        : settingsData?.ogImage
-          ? [urlForOpenGraphImage(settingsData.ogImage)]
-          : [],
+      images: ogImage ? [{ url: ogImage || "" }] : [],
     },
   };
 }

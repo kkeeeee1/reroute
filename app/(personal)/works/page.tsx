@@ -21,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: pageData?.seo?.metaTitle || defaultSeo?.metaTitle || "Works",
     description: pageData?.seo?.metaDescription || defaultSeo?.metaDescription || "",
     openGraph: {
-      images: ogImage ? [ogImage] : [],
+      images: ogImage ? [{ url: ogImage || "" }] : [],
     },
   };
 }

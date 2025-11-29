@@ -11,27 +11,17 @@ import { homePageQuery } from "@/sanity/lib/queries";
 import { urlForOpenGraphImage } from "@/sanity/lib/utils";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
-import { toPlainText } from "next-sanity";
 import { Toaster } from "sonner";
 import { handleError } from "./client-functions";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: homePage } = await sanityFetch({ query: homePageQuery, stega: false });
 
-  const ogImage = homePage?.seo?.ogImage ? urlForOpenGraphImage(homePage.seo.ogImage) : undefined;
-
   return {
-    title: homePage?.title
-      ? {
-          template: `%s | ${homePage.title}`,
-          default: homePage?.seo?.metaTitle || homePage.title || "Personal website",
-        }
-      : undefined,
-    description:
-      homePage?.seo?.metaDescription ||
-      (homePage?.overview ? toPlainText(homePage.overview) : undefined),
+    title: homePage?.seo?.metaTitle || "Personal website",
+    description: homePage?.seo?.metaDescription || "",
     openGraph: {
-      images: ogImage ? [ogImage] : [],
+      images: homePage?.seo?.ogImage ? [{ url: urlForOpenGraphImage(homePage.seo.ogImage as any) || "" }] : [],
     },
   };
 }
