@@ -1,6 +1,6 @@
 import { WorksPageContainer } from "@/components/works/WorksPage";
 import { sanityFetch } from "@/sanity/lib/live";
-import { worksPageQuery, settingsQuery } from "@/sanity/lib/queries";
+import { settingsQuery, worksPageQuery } from "@/sanity/lib/queries";
 import { urlForOpenGraphImage } from "@/sanity/lib/utils";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";

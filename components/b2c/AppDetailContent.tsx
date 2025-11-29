@@ -45,10 +45,7 @@ export function AppDetailContent({ app }: AppDetailContentProps) {
     <section>
       <div className="max-w-screen-max px-7 md:px-10 lg:px-20 py-16 md:py-20 lg:py-24 mx-auto grid grid-cols-1 md:grid-cols-[300px_1fr] xl:grid-cols-[400px_1fr] gap-12 md:gap-16 xl:gap-20">
         {/* 왼쪽: 썸네일 */}
-        <div
-          ref={thumbnailRef}
-          className="relative aspect-[3/2] overflow-hidden bg-[#141B29]"
-        >
+        <div ref={thumbnailRef} className="relative aspect-[3/2] overflow-hidden bg-[#141B29]">
           <Image
             src={imageUrl}
             alt={app.name || "리루트 앱"}
