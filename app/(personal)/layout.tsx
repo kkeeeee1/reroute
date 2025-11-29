@@ -17,11 +17,18 @@ import { handleError } from "./client-functions";
 export async function generateMetadata(): Promise<Metadata> {
   const { data: homePage } = await sanityFetch({ query: homePageQuery, stega: false });
 
+  const description =
+    homePage?.seo?.metaDescription || "We don't just solve problems. We Reroute them.";
+
   return {
-    title: homePage?.seo?.metaTitle || "Personal website",
-    description: homePage?.seo?.metaDescription || "",
+    title: homePage?.seo?.metaTitle || "Reroute",
+    description,
     openGraph: {
-      images: homePage?.seo?.ogImage ? [{ url: urlForOpenGraphImage(homePage.seo.ogImage as any) || "" }] : [],
+      title: homePage?.seo?.metaTitle || "Reroute",
+      description,
+      images: homePage?.seo?.ogImage
+        ? [{ url: urlForOpenGraphImage(homePage.seo.ogImage as any) || "" }]
+        : [],
     },
   };
 }

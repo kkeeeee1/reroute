@@ -11,6 +11,11 @@ export async function generateMetadata(): Promise<Metadata> {
 
   const defaultSeo = settingsData?.defaultSeo;
 
+  const description =
+    pageData?.seo?.metaDescription ||
+    defaultSeo?.metaDescription ||
+    "We don't just solve problems. We Reroute them.";
+
   const ogImage = pageData?.seo?.ogImage
     ? urlForOpenGraphImage(pageData.seo.ogImage as any)
     : settingsData?.ogImage
@@ -18,9 +23,11 @@ export async function generateMetadata(): Promise<Metadata> {
       : undefined;
 
   return {
-    title: pageData?.seo?.metaTitle || defaultSeo?.metaTitle || "B2C Labs",
-    description: pageData?.seo?.metaDescription || defaultSeo?.metaDescription || "",
+    title: pageData?.seo?.metaTitle || defaultSeo?.metaTitle || "B2C Labs | Reroute",
+    description,
     openGraph: {
+      title: pageData?.seo?.metaTitle || defaultSeo?.metaTitle || "B2C Labs | Reroute",
+      description,
       images: ogImage ? [{ url: ogImage || "" }] : [],
     },
   };

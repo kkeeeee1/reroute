@@ -10,6 +10,11 @@ export async function generateMetadata(): Promise<Metadata> {
 
   const defaultSeo = settingsData?.defaultSeo;
 
+  const description =
+    pageData?.seo?.metaDescription ||
+    defaultSeo?.metaDescription ||
+    "We don't just solve problems. We Reroute them.";
+
   const ogImage = pageData?.seo?.ogImage
     ? urlForOpenGraphImage(pageData.seo.ogImage as any)
     : settingsData?.ogImage
@@ -17,10 +22,11 @@ export async function generateMetadata(): Promise<Metadata> {
       : undefined;
 
   return {
-    title: pageData?.seo?.metaTitle || defaultSeo?.metaTitle || "Home",
-    description:
-      pageData?.seo?.metaDescription || defaultSeo?.metaDescription || "",
+    title: pageData?.seo?.metaTitle || defaultSeo?.metaTitle || "Home | Reroute",
+    description,
     openGraph: {
+      title: pageData?.seo?.metaTitle || defaultSeo?.metaTitle || "Home | Reroute",
+      description,
       images: ogImage ? [{ url: ogImage || "" }] : [],
     },
   };
