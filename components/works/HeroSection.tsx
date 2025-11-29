@@ -154,7 +154,7 @@ export function HeroSection() {
                 ref={taglineRef}
                 className="font-bold text-[16px] md:text-[24px] xl:text-[28px] 2xl:text-[32px] leading-[28px] md:leading-[38px] xl:leading-[44px] 2xl:leading-[50px] opacity-0"
               >
-                "리루트는 결과로 이야기합니다"
+                리루트는 결과로 이야기합니다
               </span>
             </div>
 
