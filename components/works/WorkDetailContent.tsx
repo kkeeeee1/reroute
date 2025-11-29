@@ -14,6 +14,9 @@ interface WorkDetailContentProps {
     summary: string;
     thumbnail?: any;
     content?: any;
+    startDate?: string;
+    endDate?: string;
+    roles?: string[];
     createdAt?: string;
     prevWork?: { workId: string; name: string } | null;
     nextWork?: { workId: string; name: string } | null;
@@ -25,19 +28,42 @@ export function WorkDetailContent({ work }: WorkDetailContentProps) {
   const thumbnailUrl = work.thumbnail ? urlForImage(work.thumbnail as any)?.url() : null;
   const imageUrl = (thumbnailUrl || defaultImage) as string;
 
-  const formattedDate = work.createdAt
-    ? new Date(work.createdAt).toLocaleDateString("en-US", {
-        month: "short",
-        day: "2-digit",
-        year: "numeric",
-      })
-    : "";
+  // 날짜 포맷팅 (YYYY-MM 형식)
+  const formatDateRange = (startDate?: string, endDate?: string) => {
+    const formatMonth = (dateStr: string) => {
+      // YYYY-MM 형식에서 "2025-11" 같은 문자열 처리
+      const trimmed = dateStr?.trim();
+      if (!trimmed) return "";
+
+      // 이미 YYYY-MM-DD 형식이면 그대로 사용, 아니면 -01 추가
+      const fullDate = trimmed.includes("-") && trimmed.split("-").length === 2
+        ? `${trimmed}-01`
+        : trimmed;
+
+      const date = new Date(fullDate);
+
+      // Invalid Date 체크
+      if (isNaN(date.getTime())) {
+        return dateStr; // 원본 문자열 반환
+      }
+
+      return date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+    };
+
+    if (startDate && endDate) {
+      return `${formatMonth(startDate)} - ${formatMonth(endDate)}`;
+    } else if (startDate) {
+      return formatMonth(startDate);
+    }
+    return "";
+  };
+
+  const dateRange = formatDateRange(work.startDate, work.endDate);
 
   // Refs for styling
   const thumbnailRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const summaryRef = useRef<HTMLParagraphElement>(null);
-  const dateRef = useRef<HTMLParagraphElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
 
@@ -45,10 +71,7 @@ export function WorkDetailContent({ work }: WorkDetailContentProps) {
     <section>
       <div className="max-w-screen-max px-7 md:px-10 lg:px-20 py-16 md:py-20 lg:py-24 mx-auto grid grid-cols-1 md:grid-cols-[300px_1fr] xl:grid-cols-[400px_1fr] gap-12 md:gap-16 xl:gap-20">
         {/* 왼쪽: 썸네일 */}
-        <div
-          ref={thumbnailRef}
-          className="relative aspect-[3/2] overflow-hidden bg-[#141B29]"
-        >
+        <div ref={thumbnailRef} className="relative aspect-[3/2] overflow-hidden bg-[#141B29]">
           <Image
             src={imageUrl}
             alt={work.name || "리루트 작업"}
@@ -104,22 +127,30 @@ export function WorkDetailContent({ work }: WorkDetailContentProps) {
                 </svg>
               </Link>
             </div>
-            {/* 작업 설명 */}
-            <p
-              ref={summaryRef}
-              className="text-[18px] md:text-[22px] lg:text-[25px] xl:text-[26px] 2xl:text-[28px] leading-[28px] md:leading-[38px] lg:leading-[43px] xl:leading-[45px] 2xl:leading-[48px] font-medium mb-[24px] md:mb-[30px] lg:mb-[35px] xl:mb-[37px] 2xl:mb-[39px]"
-            >
-              {work.summary}
-            </p>
-            {/* 생성일 */}
-            {formattedDate && (
-              <p
-                ref={dateRef}
-                className="text-[14px] md:text-[16px] lg:text-[18px] xl:text-[19px] 2xl:text-[20px] leading-[28px] md:leading-[38px] lg:leading-[43px] xl:leading-[45px] 2xl:leading-[48px] font-medium text-[#999999]"
-              >
-                {formattedDate}
-              </p>
-            )}
+
+            {/* 프로젝트 기간 및 역할 */}
+            <div className="flex flex-col gap-[24px] md:gap-[30px] lg:gap-[35px] xl:gap-[37px] 2xl:gap-[39px] ">
+              {/* 기간 */}
+              {dateRange && (
+                <span className="text-[14px] md:text-[16px] lg:text-[18px] xl:text-[20px] 2xl:text-[26px] font-medium text-gray">
+                  {dateRange}
+                </span>
+              )}
+
+              {/* 역할 */}
+              {work.roles && work.roles.length > 0 && (
+                <div className="flex flex-wrap gap-[8px] md:gap-[10px] lg:gap-[12px]">
+                  {work.roles.map((role, index) => (
+                    <span
+                      key={index}
+                      className="rounded-full border border-black px-[12px] md:px-[20px] lg:px-[30px] py-[6px] md:py-[8px] lg:py-[10px] text-[12px] md:text-[14px] lg:text-[20px] font-medium"
+                    >
+                      {role}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           <div ref={introRef}>

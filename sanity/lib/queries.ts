@@ -155,7 +155,7 @@ export const workDetailQuery = defineQuery(`
     thumbnail,
     startDate,
     endDate,
-    role,
+    roles,
     content,
     createdAt,
     "prevWork": *[_type == "work" && createdAt < ^.createdAt] | order(createdAt desc)[0]{

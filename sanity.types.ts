@@ -79,7 +79,7 @@ export type Work = {
   };
   startDate?: string;
   endDate?: string;
-  role?: string;
+  roles?: Array<string>;
   content?: Array<
     | {
         children?: Array<{
@@ -764,7 +764,7 @@ export type WorkDetailQueryResult = {
   } | null;
   startDate: string | null;
   endDate: string | null;
-  role: string | null;
+  roles: Array<string> | null;
   content: Array<
     | {
         children?: Array<{
@@ -841,6 +841,6 @@ declare module "@sanity/client" {
     '\n  *[_type == "app" && appId == $appId][0]{\n    _id,\n    appId,\n    name,\n    summary,\n    thumbnail,\n    content,\n    createdAt,\n    "prevApp": *[_type == "app" && createdAt < ^.createdAt] | order(createdAt desc)[0]{\n      appId,\n      name\n    },\n    "nextApp": *[_type == "app" && createdAt > ^.createdAt] | order(createdAt asc)[0]{\n      appId,\n      name\n    }\n  }\n': AppDetailQueryResult;
     '\n  *[_type == "work"] | order(createdAt desc)[0...12]{\n    _id,\n    workId,\n    name,\n    summary,\n    thumbnail,\n  }\n': WorkListQueryResult;
     '\n  count(*[_type == "work"])\n': WorkListCountQueryResult;
-    '\n  *[_type == "work" && workId == $workId][0]{\n    _id,\n    workId,\n    name,\n    summary,\n    thumbnail,\n    startDate,\n    endDate,\n    role,\n    content,\n    createdAt,\n    "prevWork": *[_type == "work" && createdAt < ^.createdAt] | order(createdAt desc)[0]{\n      workId,\n      name\n    },\n    "nextWork": *[_type == "work" && createdAt > ^.createdAt] | order(createdAt asc)[0]{\n      workId,\n      name\n    }\n  }\n': WorkDetailQueryResult;
+    '\n  *[_type == "work" && workId == $workId][0]{\n    _id,\n    workId,\n    name,\n    summary,\n    thumbnail,\n    startDate,\n    endDate,\n    roles,\n    content,\n    createdAt,\n    "prevWork": *[_type == "work" && createdAt < ^.createdAt] | order(createdAt desc)[0]{\n      workId,\n      name\n    },\n    "nextWork": *[_type == "work" && createdAt > ^.createdAt] | order(createdAt asc)[0]{\n      workId,\n      name\n    }\n  }\n': WorkDetailQueryResult;
   }
 }

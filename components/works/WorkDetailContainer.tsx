@@ -1,8 +1,8 @@
+import NotFound from "@/app/not-found";
 import { sanityFetch } from "@/sanity/lib/live";
 import { workDetailQuery } from "@/sanity/lib/queries";
 import { HeroSection } from "./HeroSection";
 import { WorkDetailContent } from "./WorkDetailContent";
-import NotFound from "@/app/not-found";
 
 interface WorkDetailContainerProps {
   workId: string;
@@ -15,7 +15,7 @@ export async function WorkDetailContainer({ workId }: WorkDetailContainerProps) 
   });
 
   if (!work) {
-    return <NotFound />
+    return <NotFound />;
   }
 
   return (

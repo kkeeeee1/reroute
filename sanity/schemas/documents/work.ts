@@ -59,10 +59,15 @@ export default defineType({
       },
     }),
     defineField({
-      name: 'role',
+      name: 'roles',
       title: '역할',
-      type: 'text',
-      description: '리루트에서 맡은 역할을 기록합니다.',
+      type: 'array',
+      description: '리루트에서 맡은 역할을 추가해주세요. (자유롭게 추가 가능)',
+      of: [
+        defineArrayMember({
+          type: 'string',
+        }),
+      ],
     }),
     defineField({
       name: 'content',
