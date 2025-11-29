@@ -94,6 +94,7 @@ export function HeroSection() {
         {
           opacity: 0,
           duration: 0.15,
+          pointerEvents: "none",
         },
         2.0
       );
@@ -104,6 +105,7 @@ export function HeroSection() {
         {
           opacity: 1,
           duration: 0.15,
+          pointerEvents: "auto",
         },
         2.3
       ).to(
@@ -111,6 +113,7 @@ export function HeroSection() {
         {
           opacity: 0,
           duration: 0.15,
+          pointerEvents: "none",
         },
         4.1
       );
@@ -121,6 +124,7 @@ export function HeroSection() {
         {
           opacity: 1,
           duration: 1.5,
+          pointerEvents: "auto",
         },
         4.4
       );
