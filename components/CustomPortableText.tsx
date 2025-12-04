@@ -157,7 +157,7 @@ export function CustomPortableText({
       },
       imageWithSize: ({value}: {value: SanityImageWithAsset & {alt?: string; caption?: string; size?: string}}) => {
         // hotspot/crop를 고려한 이미지 URL 생성
-        const imageUrl = value?.asset && urlForImage(value)?.auto('format').url()
+        const imageUrl = value?.asset && urlForImage(value.asset as any)?.auto('format').url()
 
         // Get image dimensions from asset metadata
         const width = (value?.asset as SanityImageAsset)?.metadata?.dimensions?.width || 1200
