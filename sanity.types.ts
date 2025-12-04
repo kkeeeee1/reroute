@@ -744,7 +744,7 @@ export type WorkListQueryResult = Array<{
 // Query: count(*[_type == "work"])
 export type WorkListCountQueryResult = number;
 // Variable: workDetailQuery
-// Query: *[_type == "work" && workId == $workId][0]{    _id,    workId,    name,    summary,    thumbnail,    startDate,    endDate,    role,    content,    createdAt,    "prevWork": *[_type == "work" && createdAt < ^.createdAt] | order(createdAt desc)[0]{      workId,      name    },    "nextWork": *[_type == "work" && createdAt > ^.createdAt] | order(createdAt asc)[0]{      workId,      name    }  }
+// Query: *[_type == "work" && workId == $workId][0]{    _id,    workId,    name,    summary,    thumbnail,    startDate,    endDate,    roles,    content,    createdAt,    "prevWork": *[_type == "work" && createdAt < ^.createdAt] | order(createdAt desc)[0]{      workId,      name    },    "nextWork": *[_type == "work" && createdAt > ^.createdAt] | order(createdAt asc)[0]{      workId,      name    }  }
 export type WorkDetailQueryResult = {
   _id: string;
   workId: string | null;

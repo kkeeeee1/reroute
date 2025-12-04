@@ -82,7 +82,7 @@ export function CTASection() {
                     비즈니스의 핵심 문제를 정밀하게 진단하고, 가장 효과적인 전략적 방향을 설계합니다.
                 </p>
                     <button onClick={handleClick} ref={buttonRef} className="border md:border-2 border-white px-5 py-2 md:px-7 md:py-3.5 xl:px-8 xl:py-4 text-[14px] md:text-[18px] xl:text-[20px] font-bold leading-[28px] md:leading-[36px] xl:leading-[40px] hover:bg-white hover:text-black transition-colors">
-                        전단 미팅 요청하기
+                        진단 미팅 요청하기
                     </button>
             </div>
         </section>

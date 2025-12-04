@@ -221,7 +221,7 @@ export function HeroSection() {
             style={{ willChange: "opacity" }}
           >
             <Image
-              src="/images/logo_main.png"
+              src="/images/logo_main_ko.png"
               alt="Reroute Logo"
               width={574}
               height={216}

@@ -199,7 +199,7 @@ export function IntroAnimation() {
             style={{ opacity: 0, willChange: "transform, opacity" }}
           >
             <Image
-              src="/images/logo_white.png"
+              src="/images/logo_white_ko.png"
               alt="Reroute"
               width={214}
               height={59}

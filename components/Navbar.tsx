@@ -119,7 +119,7 @@ export function Navbar() {
             id="header-logo"
           >
             <Image
-              src={isLightTheme ? "/images/logo_white.png" : "/images/logo_black.png"}
+              src={isLightTheme ? "/images/logo_white_ko.png" : "/images/logo_black_ko.png"}
               alt="Reroute Logo"
               width={214}
               height={59}

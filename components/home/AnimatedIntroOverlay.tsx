@@ -179,7 +179,7 @@ export function AnimatedIntroOverlay({ onDismiss }: AnimatedIntroOverlayProps) {
         <div className="flex w-full max-w-screen-max items-center justify-between px-7 py-8 md:px-10 md:py-8 lg:px-20 lg:py-12">
           <Link href="/" onClick={closeMenu} className="relative z-50" id="header-logo">
             <Image
-              src={isOpen ? "/images/logo_white.png" : "/images/logo_black.png"}
+              src={isOpen ? "/images/logo_white_ko.png" : "/images/logo_black_ko.png"}
               alt="Reroute Logo"
               width={214}
               height={59}

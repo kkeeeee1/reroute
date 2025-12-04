@@ -360,10 +360,13 @@
         },
         "optional": true
       },
-      "role": {
+      "roles": {
         "type": "objectAttribute",
         "value": {
-          "type": "string"
+          "type": "array",
+          "of": {
+            "type": "string"
+          }
         },
         "optional": true
       },
