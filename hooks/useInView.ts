@@ -4,7 +4,7 @@ interface UseInViewOptions {
   /**
    * Element to observe
    */
-  ref: RefObject<HTMLElement | Element>;
+  ref: RefObject<HTMLElement | Element | null>;
   /**
    * IntersectionObserver threshold
    * @default 0.4

@@ -4,6 +4,22 @@ import {PortableText, type PortableTextBlock, type PortableTextComponents} from 
 import Image from 'next/image'
 import type {Image as SanityImage} from 'sanity'
 
+// Extended type for Sanity Image with metadata
+type SanityImageAsset = {
+  _ref: string
+  _type: 'reference'
+  metadata?: {
+    dimensions?: {
+      width: number
+      height: number
+    }
+  }
+}
+
+type SanityImageWithAsset = SanityImage & {
+  asset?: SanityImageAsset
+}
+
 export function CustomPortableText({
   id,
   type,
@@ -88,13 +104,13 @@ export function CustomPortableText({
       },
     },
     types: {
-      image: ({value}: {value: SanityImage & {alt?: string; caption?: string}}) => {
+      image: ({value}: {value: SanityImageWithAsset & {alt?: string; caption?: string}}) => {
         // hotspot/crop를 고려한 이미지 URL 생성
         const imageUrl = value && urlForImage(value)?.auto('format').url()
 
         // Get image dimensions from asset metadata
-        const width = value?.asset?.metadata?.dimensions?.width || 1200
-        const height = value?.asset?.metadata?.dimensions?.height || 800
+        const width = (value?.asset as SanityImageAsset)?.metadata?.dimensions?.width || 1200
+        const height = (value?.asset as SanityImageAsset)?.metadata?.dimensions?.height || 800
         const aspectRatio = width / height
 
         // B2C 앱 콘텐츠는 깔끔한 이미지 스타일 사용
@@ -139,13 +155,13 @@ export function CustomPortableText({
           </figure>
         )
       },
-      imageWithSize: ({value}: {value: any}) => {
+      imageWithSize: ({value}: {value: SanityImageWithAsset & {alt?: string; caption?: string; size?: string}}) => {
         // hotspot/crop를 고려한 이미지 URL 생성
-        const imageUrl = value?.asset && urlForImage(value.asset)?.auto('format').url()
+        const imageUrl = value?.asset && urlForImage(value)?.auto('format').url()
 
         // Get image dimensions from asset metadata
-        const width = value?.asset?.metadata?.dimensions?.width || 1200
-        const height = value?.asset?.metadata?.dimensions?.height || 800
+        const width = (value?.asset as SanityImageAsset)?.metadata?.dimensions?.width || 1200
+        const height = (value?.asset as SanityImageAsset)?.metadata?.dimensions?.height || 800
         const aspectRatio = width / height
 
         // B2C 앱 콘텐츠는 깔끔한 이미지 스타일 사용
@@ -158,7 +174,7 @@ export function CustomPortableText({
           large: 'max-w-4xl',
           full: 'w-full',
         }
-        const maxWidthClass = sizeMap[value?.size] || 'max-w-2xl'
+        const maxWidthClass = (value?.size && sizeMap[value.size]) || 'max-w-2xl'
 
         return (
           <figure className={`${isAppContent ? 'my-6' : 'my-8'} space-y-3 ${maxWidthClass}`}>

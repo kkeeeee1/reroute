@@ -45,7 +45,6 @@ export default defineType({
       description: '시작일입니다. 월(month)까지만 표시됩니다.',
       options: {
         dateFormat: 'YYYY-MM',
-        calendarTodayLabel: '오늘',
       },
     }),
     defineField({
@@ -55,7 +54,6 @@ export default defineType({
       description: '종료일입니다. 월(month)까지만 표시됩니다.',
       options: {
         dateFormat: 'YYYY-MM',
-        calendarTodayLabel: '오늘',
       },
     }),
     defineField({
