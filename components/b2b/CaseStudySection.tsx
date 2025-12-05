@@ -99,7 +99,7 @@ export function CaseStudySection() {
           ref={logoRef}
           src="/images/b2b/casestudy_logo.png"
           alt="Case Study Logo"
-          className="h-auto w-[200px] md:w-[250px] lg:w-[300px] xl:w-[350px] 2xl:w-[400px] mx-auto object-contain mt-16 md:mt-20 lg:mt-24 xl:mt-28 2xl:mt-[108px] mb-12 md:mb-16 lg:mb-20 xl:mb-24 2xl:mb-[99px]"
+          className="h-auto w-[200px] md:w-[250px] lg:w-[300px] xl:w-[350px] 2xl:w-[400px] mx-auto object-contain mt-16 md:mt-20 lg:mt-24 xl:mt-28 2xl:mt-[108px] mb-12 md:mb-16 lg:mb-20 xl:mb-24 2xl:mb-[99px] rounded-lg md:rounded-[30px]"
           width={400}
           height={360}
         />
